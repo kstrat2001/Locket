@@ -13,12 +13,12 @@ import Alamofire
 class LocketView : UIView
 {
     
-    private var _locket : Locket?
+    private var userLocket : UserLocket?
     
-    private var openLocketImageView : UIImageView?
-    private var closedLocketImageView : UIImageView?
-    private var locketChainImageView : UIImageView?
-    private var backgroundImageView : UIImageView?
+    private var openLocketImageView : DownloadableImageView?
+    private var closedLocketImageView : DownloadableImageView?
+    private var locketChainImageView : DownloadableImageView?
+    private var backgroundImageView : DownloadableImageView?
     
     override init( frame: CGRect )
     {
@@ -30,10 +30,15 @@ class LocketView : UIView
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setLocket(locket: Locket!)
+    func setUserLocket(userLocket: UserLocket!)
     {
-        _locket = locket
+        self.userLocket = userLocket
         
+        self.setLocket(self.userLocket?.locket)
+    }
+    
+    private func setLocket(locket: Locket!)
+    {
         if let chain = locketChainImageView as UIImageView?
         {
             chain.removeFromSuperview()
@@ -44,30 +49,30 @@ class LocketView : UIView
             locket.removeFromSuperview()
         }
 
-        locketChainImageView = createChainImage(_locket!)
-        closedLocketImageView = createClosedLocketImage(_locket!)
+        locketChainImageView = createChainImage(locket)
+        closedLocketImageView = createClosedLocketImage(locket)
     }
     
-    func createClosedLocketImage( locket: Locket ) -> UIImageView
+    func createClosedLocketImage( locket: Locket ) -> DownloadableImageView
     {
-        let imageView = UIImageView()
+        let imageView = DownloadableImageView()
         self.addSubview(imageView)
         
         self.addImageConstraints( imageView, size: locket.closedImage.getSize(), position: locket.getClosedLocketPosition() )
         
-        imageView.af_setImageWithURL(locket.closedImage.getImageUrl())
+        imageView.loadImageFromUrl(locket.closedImage.getImageUrl())
         
         return imageView
     }
     
-    func createChainImage( locket: Locket ) -> UIImageView
+    func createChainImage( locket: Locket ) -> DownloadableImageView
     {
-        let imageView = UIImageView()
+        let imageView = DownloadableImageView()
         self.addSubview(imageView)
         
         self.addImageConstraints( imageView, size: locket.chainImage.getSize(), position: locket.getChainPosition() )
         
-        imageView.af_setImageWithURL(locket.chainImage.getImageUrl())
+        imageView.loadImageFromUrl(locket.chainImage.getImageUrl())
         
         return imageView
     }

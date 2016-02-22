@@ -19,6 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     window = UIWindow(frame: UIScreen.mainScreen().bounds)
     
     DataManager.sharedManager.loadAppData()
+    SettingsManager.sharedManager.loadUserLockets()
     
     let containerViewController = ContainerViewController()
     

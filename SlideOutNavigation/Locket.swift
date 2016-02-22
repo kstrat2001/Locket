@@ -10,60 +10,66 @@ import UIKit
 
 class ImageAsset
 {
-    private let _data: NSDictionary!
-    private let _anchor: CGPoint!
-    private let _size: CGSize!
+    let data: NSDictionary!
+    let anchor: CGPoint!
+    let size: CGSize!
     
     init(assetData: NSDictionary!)
     {
-        _data = assetData
+        data = assetData
         
         let scaleFactor = (UIScreen.mainScreen().scale / 3.0) / 3.0
-        let width: CGFloat = scaleFactor * (_data["width"] as! CGFloat)
-        let height: CGFloat = scaleFactor * (_data["height"] as! CGFloat)
+        let width: CGFloat = scaleFactor * (data["width"] as! CGFloat)
+        let height: CGFloat = scaleFactor * (data["height"] as! CGFloat)
         
-        _size = CGSize( width: width, height: height )
+        size = CGSize( width: width, height: height )
         
-        let anchorX = scaleFactor * (_data["anchor_x"] as! CGFloat)
-        let anchorY = scaleFactor * (_data["anchor_y"] as! CGFloat)
+        let anchorX = scaleFactor * (data["anchor_x"] as! CGFloat)
+        let anchorY = scaleFactor * (data["anchor_y"] as! CGFloat)
         
-        _anchor = CGPoint( x: anchorX, y: anchorY )
-        
-        print("thumb path: \(getThumbFilePath())")
+        anchor = CGPoint( x: anchorX, y: anchorY )
     }
     
     func getTitle() -> String
     {
-        return _data["title"] as! String
+        return data["title"] as! String
     }
     
     func getThumbUrl() -> NSURL
     {
-        let thumbStr : String = _data["image_thumb"] as! String
+        let thumbStr : String = data["image_thumb"] as! String
         return NSURL(string: thumbStr)!
-    }
-    
-    func getThumbFilePath() -> String
-    {
-        let url = getThumbUrl();
-        
-        return String(url.path)
     }
     
     func getImageUrl() -> NSURL
     {
-        let imageStr = _data["image_full"] as! String
+        let imageStr = data["image_full"] as! String
         return NSURL(string: imageStr)!
     }
     
     func getAnchor() -> CGPoint
     {
-        return _anchor
+        return anchor
     }
     
     func getSize() -> CGSize
     {
-        return _size
+        return size
+    }
+    
+    class func createDefaultImageAsset() -> ImageAsset
+    {
+        let data : NSDictionary = [
+            "title" : "default",
+            "anchor_x" : 678,
+            "anchor_y" : 34,
+            "width" : 1187,
+            "height" : 994,
+            "image_full" : "http://mainbundle.app/default_mask.png",
+            "image_thumb" : "http://mainbundle.app/default_mask.png"
+        ]
+        
+        return ImageAsset(assetData: data)
     }
 }
 
@@ -91,6 +97,8 @@ class Locket
         let lockets = data["lockets"] as! Array<NSDictionary>
         
         var returnLockets = Array<Locket>()
+        
+        returnLockets.append(Locket.createDefaultLocket())
         
         for locket in lockets
         {
@@ -141,5 +149,82 @@ class Locket
         let chainPoint : CGPoint = CGPoint( x: locketPos.x + locketAnchor.x - openAnchor.x, y: locketPos.y + locketAnchor.y - openAnchor.y )
         
         return chainPoint
+    }
+    
+    class func createDefaultLocket() -> Locket
+    {
+        let data : NSDictionary = [
+            "title" : "Default",
+            "open_image" : [
+                "anchor_x" : 678,
+                "anchor_y" : 34,
+                "width" : 1187,
+                "height" : 994,
+                "image_full" : "http://mainbundle.app/default_open.png",
+                "image_thumb" : "http://mainbundle.app/default_open.png"
+            ],
+            "closed_image" :[
+                "anchor_x" : 492,
+                "anchor_y" : 36,
+                "width" : 1017,
+                "height" : 994,
+                "image_full" : "http://mainbundle.app/default_closed.png",
+                "image_thumb" : "http://mainbundle.app/default_closed.png"
+            ],
+            "chain_image" :[
+                "anchor_x" : 254,
+                "anchor_y" : 760,
+                "width" : 515,
+                "height" : 770,
+                "image_full" : "http://mainbundle.app/default_chain.png",
+                "image_thumb" : "http://mainbundle.app/default_chain.png"
+            ],
+            "mask_image" :[
+                "anchor_x" : 678,
+                "anchor_y" : 34,
+                "width" : 1187,
+                "height" : 994,
+                "image_full" : "http://mainbundle.app/default_mask.png",
+                "image_thumb" : "http://mainbundle.app/default_mask.png"
+            ]
+        ]
+        
+        return Locket(locketData: data)
+    }
+}
+
+class UserLocket
+{
+    private (set) var title : String
+    private (set) var locket : Locket
+    private (set) var image : ImageAsset
+    private (set) var caption : String
+    private (set) var captionFont: String
+    
+    init(data: NSDictionary)
+    {
+        self.title = data["title"] as! String
+        self.locket = Locket(locketData: data["locket"] as! NSDictionary)
+        self.image = ImageAsset(assetData: data["image"] as! NSDictionary)
+        self.caption = data["caption"] as! String
+        self.captionFont = data["caption_font"] as! String
+    }
+    
+    func setLocket(locket: Locket!)
+    {
+        self.locket = locket
+    }
+    
+    class func createDefaultUserLocket() -> UserLocket
+    {
+        let data = [
+            "title" : "My Locket",
+            "locket" : Locket.createDefaultLocket().data,
+            "image" : ImageAsset.createDefaultImageAsset().data,
+            "caption" : "To cherish forever",
+            "caption_font" : "Helvetica"
+        ]
+        
+        return UserLocket(data: data)
     }
 }

@@ -8,7 +8,6 @@
 
 import UIKit
 import QuartzCore
-import Alamofire
 
 enum SlideOutState
 {
@@ -32,7 +31,7 @@ class ContainerViewController: UIViewController
     }
 
     var leftViewController: SidePanelViewController?
-    var rightViewController: SidePanelViewController?
+    var rightViewController: RightPanelViewController?
 
     let centerPanelExpandedOffset: CGFloat = 60
 
@@ -114,9 +113,12 @@ extension ContainerViewController: CenterViewControllerDelegate
         if (rightViewController == nil)
         {
             rightViewController = UIStoryboard.rightViewController()
-            rightViewController!.lockets = nil
+            rightViewController!.lockets = SettingsManager.sharedManager.userLockets
             
-            addChildSidePanelController(rightViewController!)
+            rightViewController!.delegate = centerViewController
+            view.insertSubview(rightViewController!.view, atIndex: 0)
+            addChildViewController(rightViewController!)
+            rightViewController!.didMoveToParentViewController(self)
         }
     }
   
@@ -224,8 +226,8 @@ private extension UIStoryboard {
     return mainStoryboard().instantiateViewControllerWithIdentifier("LeftViewController") as? SidePanelViewController
   }
   
-  class func rightViewController() -> SidePanelViewController? {
-    return mainStoryboard().instantiateViewControllerWithIdentifier("RightViewController") as? SidePanelViewController
+  class func rightViewController() -> RightPanelViewController? {
+    return mainStoryboard().instantiateViewControllerWithIdentifier("RightViewController") as? RightPanelViewController
   }
   
   class func centerViewController() -> CenterViewController? {

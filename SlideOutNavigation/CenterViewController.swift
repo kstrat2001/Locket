@@ -27,8 +27,16 @@ class CenterViewController: UIViewController
         super.viewDidLoad()
         
         locketView = LocketView(frame: (self.view?.frame)!)
+        locketView?.setUserLocket(SettingsManager.sharedManager.selectedLocket)
         
         self.view.addSubview(locketView!)
+    }
+}
+
+extension CenterViewController: RightPanelViewControllerDelegate
+{
+    func userLocketSelected(locket: UserLocket) {
+        locketView?.setUserLocket(locket)
     }
 }
 
@@ -36,7 +44,10 @@ extension CenterViewController: SidePanelViewControllerDelegate
 {
     func locketSelected(locket: Locket)
     {
-        locketView?.setLocket(locket)
+        let userLocket = SettingsManager.sharedManager.selectedLocket!
+        userLocket.setLocket(locket);
+        
+        locketView?.setUserLocket(userLocket)
         
         delegate?.collapseSidePanels?()
     }

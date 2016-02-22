@@ -8,17 +8,16 @@
 
 import Foundation
 import UIKit
-import AlamofireImage
 
 class LocketCell: UITableViewCell
 {
-    @IBOutlet weak var locketThumbnailView: UIImageView!
+    @IBOutlet weak var locketThumbnailView: DownloadableImageView!
     @IBOutlet weak var locketTitleLabel: UILabel!
     
     func configureForLocket(locket: Locket)
     {
         locketTitleLabel.text = locket.getTitle();
         
-        locketThumbnailView.af_setImageWithURL(locket.getThumbUrl())
+        locketThumbnailView.loadImageFromUrl(locket.getThumbUrl())
     }
 }

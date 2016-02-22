@@ -26,9 +26,39 @@ class FileManager
         self.docRoot = paths.objectAtIndex(0) as! String;
     }
     
+    func urlToFilePath( url : NSURL ) -> String
+    {
+        if url.host?.compare("mainbundle.app") == NSComparisonResult.OrderedSame
+        {
+            let resource = NSString(string: url.path!).stringByDeletingPathExtension.stringByReplacingOccurrencesOfString("/", withString: "")
+            let ext = NSString(string: url.path!).pathExtension
+            
+            let path = NSBundle.mainBundle().pathForResource(resource, ofType: ext)
+            
+            if path == nil {
+                return ""
+            }
+            else {
+                return path!
+            }
+        }
+        
+        return self.docRoot + url.path!
+    }
+    
     func fileExists(path : String) -> Bool
     {
         return NSFileManager.defaultManager().fileExistsAtPath(path)
+    }
+    
+    func createDirectoryForFile(filePath: String)
+    {
+        let dir: NSString = NSString(string: filePath).stringByDeletingLastPathComponent
+        
+        if fileExists(String(dir)) == false
+        {
+            createDirectory(String(dir))
+        }
     }
     
     func deleteFile(path : String) -> Bool

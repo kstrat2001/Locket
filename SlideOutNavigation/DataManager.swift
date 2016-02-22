@@ -35,4 +35,27 @@ class DataManager
             }
         }
     }
+    
+    func cacheImage(url: NSURL, image: UIImage) -> Bool
+    {
+        let path = FileManager.sharedManager.urlToFilePath(url)
+        
+        FileManager.sharedManager.createDirectoryForFile(path)
+        
+        let success = UIImagePNGRepresentation(image)?.writeToFile(path, atomically: true)
+        
+        return success!
+    }
+    
+    func getCachedImage(url: NSURL) -> UIImage?
+    {
+        let path = FileManager.sharedManager.urlToFilePath(url)
+        
+        if FileManager.sharedManager.fileExists(path)
+        {
+            return UIImage(contentsOfFile: path)
+        }
+        
+        return nil
+    }
 }
