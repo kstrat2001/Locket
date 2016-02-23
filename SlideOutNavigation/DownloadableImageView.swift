@@ -10,9 +10,16 @@ import Foundation
 import UIKit
 import AlamofireImage
 
+protocol DownloadableImageViewDelegate
+{
+    func imageLoaded(imageView: DownloadableImageView)
+}
+
 class DownloadableImageView : UIImageView
 {
     private (set) var url : NSURL = NSURL()
+    
+    var delegate : DownloadableImageViewDelegate?
     
     class func createWithUrl(url: NSURL) -> DownloadableImageView
     {
@@ -28,8 +35,9 @@ class DownloadableImageView : UIImageView
         
         if let image = DataManager.sharedManager.getCachedImage(url)
         {
-            self.image = image
             print("Successfully loaded cached image at url: \(url)")
+            self.image = image
+            self.imageLoadedCallback()
         }
         else
         {
@@ -53,6 +61,7 @@ class DownloadableImageView : UIImageView
                     if DataManager.sharedManager.cacheImage(self.url, image: value)
                     {
                         print("successfully cached image at url: \(self.url)")
+                        self.imageLoadedCallback()
                     }
                     else
                     {
@@ -61,6 +70,11 @@ class DownloadableImageView : UIImageView
                 }
             }
         )
+    }
+    
+    private func imageLoadedCallback()
+    {
+        self.delegate?.imageLoaded(self)
     }
     
 }

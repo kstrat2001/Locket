@@ -18,7 +18,7 @@ class ImageAsset
     {
         data = assetData
         
-        let scaleFactor = (UIScreen.mainScreen().scale / 3.0) / 3.0
+        let scaleFactor : CGFloat = 1.0 / 3.0
         let width: CGFloat = scaleFactor * (data["width"] as! CGFloat)
         let height: CGFloat = scaleFactor * (data["height"] as! CGFloat)
         
@@ -65,8 +65,8 @@ class ImageAsset
             "anchor_y" : 34,
             "width" : 1187,
             "height" : 994,
-            "image_full" : "http://mainbundle.app/default_mask.png",
-            "image_thumb" : "http://mainbundle.app/default_mask.png"
+            "image_full" : "http://mainbundle.app/default_image.png",
+            "image_thumb" : "http://mainbundle.app/default_image.png"
         ]
         
         return ImageAsset(assetData: data)
@@ -131,22 +131,28 @@ class Locket
     
     func getChainPosition() -> CGPoint
     {
-        let locketPos : CGPoint = getClosedLocketPosition()
-        let locketAnchor : CGPoint = closedImage.getAnchor()
-        let chainAnchor : CGPoint = chainImage.getAnchor()
-        
-        let chainPoint : CGPoint = CGPoint( x: locketPos.x + locketAnchor.x - chainAnchor.x, y: locketPos.y + locketAnchor.y - chainAnchor.y )
-        
-        return chainPoint
+        return getAnchoredImagePosition(self.chainImage.anchor)
     }
     
     func getOpenLocketPosition() -> CGPoint
     {
+        return getAnchoredImagePosition(self.openImage.anchor)
+    }
+    
+    func getMaskFrame() -> CGRect
+    {
+        let pos = getAnchoredImagePosition(self.maskImage.getAnchor())
+        let size = self.maskImage.getSize()
+        
+        return CGRectMake(pos.x, pos.y, size.width, size.height)
+    }
+    
+    private func getAnchoredImagePosition(anchor: CGPoint) -> CGPoint
+    {
         let locketPos : CGPoint = getClosedLocketPosition()
         let locketAnchor : CGPoint = closedImage.getAnchor()
-        let openAnchor : CGPoint = openImage.getAnchor()
         
-        let chainPoint : CGPoint = CGPoint( x: locketPos.x + locketAnchor.x - openAnchor.x, y: locketPos.y + locketAnchor.y - openAnchor.y )
+        let chainPoint : CGPoint = CGPoint( x: locketPos.x + locketAnchor.x - anchor.x, y: locketPos.y + locketAnchor.y - anchor.y )
         
         return chainPoint
     }
@@ -157,7 +163,7 @@ class Locket
             "title" : "Default",
             "open_image" : [
                 "anchor_x" : 678,
-                "anchor_y" : 34,
+                "anchor_y" : 35,
                 "width" : 1187,
                 "height" : 994,
                 "image_full" : "http://mainbundle.app/default_open.png",
@@ -180,10 +186,10 @@ class Locket
                 "image_thumb" : "http://mainbundle.app/default_chain.png"
             ],
             "mask_image" :[
-                "anchor_x" : 678,
-                "anchor_y" : 34,
-                "width" : 1187,
-                "height" : 994,
+                "anchor_x" : 459,
+                "anchor_y" : -35,
+                "width" : 919,
+                "height" : 814,
                 "image_full" : "http://mainbundle.app/default_mask.png",
                 "image_thumb" : "http://mainbundle.app/default_mask.png"
             ]
@@ -198,7 +204,7 @@ class UserLocket
     private (set) var title : String
     private (set) var locket : Locket
     private (set) var image : ImageAsset
-    private (set) var caption : String
+    private (set) var captionText : String
     private (set) var captionFont: String
     
     init(data: NSDictionary)
@@ -206,7 +212,7 @@ class UserLocket
         self.title = data["title"] as! String
         self.locket = Locket(locketData: data["locket"] as! NSDictionary)
         self.image = ImageAsset(assetData: data["image"] as! NSDictionary)
-        self.caption = data["caption"] as! String
+        self.captionText = data["caption_text"] as! String
         self.captionFont = data["caption_font"] as! String
     }
     
@@ -221,7 +227,7 @@ class UserLocket
             "title" : "My Locket",
             "locket" : Locket.createDefaultLocket().data,
             "image" : ImageAsset.createDefaultImageAsset().data,
-            "caption" : "To cherish forever",
+            "caption_text" : "To cherish forever",
             "caption_font" : "Helvetica"
         ]
         
