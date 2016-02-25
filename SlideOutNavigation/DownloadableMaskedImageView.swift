@@ -9,6 +9,11 @@
 import Foundation
 import UIKit
 
+protocol DownloadableMaskedImageViewDelegate
+{
+    func didFinishEditing()
+}
+
 class DownloadableMaskedImageView : UIView
 {
     private (set) var colorImageView : DownloadableImageView?
@@ -23,13 +28,18 @@ class DownloadableMaskedImageView : UIView
     private (set) var colorImageLoaded : Bool = false
     private (set) var maskImageLoaded : Bool = false
     
-    init(frame: CGRect, maskFrame: CGRect, colorUrl: NSURL, maskUrl: NSURL)
+    private (set) var editButton : UIButton?
+    private (set) var inEditMode : Bool = false
+    
+    var delegate : DownloadableMaskedImageViewDelegate?
+    
+    init(frame: CGRect, colorFrame: CGRect, maskFrame: CGRect, colorUrl: NSURL, maskUrl: NSURL)
     {
         super.init(frame: frame)
         
         fullScreenColorImageView = UIView(frame: frame)
         
-        colorImageView = DownloadableImageView(frame: CGRectMake(33, 160, 300, 233))
+        colorImageView = DownloadableImageView(frame: colorFrame)
         colorImageView?.delegate = self
         
         fullScreenColorImageView?.addSubview(colorImageView!)
@@ -44,6 +54,8 @@ class DownloadableMaskedImageView : UIView
         
         finalImageView = UIImageView(frame: frame)
         
+        loadEditButton()
+        
         colorImageView?.loadImageFromUrl(colorUrl)
         maskImageView?.loadImageFromUrl(maskUrl)
     }
@@ -57,16 +69,35 @@ class DownloadableMaskedImageView : UIView
         // Create the full screen mask image and store that for future use
         fullScreenMaskImage = captureView(fullScreenMaskView!)
         
+        // After securing the mask image we can set up the mask view for edit mode
+        fullScreenMaskView?.backgroundColor = UIColor(white: 0.0, alpha: 0.1)
+        
         // Update the final image with the mask image
         self.updateFinalImage()
         self.addSubview(finalImageView!)
-        
-        //self.toggleEditMode()
     }
     
-    private func toggleEditMode()
+    func toggleEditMode()
     {
-        self.addSubview(fullScreenColorImageView!)
+        inEditMode = !inEditMode
+        
+        if inEditMode == true
+        {
+            self.backgroundColor = UIColor.blackColor()
+            self.insertSubview(fullScreenColorImageView!, belowSubview: finalImageView!)
+            finalImageView?.backgroundColor = UIColor(white: 0.0, alpha: 0.7)
+            
+            editButton?.hidden = false
+            self.bringSubviewToFront(editButton!)
+        }
+        else
+        {
+            fullScreenColorImageView?.removeFromSuperview()
+            self.backgroundColor = UIColor.clearColor()
+            finalImageView?.backgroundColor = UIColor.clearColor()
+            
+            editButton?.hidden = true
+        }
     }
     
     private func updateFinalImage()
@@ -99,6 +130,32 @@ class DownloadableMaskedImageView : UIView
         let masked = CGImageCreateWithMask(image.CGImage, mask)
         
         return UIImage(CGImage: masked!)
+    }
+    
+    private func loadEditButton()
+    {
+        let screenBounds = UIScreen.mainScreen().bounds
+        let btnWidth : CGFloat = screenBounds.size.width * 0.6
+        let btnHeight : CGFloat = 50.0
+        let btnFrame = CGRectMake( 0.5 * (screenBounds.size.width - btnWidth), screenBounds.size.height - btnHeight - 30.0, btnWidth, btnHeight)
+        
+        editButton = UIButton(type: UIButtonType.RoundedRect)
+        editButton?.frame = btnFrame
+        editButton?.layer.cornerRadius = 10
+        editButton?.backgroundColor = UIColor.whiteColor()
+        editButton?.titleLabel?.font = UIFont(name: "Helvetica", size: 20)
+        editButton?.setTitle("done", forState: UIControlState.Normal)
+        editButton?.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+        
+        editButton?.addTarget(self, action: "editButtonPressed", forControlEvents: UIControlEvents.TouchUpInside)
+        
+        editButton?.hidden = !inEditMode
+        addSubview(editButton!)
+    }
+    
+    func editButtonPressed()
+    {
+        delegate?.didFinishEditing()
     }
 }
 

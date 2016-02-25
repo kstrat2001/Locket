@@ -12,7 +12,6 @@ import Alamofire
 
 class LocketView : UIView
 {
-    
     private var userLocket : UserLocket = UserLocket.createDefaultUserLocket()
     
     private var openLocketImageView : DownloadableImageView?
@@ -22,7 +21,7 @@ class LocketView : UIView
     
     private var isAnimating : Bool = false
     
-    @IBOutlet weak var captionLabel : UILabel?
+    private var captionLabel : UILabel?
     
     func setUserLocket(userLocket: UserLocket!)
     {
@@ -41,20 +40,40 @@ class LocketView : UIView
         
         let locket = self.userLocket.locket
 
-        locketChainImageView = loadImage(locket.chainImage.getImageUrl(), size: locket.chainImage.getSize(), position: locket.getChainPosition())
+        locketChainImageView = loadImage(locket.chainImage.getImageUrl(), size: locket.chainImage.frame.size, position: locket.getChainPosition())
         
-        photoImageView = DownloadableMaskedImageView(frame: self.frame, maskFrame: locket.getMaskFrame(), colorUrl: self.userLocket.image.getImageUrl(), maskUrl: locket.maskImage.getImageUrl())
+        photoImageView = DownloadableMaskedImageView(frame: self.frame,
+            colorFrame: self.userLocket.getImageFrame(),
+            maskFrame: locket.getMaskFrame(),
+            colorUrl: self.userLocket.image.getImageUrl(),
+            maskUrl: locket.maskImage.getImageUrl())
+        
+        photoImageView?.delegate = self
+        
         self.addSubview(photoImageView!)
         
-        openLocketImageView = loadImage(locket.openImage.getImageUrl(), size: locket.openImage.getSize(), position: locket.getOpenLocketPosition())
-        closedLocketImageView = loadImage(locket.closedImage.getImageUrl(), size: locket.closedImage.getSize(), position: locket.getClosedLocketPosition())
+        openLocketImageView = loadImage(locket.openImage.getImageUrl(), size: locket.openImage.frame.size, position: locket.getOpenLocketPosition())
+        closedLocketImageView = loadImage(locket.closedImage.getImageUrl(), size: locket.closedImage.frame.size, position: locket.getClosedLocketPosition())
         
         // Init open/closed state
         self.closedLocketImageView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action:Selector("locketPressed:")))
         self.closedLocketImageView?.userInteractionEnabled = true
         
         self.openLocketImageView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action:"locketPressed:"))
+        self.openLocketImageView?.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: "openLocketLongPress"))
         self.openLocketImageView?.alpha = 0.0
+    }
+    
+    func openLocketLongPress()
+    {
+        if(self.photoImageView?.inEditMode == false)
+        {
+            openLocketImageView?.hidden = true
+            closedLocketImageView?.hidden = true
+            locketChainImageView?.hidden = true
+            captionLabel?.hidden = true
+            self.photoImageView?.toggleEditMode()
+        }
     }
     
     func locketPressed(sender: UITapGestureRecognizer)
@@ -123,6 +142,8 @@ class LocketView : UIView
         label.numberOfLines = 1
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.3
+        
+        captionLabel = label
     }
     
     private func addImageConstraints( imageView: UIImageView, size: CGSize, position: CGPoint )
@@ -133,5 +154,16 @@ class LocketView : UIView
         self.addConstraint(NSLayoutConstraint(item: imageView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: size.height))
         self.addConstraint(NSLayoutConstraint(item: imageView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: position.x))
         self.addConstraint(NSLayoutConstraint(item: imageView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: position.y))
+    }
+}
+
+extension LocketView : DownloadableMaskedImageViewDelegate
+{
+    func didFinishEditing() {
+        self.photoImageView?.toggleEditMode()
+        openLocketImageView?.hidden = false
+        closedLocketImageView?.hidden = false
+        locketChainImageView?.hidden = false
+        captionLabel?.hidden = false
     }
 }
