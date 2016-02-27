@@ -72,7 +72,7 @@ class DownloadableImageView : UIImageView
         )
     }
     
-    private func imageLoadedCallback()
+    func imageLoadedCallback()
     {
         self.delegate?.imageLoaded(self)
     }

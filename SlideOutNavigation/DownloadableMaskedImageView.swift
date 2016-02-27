@@ -19,9 +19,8 @@ class DownloadableMaskedImageView : UIView
     private (set) var colorImageView : DownloadableImageView?
     private (set) var fullScreenColorImageView: UIView?
 
-    private (set) var maskImageView : DownloadableImageView?
-    private (set) var fullScreenMaskView : UIView?
-    private (set) var fullScreenMaskImage : UIImage?
+    private (set) var maskDownload : DownloadableImageView?
+    private (set) var maskImageView : MaskView?
     
     private (set) var finalImageView : UIImageView?
     
@@ -31,6 +30,8 @@ class DownloadableMaskedImageView : UIView
     private (set) var editButton : UIButton?
     private (set) var inEditMode : Bool = false
     
+    private (set) var colorImageFrame : CGRect = CGRect()
+    
     var delegate : DownloadableMaskedImageViewDelegate?
     
     init(frame: CGRect, colorFrame: CGRect, maskFrame: CGRect, colorUrl: NSURL, maskUrl: NSURL)
@@ -39,25 +40,25 @@ class DownloadableMaskedImageView : UIView
         
         fullScreenColorImageView = UIView(frame: frame)
         
+        colorImageFrame = colorFrame
         colorImageView = DownloadableImageView(frame: colorFrame)
         colorImageView?.delegate = self
         
         fullScreenColorImageView?.addSubview(colorImageView!)
+        fullScreenColorImageView?.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: "panHandler:"))
+        fullScreenColorImageView?.addGestureRecognizer(UIPinchGestureRecognizer(target: self, action: "pinchHandler:"))
         
-        fullScreenMaskView = UIView(frame: frame)
-        fullScreenMaskView?.backgroundColor = UIColor(white: 1.0, alpha: 1.0)
+        maskImageView = MaskView(frame: frame)
         
-        maskImageView = DownloadableImageView(frame: maskFrame)
-        maskImageView?.delegate = self
-        
-        fullScreenMaskView?.addSubview(maskImageView!)
+        maskDownload = DownloadableImageView(frame: maskFrame)
+        maskDownload?.delegate = self
         
         finalImageView = UIImageView(frame: frame)
         
         loadEditButton()
         
         colorImageView?.loadImageFromUrl(colorUrl)
-        maskImageView?.loadImageFromUrl(maskUrl)
+        maskDownload?.loadImageFromUrl(maskUrl)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -66,70 +67,20 @@ class DownloadableMaskedImageView : UIView
     
     private func setupLayers()
     {
-        // Create the full screen mask image and store that for future use
-        fullScreenMaskImage = captureView(fullScreenMaskView!)
-        
-        // After securing the mask image we can set up the mask view for edit mode
-        fullScreenMaskView?.backgroundColor = UIColor(white: 0.0, alpha: 0.1)
+        maskImageView?.addSubview(maskDownload!)
+        maskImageView?.backgroundColor = UIColor.whiteColor()
+        maskImageView?.updateMask()
         
         // Update the final image with the mask image
         self.updateFinalImage()
         self.addSubview(finalImageView!)
     }
     
-    func toggleEditMode()
-    {
-        inEditMode = !inEditMode
-        
-        if inEditMode == true
-        {
-            self.backgroundColor = UIColor.blackColor()
-            self.insertSubview(fullScreenColorImageView!, belowSubview: finalImageView!)
-            finalImageView?.backgroundColor = UIColor(white: 0.0, alpha: 0.7)
-            
-            editButton?.hidden = false
-            self.bringSubviewToFront(editButton!)
-        }
-        else
-        {
-            fullScreenColorImageView?.removeFromSuperview()
-            self.backgroundColor = UIColor.clearColor()
-            finalImageView?.backgroundColor = UIColor.clearColor()
-            
-            editButton?.hidden = true
-        }
-    }
-    
     private func updateFinalImage()
     {
-        let fullScreenColor = captureView(fullScreenColorImageView!)
+        let fullScreenColor = fullScreenColorImageView?.captureImage()
         
-        finalImageView?.image = createMaskedImage(fullScreenColor, mask: fullScreenMaskImage!)
-    }
-    
-    private func captureView(view: UIView) -> UIImage
-    {
-        UIGraphicsBeginImageContextWithOptions(view.bounds.size, view.opaque, 0.0);
-        let context = UIGraphicsGetCurrentContext();
-        view.layer.renderInContext(context!);
-        let image = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-        return image;
-    }
-    
-    private func createMaskedImage(image: UIImage, mask: UIImage) -> UIImage
-    {
-        let maskRef = mask.CGImage
-        let mask = CGImageMaskCreate(CGImageGetWidth(maskRef),
-            CGImageGetHeight(maskRef),
-            CGImageGetBitsPerComponent(maskRef),
-            CGImageGetBitsPerPixel(maskRef),
-            CGImageGetBytesPerRow(maskRef),
-            CGImageGetDataProvider(maskRef), nil, false);
-        
-        let masked = CGImageCreateWithMask(image.CGImage, mask)
-        
-        return UIImage(CGImage: masked!)
+        finalImageView?.image = maskImageView?.maskImage(fullScreenColor!)
     }
     
     private func loadEditButton()
@@ -153,9 +104,67 @@ class DownloadableMaskedImageView : UIView
         addSubview(editButton!)
     }
     
+    func toggleEditMode()
+    {
+        inEditMode = !inEditMode
+        
+        if inEditMode == true
+        {
+            self.backgroundColor = UIColor.blackColor()
+            self.addSubview(fullScreenColorImageView!)
+            finalImageView?.removeFromSuperview()
+            self.addSubview((maskImageView?.inverseMaskView)!)
+            
+            editButton?.hidden = false
+            self.bringSubviewToFront(editButton!)
+        }
+        else
+        {
+            fullScreenColorImageView?.removeFromSuperview()
+            self.updateFinalImage()
+            maskImageView?.inverseMaskView?.removeFromSuperview()
+            self.addSubview(finalImageView!)
+            self.backgroundColor = UIColor.clearColor()
+            
+            editButton?.hidden = true
+        }
+    }
+    
     func editButtonPressed()
     {
         delegate?.didFinishEditing()
+    }
+    
+    func panHandler(sender: UIPanGestureRecognizer)
+    {
+        let translation = sender.translationInView(fullScreenColorImageView!)
+        let location = CGPoint(x: translation.x + colorImageFrame.origin.x, y: translation.y + colorImageFrame.origin.y)
+        
+        let newFrame = CGRect(origin: location, size: colorImageFrame.size)
+        
+        colorImageView?.frame = newFrame
+        
+        if sender.state == UIGestureRecognizerState.Ended {
+            colorImageFrame = newFrame
+        }
+    }
+    
+    func pinchHandler(sender: UIPinchGestureRecognizer)
+    {
+        let xOffset = -(colorImageFrame.size.width * (sender.scale - 1.0)) * 0.5
+        let yOffset = -(colorImageFrame.size.height * (sender.scale - 1.0)) * 0.5
+        let translate = CGAffineTransformMakeTranslation(xOffset, yOffset)
+        let scale = CGAffineTransformMakeScale(sender.scale, sender.scale)
+        
+        let finalTransform = CGAffineTransformConcat(scale, translate)
+
+        let newFrame = CGRectApplyAffineTransform(colorImageFrame, finalTransform)
+        
+        colorImageView?.frame = newFrame
+        
+        if sender.state == UIGestureRecognizerState.Ended {
+            colorImageFrame = newFrame
+        }
     }
 }
 
@@ -166,7 +175,7 @@ extension DownloadableMaskedImageView : DownloadableImageViewDelegate
         {
             self.colorImageLoaded = true
         }
-        else if imageView == maskImageView
+        else if imageView == maskDownload
         {
             self.maskImageLoaded = true
         }

@@ -10,6 +10,12 @@ import Foundation
 import UIKit
 import Alamofire
 
+protocol LocketViewDelegate
+{
+    func locketViewDidStartEditing()
+    func locketViewDidFinishEditing()
+}
+
 class LocketView : UIView
 {
     private var userLocket : UserLocket = UserLocket.createDefaultUserLocket()
@@ -19,9 +25,12 @@ class LocketView : UIView
     private var locketChainImageView : DownloadableImageView?
     private var photoImageView : DownloadableMaskedImageView?
     
-    private var isAnimating : Bool = false
-    
     private var captionLabel : UILabel?
+    
+    private var isAnimating : Bool = false
+    private (set) var isClosed : Bool = true
+    
+    var delegate : LocketViewDelegate?
     
     func setUserLocket(userLocket: UserLocket!)
     {
@@ -68,6 +77,7 @@ class LocketView : UIView
     {
         if(self.photoImageView?.inEditMode == false)
         {
+            delegate?.locketViewDidStartEditing()
             openLocketImageView?.hidden = true
             closedLocketImageView?.hidden = true
             locketChainImageView?.hidden = true
@@ -78,32 +88,26 @@ class LocketView : UIView
     
     func locketPressed(sender: UITapGestureRecognizer)
     {
-        if closedLocketImageView?.userInteractionEnabled == true && !isAnimating
-        {
-            closedLocketImageView?.userInteractionEnabled = false
-            isAnimating = true
-            UIView.animateWithDuration(0.5, animations: {
-                self.closedLocketImageView?.alpha = 0.0
-                self.openLocketImageView?.alpha = 1.0
-                },
-                completion: { (value: Bool) in
-                    self.isAnimating = false
-                    self.openLocketImageView?.userInteractionEnabled = true
-                })
+        if isAnimating == true {
+            return
         }
-        else if openLocketImageView?.userInteractionEnabled == true && !isAnimating
-        {
-            openLocketImageView?.userInteractionEnabled = false
-            isAnimating = true
-            UIView.animateWithDuration(0.5, animations: {
-                self.closedLocketImageView?.alpha = 1.0
-                self.openLocketImageView?.alpha = 0.0
-                },
-                completion: { (value: Bool) in
-                    self.isAnimating = false
-                    self.closedLocketImageView?.userInteractionEnabled = true
-                })
-        }
+        
+        // set up views to manipulate
+        let fadingView = isClosed ? closedLocketImageView! : openLocketImageView!
+        let incomingView = isClosed ? openLocketImageView! : closedLocketImageView!
+        
+        isClosed = !isClosed
+        fadingView.userInteractionEnabled = false
+        isAnimating = true
+        
+        UIView.animateWithDuration(0.5, animations: {
+            fadingView.alpha = 0.0
+            incomingView.alpha = 1.0
+            },
+            completion: { (value: Bool) in
+                self.isAnimating = false
+                incomingView.userInteractionEnabled = true
+            })
     }
     
     private func loadImage(url: NSURL, size: CGSize, position: CGPoint) -> DownloadableImageView
@@ -165,5 +169,7 @@ extension LocketView : DownloadableMaskedImageViewDelegate
         closedLocketImageView?.hidden = false
         locketChainImageView?.hidden = false
         captionLabel?.hidden = false
+        
+        delegate?.locketViewDidFinishEditing()
     }
 }

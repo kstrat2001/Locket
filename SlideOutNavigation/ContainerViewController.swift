@@ -34,6 +34,9 @@ class ContainerViewController: UIViewController
     var rightViewController: RightPanelViewController?
 
     let centerPanelExpandedOffset: CGFloat = 60
+    
+    // For enabling and disabling the sliding menus
+    private (set) var slidePanelsEnabled: Bool = true
 
     override func viewDidLoad()
     {
@@ -61,8 +64,11 @@ class ContainerViewController: UIViewController
 
 extension ContainerViewController: CenterViewControllerDelegate
 {
-    func toggleLeftPanel()
-    {
+    func enableSlidePanels(enable: Bool) {
+        self.slidePanelsEnabled = enable
+    }
+    
+    func toggleLeftPanel() {
         let notAlreadyExpanded = (currentState != .LeftPanelExpanded)
     
         if notAlreadyExpanded
@@ -73,20 +79,17 @@ extension ContainerViewController: CenterViewControllerDelegate
         animateLeftPanel(shouldExpand: notAlreadyExpanded)
     }
   
-    func toggleRightPanel()
-    {
+    func toggleRightPanel() {
         let notAlreadyExpanded = (currentState != .RightPanelExpanded)
     
-        if notAlreadyExpanded
-        {
+        if notAlreadyExpanded {
             addRightPanelViewController()
         }
     
         animateRightPanel(shouldExpand: notAlreadyExpanded)
     }
   
-    func collapseSidePanels()
-    {
+    func collapseSidePanels() {
         switch (currentState)
         {
             case .RightPanelExpanded:
@@ -98,8 +101,7 @@ extension ContainerViewController: CenterViewControllerDelegate
         }
     }
   
-    func addLeftPanelViewController()
-    {
+    func addLeftPanelViewController() {
         if (leftViewController == nil)
         {
             leftViewController = UIStoryboard.leftViewController()
@@ -108,10 +110,8 @@ extension ContainerViewController: CenterViewControllerDelegate
         }
     }
     
-    func addRightPanelViewController()
-    {
-        if (rightViewController == nil)
-        {
+    func addRightPanelViewController() {
+        if (rightViewController == nil) {
             rightViewController = UIStoryboard.rightViewController()
             rightViewController!.lockets = SettingsManager.sharedManager.userLockets
             
@@ -122,8 +122,7 @@ extension ContainerViewController: CenterViewControllerDelegate
         }
     }
   
-    func addChildSidePanelController(sidePanelController: SidePanelViewController)
-    {
+    func addChildSidePanelController(sidePanelController: SidePanelViewController) {
         sidePanelController.delegate = centerViewController
 
         view.insertSubview(sidePanelController.view, atIndex: 0)
@@ -132,18 +131,14 @@ extension ContainerViewController: CenterViewControllerDelegate
         sidePanelController.didMoveToParentViewController(self)
     }
   
-  func animateLeftPanel(shouldExpand shouldExpand: Bool)
-  {
-    if (shouldExpand)
-    {
+  func animateLeftPanel(shouldExpand shouldExpand: Bool) {
+    if (shouldExpand) {
       currentState = .LeftPanelExpanded
       
       animateCenterPanelXPosition(targetPosition: CGRectGetWidth(centerNavigationController.view.frame) - centerPanelExpandedOffset)
     }
-    else
-    {
-        animateCenterPanelXPosition(targetPosition: 0)
-        {
+    else {
+        animateCenterPanelXPosition(targetPosition: 0) {
             finished in
             self.currentState = .BothCollapsed
 
@@ -188,6 +183,9 @@ extension ContainerViewController: UIGestureRecognizerDelegate {
   // MARK: Gesture recognizer
   
   func handlePanGesture(recognizer: UIPanGestureRecognizer) {
+    
+    if slidePanelsEnabled == false { return }
+    
     let gestureIsDraggingFromLeftToRight = (recognizer.velocityInView(view).x > 0)
     
     switch(recognizer.state) {

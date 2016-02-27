@@ -31,6 +31,8 @@
 		ACD182081C6D432100264B2D /* LocketCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD182071C6D432100264B2D /* LocketCell.swift */; };
 		ACD1820A1C6D97DB00264B2D /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD182091C6D97DB00264B2D /* DataManager.swift */; };
 		ACD182131C75735D00264B2D /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD182121C75735D00264B2D /* FileManager.swift */; };
+		ACF6DA911C81429400B0095A /* MaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF6DA901C81429400B0095A /* MaskView.swift */; };
+		ACF6DA941C814BC600B0095A /* UIView+CaptureImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF6DA931C814BC600B0095A /* UIView+CaptureImage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +75,8 @@
 		ACD182071C6D432100264B2D /* LocketCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocketCell.swift; sourceTree = "<group>"; };
 		ACD182091C6D97DB00264B2D /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		ACD182121C75735D00264B2D /* FileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
+		ACF6DA901C81429400B0095A /* MaskView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaskView.swift; sourceTree = "<group>"; };
+		ACF6DA931C814BC600B0095A /* UIView+CaptureImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+CaptureImage.swift"; sourceTree = "<group>"; };
 		CBF1ABC6A16FF43E4B647314 /* Pods-Locket.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Locket.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Locket/Pods-Locket.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -126,6 +130,7 @@
 		17C4DFCC198E428000E0B395 /* Locket */ = {
 			isa = PBXGroup;
 			children = (
+				ACF6DA921C814BA900B0095A /* UIKit Extension */,
 				AC3D8A361C7AABA200BB3530 /* Assets */,
 				17C4DFCF198E428000E0B395 /* AppDelegate.swift */,
 				17C4E01E198E477C00E0B395 /* CenterViewController.swift */,
@@ -141,6 +146,7 @@
 				AC3D8A401C7AB8C800BB3530 /* SettingsManager.swift */,
 				AC3D8A341C7A7D3D00BB3530 /* DownloadableImageView.swift */,
 				ACA045181C7BB1CA00C1679C /* DownloadableMaskedImageView.swift */,
+				ACF6DA901C81429400B0095A /* MaskView.swift */,
 				17C4DFD3198E428000E0B395 /* Main.storyboard */,
 				179191C81A1D4F0D00072138 /* LaunchScreen.xib */,
 				17C4DFD6198E428000E0B395 /* Images.xcassets */,
@@ -203,6 +209,14 @@
 				AC3D8A3B1C7AABA200BB3530 /* default_open.png */,
 			);
 			path = default_locket;
+			sourceTree = "<group>";
+		};
+		ACF6DA921C814BA900B0095A /* UIKit Extension */ = {
+			isa = PBXGroup;
+			children = (
+				ACF6DA931C814BC600B0095A /* UIView+CaptureImage.swift */,
+			);
+			name = "UIKit Extension";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -369,6 +383,7 @@
 				AC3937891C347FB200BEC4B7 /* LocketView.swift in Sources */,
 				ACD1820A1C6D97DB00264B2D /* DataManager.swift in Sources */,
 				17C4DFD0198E428000E0B395 /* AppDelegate.swift in Sources */,
+				ACF6DA911C81429400B0095A /* MaskView.swift in Sources */,
 				ACA045191C7BB1CA00C1679C /* DownloadableMaskedImageView.swift in Sources */,
 				AC3D8A451C7AC37B00BB3530 /* RightPanelViewController.swift in Sources */,
 				ACD182081C6D432100264B2D /* LocketCell.swift in Sources */,
@@ -378,6 +393,7 @@
 				17C4E023198E504400E0B395 /* SidePanelViewController.swift in Sources */,
 				AC3D8A411C7AB8C800BB3530 /* SettingsManager.swift in Sources */,
 				17C4E01F198E477C00E0B395 /* CenterViewController.swift in Sources */,
+				ACF6DA941C814BC600B0095A /* UIView+CaptureImage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

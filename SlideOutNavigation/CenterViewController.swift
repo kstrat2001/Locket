@@ -14,6 +14,7 @@ protocol CenterViewControllerDelegate
     optional func toggleLeftPanel()
     optional func toggleRightPanel()
     optional func collapseSidePanels()
+    optional func enableSlidePanels(enable: Bool)
 }
 
 class CenterViewController: UIViewController
@@ -28,6 +29,7 @@ class CenterViewController: UIViewController
         
         locketView = LocketView(frame: (self.view?.frame)!)
         locketView?.setUserLocket(SettingsManager.sharedManager.selectedLocket)
+        locketView?.delegate = self
         
         self.view.addSubview(locketView!)
     }
@@ -50,5 +52,16 @@ extension CenterViewController: SidePanelViewControllerDelegate
         locketView?.setUserLocket(userLocket)
         
         delegate?.collapseSidePanels?()
+    }
+}
+
+extension CenterViewController: LocketViewDelegate
+{
+    func locketViewDidFinishEditing() {
+        delegate?.enableSlidePanels?(true)
+    }
+    
+    func locketViewDidStartEditing() {
+        delegate?.enableSlidePanels?(false)
     }
 }
