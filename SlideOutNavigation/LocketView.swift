@@ -14,6 +14,8 @@ protocol LocketViewDelegate
 {
     func locketViewDidStartEditing()
     func locketViewDidFinishEditing()
+    func selectPhoto()
+    func takePhoto()
 }
 
 class LocketView : UIView
@@ -23,7 +25,10 @@ class LocketView : UIView
     private var openLocketImageView : DownloadableImageView?
     private var closedLocketImageView : DownloadableImageView?
     private var locketChainImageView : DownloadableImageView?
-    private var photoImageView : DownloadableMaskedImageView?
+    private var photoImageView : LocketPhotoView?
+    
+    private var bgEditView : BackgroundEditView?
+    private var bgEditing : Bool! = false
     
     private var captionLabel : UILabel?
     
@@ -50,8 +55,9 @@ class LocketView : UIView
         let locket = self.userLocket.locket
 
         locketChainImageView = loadImage(locket.chainImage.getImageUrl(), size: locket.chainImage.frame.size, position: locket.getChainPosition())
+        locketChainImageView?.userInteractionEnabled = false
         
-        photoImageView = DownloadableMaskedImageView(frame: self.frame,
+        photoImageView = LocketPhotoView(frame: self.frame,
             colorFrame: self.userLocket.getImageFrame(),
             maskFrame: locket.getMaskFrame(),
             colorUrl: self.userLocket.image.getImageUrl(),
@@ -65,15 +71,51 @@ class LocketView : UIView
         closedLocketImageView = loadImage(locket.closedImage.getImageUrl(), size: locket.closedImage.frame.size, position: locket.getClosedLocketPosition())
         
         // Init open/closed state
-        self.closedLocketImageView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action:Selector("locketPressed:")))
+        self.closedLocketImageView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action:Selector("locketTapped:")))
         self.closedLocketImageView?.userInteractionEnabled = true
         
-        self.openLocketImageView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action:"locketPressed:"))
-        self.openLocketImageView?.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: "openLocketLongPress"))
+        self.openLocketImageView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action:"locketTapped:"))
         self.openLocketImageView?.alpha = 0.0
+        
+        self.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: "viewLongPress:"))
+        
+        self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "viewTapped:"))
     }
     
-    func openLocketLongPress()
+    func setPhoto(image: UIImage)
+    {
+        photoImageView?.setPhoto(image)
+    }
+    
+    func viewTapped(tap: UITapGestureRecognizer)
+    {
+        if tap.locationInView(self).y > bgEditView?.frame.height {
+            self.stopEditingBackground()
+        }
+        
+    }
+    
+    func viewLongPress(press: UILongPressGestureRecognizer)
+    {
+        if press.state != UIGestureRecognizerState.Began {
+            return
+        }
+        
+        let location = press.locationInView(self)
+        let height = self.frame.height
+        
+        if isClosed == false && location.y >= height * 0.33 && location.y <= height * 0.66 {
+            editPhoto()
+        }
+        else if location.y < (height * 0.33) {
+            editBackground()
+        }
+        else if location.y > (height * 0.66) {
+            print("edit caption")
+        }
+    }
+    
+    func editPhoto()
     {
         if(self.photoImageView?.inEditMode == false)
         {
@@ -86,7 +128,53 @@ class LocketView : UIView
         }
     }
     
-    func locketPressed(sender: UITapGestureRecognizer)
+    func stopEditingPhoto()
+    {
+        if self.photoImageView?.inEditMode == true {
+            self.photoImageView?.toggleEditMode()
+            openLocketImageView?.hidden = false
+            closedLocketImageView?.hidden = false
+            locketChainImageView?.hidden = false
+            captionLabel?.hidden = false
+            
+            delegate?.locketViewDidFinishEditing()
+        }
+    }
+    
+    func editBackground()
+    {
+        if bgEditView == nil {
+            bgEditView = BackgroundEditView.loadFromNibNamed("BackgroundEditView") as? BackgroundEditView
+            
+            bgEditView?.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: 155)
+            bgEditView?.delegate = self
+            
+            bgEditView?.setColor(1.0, green: 1.0, blue: 1.0)
+            bgEditView?.initEvents()
+        }
+        
+        openLocketImageView?.userInteractionEnabled = false
+        closedLocketImageView?.userInteractionEnabled = false
+        captionLabel?.userInteractionEnabled = false
+        delegate?.locketViewDidStartEditing()
+        self.addSubview(bgEditView!)
+        
+        bgEditing = true
+    }
+    
+    func stopEditingBackground()
+    {
+        if bgEditing == true {
+            bgEditView?.removeFromSuperview()
+            openLocketImageView?.userInteractionEnabled = true
+            closedLocketImageView?.userInteractionEnabled = true
+            captionLabel?.userInteractionEnabled = true
+            bgEditing = false
+            delegate?.locketViewDidFinishEditing()
+        }
+    }
+    
+    func locketTapped(sender: UITapGestureRecognizer)
     {
         if isAnimating == true {
             return
@@ -161,15 +249,25 @@ class LocketView : UIView
     }
 }
 
-extension LocketView : DownloadableMaskedImageViewDelegate
+extension LocketView : LocketPhotoViewDelegate
 {
     func didFinishEditing() {
-        self.photoImageView?.toggleEditMode()
-        openLocketImageView?.hidden = false
-        closedLocketImageView?.hidden = false
-        locketChainImageView?.hidden = false
-        captionLabel?.hidden = false
-        
-        delegate?.locketViewDidFinishEditing()
+        self.stopEditingPhoto()
+    }
+    
+    func selectPhoto() {
+        delegate?.selectPhoto()
+    }
+    
+    func takePhoto()
+    {
+        delegate?.takePhoto()
+    }
+}
+
+extension LocketView : BGEditViewDelegate
+{
+    func BGEditViewColorChanged(color: UIColor) {
+        self.backgroundColor = color
     }
 }

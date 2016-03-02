@@ -26,7 +26,10 @@
 		AC3D8A411C7AB8C800BB3530 /* SettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3D8A401C7AB8C800BB3530 /* SettingsManager.swift */; };
 		AC3D8A431C7ABED700BB3530 /* UserLocketCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3D8A421C7ABED700BB3530 /* UserLocketCell.swift */; };
 		AC3D8A451C7AC37B00BB3530 /* RightPanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3D8A441C7AC37B00BB3530 /* RightPanelViewController.swift */; };
-		ACA045191C7BB1CA00C1679C /* DownloadableMaskedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA045181C7BB1CA00C1679C /* DownloadableMaskedImageView.swift */; };
+		AC8CC5FB1C854C5E002789CA /* BackgroundEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8CC5FA1C854C5E002789CA /* BackgroundEditView.swift */; };
+		AC8CC5FF1C854D2F002789CA /* BackgroundEditView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC8CC5FE1C854D2F002789CA /* BackgroundEditView.xib */; };
+		AC8CC6011C855889002789CA /* UIView+LoadFromNIB.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8CC6001C855889002789CA /* UIView+LoadFromNIB.swift */; };
+		ACA045191C7BB1CA00C1679C /* LocketPhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA045181C7BB1CA00C1679C /* LocketPhotoView.swift */; };
 		ACA0451B1C7BBB1D00C1679C /* default_image.png in Resources */ = {isa = PBXBuildFile; fileRef = ACA0451A1C7BBB1C00C1679C /* default_image.png */; };
 		ACD182081C6D432100264B2D /* LocketCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD182071C6D432100264B2D /* LocketCell.swift */; };
 		ACD1820A1C6D97DB00264B2D /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD182091C6D97DB00264B2D /* DataManager.swift */; };
@@ -52,7 +55,7 @@
 		17C4DFCE198E428000E0B395 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		17C4DFCF198E428000E0B395 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		17C4DFD4198E428000E0B395 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		17C4DFD6198E428000E0B395 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		17C4DFD6198E428000E0B395 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ../Images.xcassets; sourceTree = "<group>"; };
 		17C4DFDC198E428000E0B395 /* Locket.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Locket.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		17C4DFE1198E428000E0B395 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		17C4DFE2198E428000E0B395 /* SlideOutNavigationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideOutNavigationTests.swift; sourceTree = "<group>"; };
@@ -70,7 +73,10 @@
 		AC3D8A401C7AB8C800BB3530 /* SettingsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsManager.swift; sourceTree = "<group>"; };
 		AC3D8A421C7ABED700BB3530 /* UserLocketCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserLocketCell.swift; sourceTree = "<group>"; };
 		AC3D8A441C7AC37B00BB3530 /* RightPanelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RightPanelViewController.swift; sourceTree = "<group>"; };
-		ACA045181C7BB1CA00C1679C /* DownloadableMaskedImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadableMaskedImageView.swift; sourceTree = "<group>"; };
+		AC8CC5FA1C854C5E002789CA /* BackgroundEditView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackgroundEditView.swift; sourceTree = "<group>"; };
+		AC8CC5FE1C854D2F002789CA /* BackgroundEditView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BackgroundEditView.xib; sourceTree = "<group>"; };
+		AC8CC6001C855889002789CA /* UIView+LoadFromNIB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+LoadFromNIB.swift"; sourceTree = "<group>"; };
+		ACA045181C7BB1CA00C1679C /* LocketPhotoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocketPhotoView.swift; sourceTree = "<group>"; };
 		ACA0451A1C7BBB1C00C1679C /* default_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default_image.png; sourceTree = "<group>"; };
 		ACD182071C6D432100264B2D /* LocketCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocketCell.swift; sourceTree = "<group>"; };
 		ACD182091C6D97DB00264B2D /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
@@ -130,26 +136,10 @@
 		17C4DFCC198E428000E0B395 /* Locket */ = {
 			isa = PBXGroup;
 			children = (
+				AC8CC5FD1C854CE7002789CA /* Source */,
+				AC8CC5FC1C854CB9002789CA /* User Interfaces */,
 				ACF6DA921C814BA900B0095A /* UIKit Extension */,
 				AC3D8A361C7AABA200BB3530 /* Assets */,
-				17C4DFCF198E428000E0B395 /* AppDelegate.swift */,
-				17C4E01E198E477C00E0B395 /* CenterViewController.swift */,
-				178B5A5C198E7379006414ED /* ContainerViewController.swift */,
-				17C4E022198E504400E0B395 /* SidePanelViewController.swift */,
-				AC3D8A441C7AC37B00BB3530 /* RightPanelViewController.swift */,
-				AC3937881C347FB200BEC4B7 /* LocketView.swift */,
-				17C4E01A198E444000E0B395 /* Locket.swift */,
-				ACD182071C6D432100264B2D /* LocketCell.swift */,
-				AC3D8A421C7ABED700BB3530 /* UserLocketCell.swift */,
-				ACD182091C6D97DB00264B2D /* DataManager.swift */,
-				ACD182121C75735D00264B2D /* FileManager.swift */,
-				AC3D8A401C7AB8C800BB3530 /* SettingsManager.swift */,
-				AC3D8A341C7A7D3D00BB3530 /* DownloadableImageView.swift */,
-				ACA045181C7BB1CA00C1679C /* DownloadableMaskedImageView.swift */,
-				ACF6DA901C81429400B0095A /* MaskView.swift */,
-				17C4DFD3198E428000E0B395 /* Main.storyboard */,
-				179191C81A1D4F0D00072138 /* LaunchScreen.xib */,
-				17C4DFD6198E428000E0B395 /* Images.xcassets */,
 				17C4DFDF198E428000E0B395 /* LocketTests */,
 				17C4DFCD198E428000E0B395 /* Supporting Files */,
 			);
@@ -194,6 +184,7 @@
 		AC3D8A361C7AABA200BB3530 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				17C4DFD6198E428000E0B395 /* Images.xcassets */,
 				AC3D8A371C7AABA200BB3530 /* default_locket */,
 			);
 			path = Assets;
@@ -211,10 +202,44 @@
 			path = default_locket;
 			sourceTree = "<group>";
 		};
+		AC8CC5FC1C854CB9002789CA /* User Interfaces */ = {
+			isa = PBXGroup;
+			children = (
+				179191C81A1D4F0D00072138 /* LaunchScreen.xib */,
+				17C4DFD3198E428000E0B395 /* Main.storyboard */,
+				AC8CC5FE1C854D2F002789CA /* BackgroundEditView.xib */,
+			);
+			name = "User Interfaces";
+			sourceTree = "<group>";
+		};
+		AC8CC5FD1C854CE7002789CA /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				17C4DFCF198E428000E0B395 /* AppDelegate.swift */,
+				178B5A5C198E7379006414ED /* ContainerViewController.swift */,
+				17C4E022198E504400E0B395 /* SidePanelViewController.swift */,
+				AC3D8A441C7AC37B00BB3530 /* RightPanelViewController.swift */,
+				17C4E01E198E477C00E0B395 /* CenterViewController.swift */,
+				AC3937881C347FB200BEC4B7 /* LocketView.swift */,
+				ACA045181C7BB1CA00C1679C /* LocketPhotoView.swift */,
+				ACF6DA901C81429400B0095A /* MaskView.swift */,
+				AC3D8A341C7A7D3D00BB3530 /* DownloadableImageView.swift */,
+				AC8CC5FA1C854C5E002789CA /* BackgroundEditView.swift */,
+				17C4E01A198E444000E0B395 /* Locket.swift */,
+				ACD182071C6D432100264B2D /* LocketCell.swift */,
+				AC3D8A421C7ABED700BB3530 /* UserLocketCell.swift */,
+				ACD182091C6D97DB00264B2D /* DataManager.swift */,
+				ACD182121C75735D00264B2D /* FileManager.swift */,
+				AC3D8A401C7AB8C800BB3530 /* SettingsManager.swift */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
 		ACF6DA921C814BA900B0095A /* UIKit Extension */ = {
 			isa = PBXGroup;
 			children = (
 				ACF6DA931C814BC600B0095A /* UIView+CaptureImage.swift */,
+				AC8CC6001C855889002789CA /* UIView+LoadFromNIB.swift */,
 			);
 			name = "UIKit Extension";
 			sourceTree = "<group>";
@@ -313,6 +338,7 @@
 				AC3D8A3F1C7AABA200BB3530 /* default_open.png in Resources */,
 				AC3D8A3C1C7AABA200BB3530 /* default_chain.png in Resources */,
 				AC3D8A3E1C7AABA200BB3530 /* default_mask.png in Resources */,
+				AC8CC5FF1C854D2F002789CA /* BackgroundEditView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -378,13 +404,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AC8CC6011C855889002789CA /* UIView+LoadFromNIB.swift in Sources */,
 				AC3D8A431C7ABED700BB3530 /* UserLocketCell.swift in Sources */,
 				AC3D8A351C7A7D3D00BB3530 /* DownloadableImageView.swift in Sources */,
 				AC3937891C347FB200BEC4B7 /* LocketView.swift in Sources */,
 				ACD1820A1C6D97DB00264B2D /* DataManager.swift in Sources */,
 				17C4DFD0198E428000E0B395 /* AppDelegate.swift in Sources */,
+				AC8CC5FB1C854C5E002789CA /* BackgroundEditView.swift in Sources */,
 				ACF6DA911C81429400B0095A /* MaskView.swift in Sources */,
-				ACA045191C7BB1CA00C1679C /* DownloadableMaskedImageView.swift in Sources */,
+				ACA045191C7BB1CA00C1679C /* LocketPhotoView.swift in Sources */,
 				AC3D8A451C7AC37B00BB3530 /* RightPanelViewController.swift in Sources */,
 				ACD182081C6D432100264B2D /* LocketCell.swift in Sources */,
 				17C4E01B198E444000E0B395 /* Locket.swift in Sources */,

@@ -17,11 +17,14 @@ protocol CenterViewControllerDelegate
     optional func enableSlidePanels(enable: Bool)
 }
 
-class CenterViewController: UIViewController
+class CenterViewController: UIViewController, UINavigationControllerDelegate
 {
     var delegate: CenterViewControllerDelegate?
     
     var locketView: LocketView?
+    
+    let photoPicker: UIImagePickerController = UIImagePickerController()
+    let photoTaker: UIImagePickerController = UIImagePickerController()
     
     override func viewDidLoad()
     {
@@ -63,5 +66,27 @@ extension CenterViewController: LocketViewDelegate
     
     func locketViewDidStartEditing() {
         delegate?.enableSlidePanels?(false)
+    }
+    
+    func selectPhoto() {
+        photoPicker.delegate = self
+        photoPicker.allowsEditing = false
+        photoPicker.sourceType = .PhotoLibrary
+        presentViewController(photoPicker, animated: true, completion: nil)
+    }
+    
+    func takePhoto() {
+        photoTaker.delegate = self
+        photoTaker.allowsEditing = false
+        photoTaker.sourceType = .Camera
+        presentViewController(photoTaker, animated: true, completion: nil)
+    }
+}
+
+extension CenterViewController: UIImagePickerControllerDelegate
+{
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
+        locketView?.setPhoto(image)
+       dismissViewControllerAnimated(true, completion: nil)
     }
 }

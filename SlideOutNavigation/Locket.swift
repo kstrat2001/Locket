@@ -18,7 +18,8 @@ class ImageAsset
     {
         data = assetData
         
-        let scaleFactor : CGFloat = 1.0 / 3.0
+        let screenWidth = UIScreen.mainScreen().bounds.width
+        let scaleFactor : CGFloat = screenWidth / 1242
         let width: CGFloat = scaleFactor * (data["width"] as! CGFloat)
         let height: CGFloat = scaleFactor * (data["height"] as! CGFloat)
         let anchorX = scaleFactor * (data["anchor_x"] as! CGFloat)
