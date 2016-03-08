@@ -194,6 +194,7 @@ class UserLocket
     private (set) var image : ImageAsset
     private (set) var captionText : String
     private (set) var captionFont: String
+    private (set) var backgroundColor : UIColor
     
     init(data: NSDictionary)
     {
@@ -202,6 +203,7 @@ class UserLocket
         self.image = ImageAsset(assetData: data["image"] as! NSDictionary)
         self.captionText = data["caption_text"] as! String
         self.captionFont = data["caption_font"] as! String
+        self.backgroundColor = UIColor(red: data["bg_red"] as! CGFloat, green: data["bg_green"] as! CGFloat, blue: data["bg_blue"] as! CGFloat, alpha: 1.0)
     }
     
     func setLocket(locket: Locket!)
@@ -222,7 +224,10 @@ class UserLocket
             "locket" : Locket.createDefaultLocket().data,
             "image" : ImageAsset.createDefaultImageAsset().data,
             "caption_text" : "To cherish forever",
-            "caption_font" : "Helvetica"
+            "caption_font" : "Optima",
+            "bg_red" : 0.75,
+            "bg_green" : 0.65,
+            "bg_blue" : 1.0
         ]
         
         return UserLocket(data: data)

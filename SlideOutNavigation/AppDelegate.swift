@@ -14,9 +14,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
   
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-    application.setStatusBarHidden(true, withAnimation: UIStatusBarAnimation.None)
     
     window = UIWindow(frame: UIScreen.mainScreen().bounds)
+    
+    UILabel.appearanceWhenContainedInInstancesOfClasses([UITableViewCell.self]).font = UIFont(name: "Optima", size: 20)
     
     DataManager.sharedManager.loadAppData()
     SettingsManager.sharedManager.loadUserLockets()
@@ -30,7 +31,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
     
     func application(application: UIApplication, willFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        application.setStatusBarHidden(true, withAnimation: UIStatusBarAnimation.None)
         return true
     }
   

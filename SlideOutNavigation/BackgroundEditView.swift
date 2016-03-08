@@ -41,6 +41,13 @@ class BackgroundEditView : UIView {
         blueSlider.value = blue
     }
     
+    func setColor(color: UIColor)
+    {
+        let col = color.coreImageColor
+        
+        self.setColor(Float((col?.red)!), green: Float((col?.green)!), blue: Float((col?.blue)!))
+    }
+    
     func initEvents()
     {
         self.redSlider.addTarget(self, action: "colorChanged:", forControlEvents: UIControlEvents.ValueChanged)

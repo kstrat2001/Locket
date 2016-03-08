@@ -43,6 +43,7 @@ class LocketView : UIView
         
         self.loadLocket()
         self.loadCaption()
+        self.loadBackgroundColor()
     }
     
     private func loadLocket()
@@ -80,6 +81,11 @@ class LocketView : UIView
         self.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: "viewLongPress:"))
         
         self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "viewTapped:"))
+    }
+    
+    func loadBackgroundColor()
+    {
+        self.backgroundColor = userLocket.backgroundColor
     }
     
     func setPhoto(image: UIImage)
@@ -148,8 +154,6 @@ class LocketView : UIView
             
             bgEditView?.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: 155)
             bgEditView?.delegate = self
-            
-            bgEditView?.setColor(1.0, green: 1.0, blue: 1.0)
             bgEditView?.initEvents()
         }
         
@@ -157,6 +161,8 @@ class LocketView : UIView
         closedLocketImageView?.userInteractionEnabled = false
         captionLabel?.userInteractionEnabled = false
         delegate?.locketViewDidStartEditing()
+        
+        bgEditView?.setColor(self.backgroundColor!)
         self.addSubview(bgEditView!)
         
         bgEditing = true
