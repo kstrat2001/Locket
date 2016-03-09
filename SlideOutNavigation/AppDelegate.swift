@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     window = UIWindow(frame: UIScreen.mainScreen().bounds)
     
-    UILabel.appearanceWhenContainedInInstancesOfClasses([UITableViewCell.self]).font = UIFont(name: "Optima", size: 20)
+    UILabel.appearanceWhenContainedInInstancesOfClasses([LocketCell.self]).font = gTableCellFont
     
     DataManager.sharedManager.loadAppData()
     SettingsManager.sharedManager.loadUserLockets()

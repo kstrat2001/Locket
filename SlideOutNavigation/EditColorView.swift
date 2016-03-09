@@ -9,12 +9,12 @@
 import Foundation
 import UIKit
 
-protocol BGEditViewDelegate
+protocol EditColorViewDelegate
 {
-    func BGEditViewColorChanged(color: UIColor)
+    func EditColorViewColorChanged(color: UIColor)
 }
 
-class BackgroundEditView : UIView {
+class EditColorView : UIView {
     
     @IBOutlet weak var redSlider: UISlider!
     @IBOutlet weak var greenSlider: UISlider!
@@ -24,7 +24,7 @@ class BackgroundEditView : UIView {
     private (set) var green : Float! = 1.0
     private (set) var blue : Float! = 1.0
     
-    var delegate : BGEditViewDelegate?
+    var delegate : EditColorViewDelegate?
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -61,6 +61,6 @@ class BackgroundEditView : UIView {
         green = greenSlider.value
         blue = blueSlider.value
         
-        delegate?.BGEditViewColorChanged(UIColor(colorLiteralRed: red, green: green, blue: blue, alpha: 1.0))
+        delegate?.EditColorViewColorChanged(UIColor(colorLiteralRed: red, green: green, blue: blue, alpha: 1.0))
     }
 }

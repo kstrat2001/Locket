@@ -16,8 +16,9 @@ class UserLocketCell: UITableViewCell
     
     func configureForLocket(userLocket: UserLocket)
     {
-        locketTitleLabel.text = userLocket.title
-        
+        locketTitleLabel.text = userLocket.captionText
+        locketTitleLabel.font = UIFont(name: userLocket.captionFont, size: gTableCellFontSize)
         locketThumbnailView.loadImageFromUrl(userLocket.locket.getThumbUrl())
+        self.backgroundColor = userLocket.backgroundColor
     }
 }

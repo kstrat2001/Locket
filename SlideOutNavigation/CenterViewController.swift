@@ -77,7 +77,7 @@ extension CenterViewController: LocketViewDelegate
     
     func takePhoto() {
         photoTaker.delegate = self
-        photoTaker.allowsEditing = false
+        photoTaker.allowsEditing = true
         photoTaker.sourceType = .Camera
         presentViewController(photoTaker, animated: true, completion: nil)
     }

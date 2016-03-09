@@ -225,7 +225,7 @@ class UserLocket
             "image" : ImageAsset.createDefaultImageAsset().data,
             "caption_text" : "To cherish forever",
             "caption_font" : "Optima",
-            "bg_red" : 0.75,
+            "bg_red" : 0.80,
             "bg_green" : 0.65,
             "bg_blue" : 1.0
         ]

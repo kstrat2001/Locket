@@ -26,8 +26,8 @@
 		AC3D8A411C7AB8C800BB3530 /* SettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3D8A401C7AB8C800BB3530 /* SettingsManager.swift */; };
 		AC3D8A431C7ABED700BB3530 /* UserLocketCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3D8A421C7ABED700BB3530 /* UserLocketCell.swift */; };
 		AC3D8A451C7AC37B00BB3530 /* RightPanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3D8A441C7AC37B00BB3530 /* RightPanelViewController.swift */; };
-		AC8CC5FB1C854C5E002789CA /* BackgroundEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8CC5FA1C854C5E002789CA /* BackgroundEditView.swift */; };
-		AC8CC5FF1C854D2F002789CA /* BackgroundEditView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC8CC5FE1C854D2F002789CA /* BackgroundEditView.xib */; };
+		AC8CC5FB1C854C5E002789CA /* EditColorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8CC5FA1C854C5E002789CA /* EditColorView.swift */; };
+		AC8CC5FF1C854D2F002789CA /* EditColorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC8CC5FE1C854D2F002789CA /* EditColorView.xib */; };
 		AC8CC6011C855889002789CA /* UIView+LoadFromNIB.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8CC6001C855889002789CA /* UIView+LoadFromNIB.swift */; };
 		ACA045191C7BB1CA00C1679C /* LocketPhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA045181C7BB1CA00C1679C /* LocketPhotoView.swift */; };
 		ACA0451B1C7BBB1D00C1679C /* default_image.png in Resources */ = {isa = PBXBuildFile; fileRef = ACA0451A1C7BBB1C00C1679C /* default_image.png */; };
@@ -35,6 +35,9 @@
 		ACD1820A1C6D97DB00264B2D /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD182091C6D97DB00264B2D /* DataManager.swift */; };
 		ACD182131C75735D00264B2D /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD182121C75735D00264B2D /* FileManager.swift */; };
 		ACDD19931C8E580F007D2439 /* UIColor+CIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDD19921C8E580F007D2439 /* UIColor+CIColor.swift */; };
+		ACDD19951C8F4FCE007D2439 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDD19941C8F4FCE007D2439 /* Constants.swift */; };
+		ACDD19971C8F6B0B007D2439 /* EditTextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = ACDD19961C8F6B0B007D2439 /* EditTextView.xib */; };
+		ACDD19991C8F6BC4007D2439 /* EditTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDD19981C8F6BC4007D2439 /* EditTextView.swift */; };
 		ACF6DA911C81429400B0095A /* MaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF6DA901C81429400B0095A /* MaskView.swift */; };
 		ACF6DA941C814BC600B0095A /* UIView+CaptureImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF6DA931C814BC600B0095A /* UIView+CaptureImage.swift */; };
 /* End PBXBuildFile section */
@@ -74,8 +77,8 @@
 		AC3D8A401C7AB8C800BB3530 /* SettingsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsManager.swift; sourceTree = "<group>"; };
 		AC3D8A421C7ABED700BB3530 /* UserLocketCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserLocketCell.swift; sourceTree = "<group>"; };
 		AC3D8A441C7AC37B00BB3530 /* RightPanelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RightPanelViewController.swift; sourceTree = "<group>"; };
-		AC8CC5FA1C854C5E002789CA /* BackgroundEditView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackgroundEditView.swift; sourceTree = "<group>"; };
-		AC8CC5FE1C854D2F002789CA /* BackgroundEditView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BackgroundEditView.xib; sourceTree = "<group>"; };
+		AC8CC5FA1C854C5E002789CA /* EditColorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditColorView.swift; sourceTree = "<group>"; };
+		AC8CC5FE1C854D2F002789CA /* EditColorView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditColorView.xib; sourceTree = "<group>"; };
 		AC8CC6001C855889002789CA /* UIView+LoadFromNIB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+LoadFromNIB.swift"; sourceTree = "<group>"; };
 		ACA045181C7BB1CA00C1679C /* LocketPhotoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocketPhotoView.swift; sourceTree = "<group>"; };
 		ACA0451A1C7BBB1C00C1679C /* default_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default_image.png; sourceTree = "<group>"; };
@@ -83,6 +86,9 @@
 		ACD182091C6D97DB00264B2D /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		ACD182121C75735D00264B2D /* FileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
 		ACDD19921C8E580F007D2439 /* UIColor+CIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+CIColor.swift"; sourceTree = "<group>"; };
+		ACDD19941C8F4FCE007D2439 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		ACDD19961C8F6B0B007D2439 /* EditTextView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditTextView.xib; sourceTree = "<group>"; };
+		ACDD19981C8F6BC4007D2439 /* EditTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditTextView.swift; sourceTree = "<group>"; };
 		ACF6DA901C81429400B0095A /* MaskView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaskView.swift; sourceTree = "<group>"; };
 		ACF6DA931C814BC600B0095A /* UIView+CaptureImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+CaptureImage.swift"; sourceTree = "<group>"; };
 		CBF1ABC6A16FF43E4B647314 /* Pods-Locket.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Locket.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Locket/Pods-Locket.debug.xcconfig"; sourceTree = "<group>"; };
@@ -209,7 +215,10 @@
 			children = (
 				179191C81A1D4F0D00072138 /* LaunchScreen.xib */,
 				17C4DFD3198E428000E0B395 /* Main.storyboard */,
-				AC8CC5FE1C854D2F002789CA /* BackgroundEditView.xib */,
+				AC8CC5FA1C854C5E002789CA /* EditColorView.swift */,
+				AC8CC5FE1C854D2F002789CA /* EditColorView.xib */,
+				ACDD19981C8F6BC4007D2439 /* EditTextView.swift */,
+				ACDD19961C8F6B0B007D2439 /* EditTextView.xib */,
 			);
 			name = "User Interfaces";
 			sourceTree = "<group>";
@@ -226,13 +235,13 @@
 				ACA045181C7BB1CA00C1679C /* LocketPhotoView.swift */,
 				ACF6DA901C81429400B0095A /* MaskView.swift */,
 				AC3D8A341C7A7D3D00BB3530 /* DownloadableImageView.swift */,
-				AC8CC5FA1C854C5E002789CA /* BackgroundEditView.swift */,
 				17C4E01A198E444000E0B395 /* Locket.swift */,
 				ACD182071C6D432100264B2D /* LocketCell.swift */,
 				AC3D8A421C7ABED700BB3530 /* UserLocketCell.swift */,
 				ACD182091C6D97DB00264B2D /* DataManager.swift */,
 				ACD182121C75735D00264B2D /* FileManager.swift */,
 				AC3D8A401C7AB8C800BB3530 /* SettingsManager.swift */,
+				ACDD19941C8F4FCE007D2439 /* Constants.swift */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -336,12 +345,13 @@
 				17C4DFD5198E428000E0B395 /* Main.storyboard in Resources */,
 				17C4DFD7198E428000E0B395 /* Images.xcassets in Resources */,
 				AC3D8A3D1C7AABA200BB3530 /* default_closed.png in Resources */,
+				ACDD19971C8F6B0B007D2439 /* EditTextView.xib in Resources */,
 				ACA0451B1C7BBB1D00C1679C /* default_image.png in Resources */,
 				179191C91A1D4F0D00072138 /* LaunchScreen.xib in Resources */,
 				AC3D8A3F1C7AABA200BB3530 /* default_open.png in Resources */,
 				AC3D8A3C1C7AABA200BB3530 /* default_chain.png in Resources */,
 				AC3D8A3E1C7AABA200BB3530 /* default_mask.png in Resources */,
-				AC8CC5FF1C854D2F002789CA /* BackgroundEditView.xib in Resources */,
+				AC8CC5FF1C854D2F002789CA /* EditColorView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -413,7 +423,7 @@
 				AC3937891C347FB200BEC4B7 /* LocketView.swift in Sources */,
 				ACD1820A1C6D97DB00264B2D /* DataManager.swift in Sources */,
 				17C4DFD0198E428000E0B395 /* AppDelegate.swift in Sources */,
-				AC8CC5FB1C854C5E002789CA /* BackgroundEditView.swift in Sources */,
+				AC8CC5FB1C854C5E002789CA /* EditColorView.swift in Sources */,
 				ACDD19931C8E580F007D2439 /* UIColor+CIColor.swift in Sources */,
 				ACF6DA911C81429400B0095A /* MaskView.swift in Sources */,
 				ACA045191C7BB1CA00C1679C /* LocketPhotoView.swift in Sources */,
@@ -422,8 +432,10 @@
 				17C4E01B198E444000E0B395 /* Locket.swift in Sources */,
 				178B5A5D198E7379006414ED /* ContainerViewController.swift in Sources */,
 				ACD182131C75735D00264B2D /* FileManager.swift in Sources */,
+				ACDD19951C8F4FCE007D2439 /* Constants.swift in Sources */,
 				17C4E023198E504400E0B395 /* SidePanelViewController.swift in Sources */,
 				AC3D8A411C7AB8C800BB3530 /* SettingsManager.swift in Sources */,
+				ACDD19991C8F6BC4007D2439 /* EditTextView.swift in Sources */,
 				17C4E01F198E477C00E0B395 /* CenterViewController.swift in Sources */,
 				ACF6DA941C814BC600B0095A /* UIView+CaptureImage.swift in Sources */,
 			);

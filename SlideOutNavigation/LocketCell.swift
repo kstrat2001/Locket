@@ -19,5 +19,6 @@ class LocketCell: UITableViewCell
         locketTitleLabel.text = locket.getTitle();
         
         locketThumbnailView.loadImageFromUrl(locket.getThumbUrl())
+        self.backgroundColor = gLightPinkColor
     }
 }
