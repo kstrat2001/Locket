@@ -10,15 +10,13 @@ import UIKit
 
 protocol SidePanelViewControllerDelegate
 {
-    func locketSelected(locket: Locket)
+    func locketSkinSelected(skin: LocketSkinEntity)
 }
 
 class SidePanelViewController: UIViewController {
   
   @IBOutlet weak var tableView: UITableView!
   var delegate: SidePanelViewControllerDelegate?
-
-  var lockets: Array<Locket>?
   
   struct TableView {
     struct CellIdentifiers {
@@ -45,18 +43,14 @@ extension SidePanelViewController: UITableViewDataSource {
   
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        if (lockets != nil)
-        {
-            return lockets!.count
-        }
-        
-        return 0
+        return DataManager.sharedManager.locketSkins.count
     }
   
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
         let cell = tableView.dequeueReusableCellWithIdentifier(TableView.CellIdentifiers.LocketCell, forIndexPath: indexPath) as! LocketCell
-        cell.configureForLocket(lockets![indexPath.row])
+        let entity = DataManager.sharedManager.locketSkins[indexPath.row]
+        cell.configureForLocket(entity)
         return cell
     }
   
@@ -67,8 +61,8 @@ extension SidePanelViewController: UITableViewDataSource {
 extension SidePanelViewController: UITableViewDelegate {
 
   func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    let selectedRow = lockets![indexPath.row]
-    delegate?.locketSelected(selectedRow)
+    let selectedEntity = DataManager.sharedManager.locketSkins[indexPath.row]
+    delegate?.locketSkinSelected(selectedEntity)
   }
   
 }

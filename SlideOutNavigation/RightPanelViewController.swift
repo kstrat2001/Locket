@@ -11,15 +11,13 @@ import UIKit
 
 protocol RightPanelViewControllerDelegate
 {
-    func userLocketSelected(locket: UserLocket)
+    func userLocketSelected(userLocket: UserLocketEntity)
 }
 
 class RightPanelViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     var delegate: RightPanelViewControllerDelegate?
-    
-    var lockets: Array<UserLocket>?
     
     struct TableView {
         struct CellIdentifiers {
@@ -46,18 +44,15 @@ extension RightPanelViewController: UITableViewDataSource {
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        if (lockets != nil)
-        {
-            return lockets!.count
-        }
-        
-        return 0
+        return SettingsManager.sharedManager.userLockets.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
         let cell = tableView.dequeueReusableCellWithIdentifier(TableView.CellIdentifiers.LocketCell, forIndexPath: indexPath) as! UserLocketCell
-        cell.configureForLocket(lockets![indexPath.row])
+        
+        let locket = SettingsManager.sharedManager.userLockets[indexPath.row]
+        cell.configureForLocket(locket)
         return cell
     }
     
@@ -68,8 +63,8 @@ extension RightPanelViewController: UITableViewDataSource {
 extension RightPanelViewController: UITableViewDelegate {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let selectedRow = lockets![indexPath.row]
-        delegate?.userLocketSelected(selectedRow)
+        let selectedLocket = SettingsManager.sharedManager.userLockets[indexPath.row]
+        delegate?.userLocketSelected(selectedLocket)
     }
     
 }

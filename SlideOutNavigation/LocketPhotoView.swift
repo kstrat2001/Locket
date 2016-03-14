@@ -117,7 +117,20 @@ class LocketPhotoView : UIView
         
         // Update the final image with the mask image
         self.updateFinalImage()
+        
+        (maskImageView?.inverseMaskView)!.alpha = 0.0
+        fullScreenColorImageView!.alpha = 0.0
+        self.addSubview(fullScreenColorImageView!)
+        self.addSubview((maskImageView?.inverseMaskView)!)
+        
         self.addSubview(finalImageView!)
+        
+        self.takePhotoButton?.hidden = true
+        self.selectPhotoButton?.hidden = true
+        self.editButton?.hidden = true
+        self.bringSubviewToFront(self.editButton!)
+        self.bringSubviewToFront(self.selectPhotoButton!)
+        self.bringSubviewToFront(self.takePhotoButton!)
     }
     
     private func updateFinalImage()
@@ -127,96 +140,46 @@ class LocketPhotoView : UIView
         finalImageView?.image = maskImageView?.maskImage(fullScreenColor!)
     }
     
-    private func loadEditButton()
-    {
-        let btnWidth : CGFloat = self.frame.width * 0.6
-        let btnHeight : CGFloat = 50.0
-        let btnFrame = CGRectMake( 0.5 * (self.frame.width - btnWidth), self.frame.height - btnHeight - 30.0, btnWidth, btnHeight)
-        
-        editButton = self.loadButton("done", frame: btnFrame)
-        editButton?.hidden = !inEditMode
-        addSubview(editButton!)
-    }
-    
-    private func loadSelectPhotoButton()
-    {
-        let btnWidth : CGFloat = self.frame.width * 0.3
-        let btnHeight : CGFloat = 50.0
-        let btnFrame = CGRectMake( (0.25 * self.frame.width - 0.5 * btnWidth), 20, btnWidth, btnHeight)
-        
-        selectPhotoButton = self.loadButton("select", frame: btnFrame)
-        selectPhotoButton?.hidden = !inEditMode
-        addSubview(selectPhotoButton!)
-    }
-    
-    private func loadTakePhotoButton()
-    {
-        let btnWidth : CGFloat = self.frame.width * 0.3
-        let btnHeight : CGFloat = 50.0
-        let btnFrame = CGRectMake( (0.75 * self.frame.width - 0.5 * btnWidth), 20, btnWidth, btnHeight)
-        
-        takePhotoButton = self.loadButton("take", frame: btnFrame)
-        takePhotoButton?.hidden = !inEditMode
-        addSubview(takePhotoButton!)
-    }
-    
-    private func loadButton(title: String, frame: CGRect) -> UIButton
-    {
-        let button = UIButton(type: UIButtonType.RoundedRect)
-        button.frame = frame
-        button.layer.cornerRadius = 10
-        button.backgroundColor = UIColor.whiteColor()
-        button.titleLabel?.font = UIFont(name: "Helvetica", size: 20)
-        button.setTitle(title, forState: UIControlState.Normal)
-        button.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
-        
-        button.addTarget(self, action: "buttonPressed:", forControlEvents: UIControlEvents.TouchUpInside)
-        
-        return button
-    }
-    
-    func buttonPressed(button: UIButton)
-    {
-        if button == editButton {
-            delegate?.didFinishEditing()
-        }
-        else if button == selectPhotoButton {
-            delegate?.selectPhoto()
-        }
-        else if button == takePhotoButton {
-            delegate?.takePhoto()
-        }
-    }
-    
     func toggleEditMode()
     {
         inEditMode = !inEditMode
         
         if inEditMode == true
         {
-            self.backgroundColor = UIColor.blackColor()
-            self.addSubview(fullScreenColorImageView!)
-            finalImageView?.removeFromSuperview()
-            self.addSubview((maskImageView?.inverseMaskView)!)
+            self.takePhotoButton?.hidden = false
+            self.selectPhotoButton?.hidden = false
+            self.editButton?.hidden = false
             
-            editButton?.hidden = false
-            selectPhotoButton?.hidden = false
-            takePhotoButton?.hidden = false
-            self.bringSubviewToFront(editButton!)
-            self.bringSubviewToFront(selectPhotoButton!)
-            self.bringSubviewToFront(takePhotoButton!)
+            UIView.animateWithDuration(gEditAnimationDuration, delay: 0, usingSpringWithDamping: gEditAnimationDamping, initialSpringVelocity: 1, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+                    self.fullScreenColorImageView?.alpha = 1.0
+                    (self.maskImageView?.inverseMaskView)!.alpha = 1.0
+                    let transform = CGAffineTransformMakeTranslation(0, 0)
+                    self.takePhotoButton?.transform = transform
+                    self.selectPhotoButton?.transform = transform
+                    self.editButton?.transform = transform
+                },
+                completion: { (value: Bool) in
+                    self.finalImageView?.hidden = true
+
+            })
         }
         else
         {
-            fullScreenColorImageView?.removeFromSuperview()
             self.updateFinalImage()
-            maskImageView?.inverseMaskView?.removeFromSuperview()
-            self.addSubview(finalImageView!)
-            self.backgroundColor = UIColor.clearColor()
+            finalImageView!.hidden = false
             
-            selectPhotoButton?.hidden = true
-            takePhotoButton?.hidden = true
-            editButton?.hidden = true
+            UIView.animateWithDuration(gEditAnimationDuration, delay: 0, usingSpringWithDamping: gEditAnimationDamping, initialSpringVelocity: 1, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+                    self.fullScreenColorImageView?.alpha = 0.0
+                    (self.maskImageView?.inverseMaskView)!.alpha = 0.0
+                    self.takePhotoButton?.transform = CGAffineTransformMakeTranslation(0, -100)
+                    self.selectPhotoButton?.transform = CGAffineTransformMakeTranslation(0, -100)
+                    self.editButton?.transform = CGAffineTransformMakeTranslation(0, 100)
+                },
+                completion: { (value: Bool) in
+                    self.takePhotoButton?.hidden = true
+                    self.selectPhotoButton?.hidden = true
+                    self.editButton?.hidden = true
+            })
         }
     }
     
@@ -269,6 +232,67 @@ class LocketPhotoView : UIView
         
         if sender.state == UIGestureRecognizerState.Ended {
             colorImageFrame = (colorImageView?.frame)!
+        }
+    }
+    
+    private func loadEditButton()
+    {
+        let btnWidth : CGFloat = self.frame.width * 0.6
+        let btnHeight : CGFloat = 50.0
+        let btnFrame = CGRectMake( 0.5 * (self.frame.width - btnWidth), self.frame.height - btnHeight - 30.0, btnWidth, btnHeight)
+        
+        editButton = self.loadButton("done", frame: btnFrame)
+        editButton?.transform = CGAffineTransformMakeTranslation(0, 100)
+        addSubview(editButton!)
+    }
+    
+    private func loadSelectPhotoButton()
+    {
+        let btnWidth : CGFloat = self.frame.width * 0.3
+        let btnHeight : CGFloat = 50.0
+        let btnFrame = CGRectMake( (0.25 * self.frame.width - 0.5 * btnWidth), 20, btnWidth, btnHeight)
+        
+        selectPhotoButton = self.loadButton("select", frame: btnFrame)
+        selectPhotoButton?.transform = CGAffineTransformMakeTranslation(0, -100)
+        addSubview(selectPhotoButton!)
+    }
+    
+    private func loadTakePhotoButton()
+    {
+        let btnWidth : CGFloat = self.frame.width * 0.3
+        let btnHeight : CGFloat = 50.0
+        let btnFrame = CGRectMake( (0.75 * self.frame.width - 0.5 * btnWidth), 20, btnWidth, btnHeight)
+        
+        takePhotoButton = self.loadButton("take", frame: btnFrame)
+        takePhotoButton?.transform = CGAffineTransformMakeTranslation(0, -100)
+        addSubview(takePhotoButton!)
+    }
+    
+    private func loadButton(title: String, frame: CGRect) -> UIButton
+    {
+        let button = UIButton(type: UIButtonType.RoundedRect)
+        button.frame = frame
+        button.layer.cornerRadius = 10
+        button.backgroundColor = UIColor.whiteColor()
+        button.titleLabel?.font = UIFont(name: "Helvetica", size: 20)
+        button.setTitle(title, forState: UIControlState.Normal)
+        button.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+        
+        button.addTarget(self, action: "buttonPressed:", forControlEvents: UIControlEvents.TouchUpInside)
+        
+        return button
+    }
+    
+    func buttonPressed(button: UIButton)
+    {
+        if button == editButton {
+            delegate?.didFinishEditing()
+        }
+        else if button == selectPhotoButton {
+            delegate?.selectPhoto()
+        }
+        else if button == takePhotoButton {
+            delegate?.takePhoto()
         }
     }
 }

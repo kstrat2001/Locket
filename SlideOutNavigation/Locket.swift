@@ -43,17 +43,7 @@ class ImageAsset
     
     class func createDefaultImageAsset() -> ImageAsset
     {
-        let data : NSDictionary = [
-            "title" : "default",
-            "anchor_x" : 500,
-            "anchor_y" : 0,
-            "width" : 1000,
-            "height" : 750,
-            "image_full" : "http://mainbundle.app/default_image.png",
-            "image_thumb" : "http://mainbundle.app/default_image.png"
-        ]
-        
-        return ImageAsset(assetData: data)
+        return ImageAsset(assetData: gDefaultImageAssetData)
     }
 }
 
@@ -143,47 +133,7 @@ class Locket
     
     class func createDefaultLocket() -> Locket
     {
-        let data : NSDictionary = [
-            "title" : "Default",
-            "open_image" : [
-                "title" : "default_open",
-                "anchor_x" : 678,
-                "anchor_y" : 35,
-                "width" : 1187,
-                "height" : 994,
-                "image_full" : "http://mainbundle.app/default_open.png",
-                "image_thumb" : "http://mainbundle.app/default_open.png"
-            ],
-            "closed_image" :[
-                "title" : "default_closed",
-                "anchor_x" : 492,
-                "anchor_y" : 36,
-                "width" : 1017,
-                "height" : 994,
-                "image_full" : "http://mainbundle.app/default_closed.png",
-                "image_thumb" : "http://mainbundle.app/default_closed.png"
-            ],
-            "chain_image" :[
-                "title" : "default_chain",
-                "anchor_x" : 254,
-                "anchor_y" : 760,
-                "width" : 515,
-                "height" : 770,
-                "image_full" : "http://mainbundle.app/default_chain.png",
-                "image_thumb" : "http://mainbundle.app/default_chain.png"
-            ],
-            "mask_image" :[
-                "title" : "default_mask",
-                "anchor_x" : 459,
-                "anchor_y" : -35,
-                "width" : 919,
-                "height" : 814,
-                "image_full" : "http://mainbundle.app/default_mask.png",
-                "image_thumb" : "http://mainbundle.app/default_mask.png"
-            ]
-        ]
-        
-        return Locket(locketData: data)
+        return Locket(locketData: gDefaultLocketData)
     }
 }
 
@@ -191,6 +141,7 @@ class UserLocket
 {
     private (set) var title : String
     private (set) var locket : Locket
+    private (set) var locketSkin : LocketSkinEntity
     private (set) var image : ImageAsset
     private (set) var captionText : String
     private (set) var captionFont: String
@@ -200,6 +151,7 @@ class UserLocket
     {
         self.title = data["title"] as! String
         self.locket = Locket(locketData: data["locket"] as! NSDictionary)
+        self.locketSkin = DataManager.sharedManager.locketSkins[0]
         self.image = ImageAsset(assetData: data["image"] as! NSDictionary)
         self.captionText = data["caption_text"] as! String
         self.captionFont = data["caption_font"] as! String
@@ -211,6 +163,11 @@ class UserLocket
         self.locket = locket
     }
     
+    func setLocketSkin(locketSkin: LocketSkinEntity!)
+    {
+        self.locketSkin = locketSkin
+    }
+    
     func getImageFrame() -> CGRect
     {
         let pos = locket.getAnchoredImagePosition(image.frame.origin)
@@ -219,17 +176,6 @@ class UserLocket
     
     class func createDefaultUserLocket() -> UserLocket
     {
-        let data = [
-            "title" : "First Locket",
-            "locket" : Locket.createDefaultLocket().data,
-            "image" : ImageAsset.createDefaultImageAsset().data,
-            "caption_text" : "To cherish forever",
-            "caption_font" : "Optima",
-            "bg_red" : 0.80,
-            "bg_green" : 0.65,
-            "bg_blue" : 1.0
-        ]
-        
-        return UserLocket(data: data)
+        return UserLocket(data: gDefaultUserLocketData)
     }
 }

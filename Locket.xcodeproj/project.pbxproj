@@ -26,6 +26,15 @@
 		AC3D8A411C7AB8C800BB3530 /* SettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3D8A401C7AB8C800BB3530 /* SettingsManager.swift */; };
 		AC3D8A431C7ABED700BB3530 /* UserLocketCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3D8A421C7ABED700BB3530 /* UserLocketCell.swift */; };
 		AC3D8A451C7AC37B00BB3530 /* RightPanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3D8A441C7AC37B00BB3530 /* RightPanelViewController.swift */; };
+		AC7F440A1C95EDE00049DD2B /* LocketModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AC7F44081C95EDE00049DD2B /* LocketModel.xcdatamodeld */; };
+		AC8397851C9612AB0020B943 /* ImageAssetEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC83977D1C9612AB0020B943 /* ImageAssetEntity+CoreDataProperties.swift */; };
+		AC8397861C9612AB0020B943 /* ImageAssetEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC83977E1C9612AB0020B943 /* ImageAssetEntity.swift */; };
+		AC8397871C9612AB0020B943 /* LocketSkinEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC83977F1C9612AB0020B943 /* LocketSkinEntity+CoreDataProperties.swift */; };
+		AC8397881C9612AB0020B943 /* LocketSkinEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8397801C9612AB0020B943 /* LocketSkinEntity.swift */; };
+		AC8397891C9612AB0020B943 /* ColorEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8397811C9612AB0020B943 /* ColorEntity+CoreDataProperties.swift */; };
+		AC83978A1C9612AB0020B943 /* ColorEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8397821C9612AB0020B943 /* ColorEntity.swift */; };
+		AC83978B1C9612AB0020B943 /* UserLocketEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8397831C9612AB0020B943 /* UserLocketEntity+CoreDataProperties.swift */; };
+		AC83978C1C9612AB0020B943 /* UserLocketEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8397841C9612AB0020B943 /* UserLocketEntity.swift */; };
 		AC8CC5FB1C854C5E002789CA /* EditColorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8CC5FA1C854C5E002789CA /* EditColorView.swift */; };
 		AC8CC5FF1C854D2F002789CA /* EditColorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC8CC5FE1C854D2F002789CA /* EditColorView.xib */; };
 		AC8CC6011C855889002789CA /* UIView+LoadFromNIB.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8CC6001C855889002789CA /* UIView+LoadFromNIB.swift */; };
@@ -77,6 +86,15 @@
 		AC3D8A401C7AB8C800BB3530 /* SettingsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsManager.swift; sourceTree = "<group>"; };
 		AC3D8A421C7ABED700BB3530 /* UserLocketCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserLocketCell.swift; sourceTree = "<group>"; };
 		AC3D8A441C7AC37B00BB3530 /* RightPanelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RightPanelViewController.swift; sourceTree = "<group>"; };
+		AC7F44091C95EDE00049DD2B /* LocketModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LocketModel.xcdatamodel; sourceTree = "<group>"; };
+		AC83977D1C9612AB0020B943 /* ImageAssetEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ImageAssetEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		AC83977E1C9612AB0020B943 /* ImageAssetEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageAssetEntity.swift; sourceTree = "<group>"; };
+		AC83977F1C9612AB0020B943 /* LocketSkinEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LocketSkinEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		AC8397801C9612AB0020B943 /* LocketSkinEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocketSkinEntity.swift; sourceTree = "<group>"; };
+		AC8397811C9612AB0020B943 /* ColorEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ColorEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		AC8397821C9612AB0020B943 /* ColorEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorEntity.swift; sourceTree = "<group>"; };
+		AC8397831C9612AB0020B943 /* UserLocketEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserLocketEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		AC8397841C9612AB0020B943 /* UserLocketEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserLocketEntity.swift; sourceTree = "<group>"; };
 		AC8CC5FA1C854C5E002789CA /* EditColorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditColorView.swift; sourceTree = "<group>"; };
 		AC8CC5FE1C854D2F002789CA /* EditColorView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditColorView.xib; sourceTree = "<group>"; };
 		AC8CC6001C855889002789CA /* UIView+LoadFromNIB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+LoadFromNIB.swift"; sourceTree = "<group>"; };
@@ -210,9 +228,49 @@
 			path = default_locket;
 			sourceTree = "<group>";
 		};
+		AC83976A1C9608420020B943 /* DataModel */ = {
+			isa = PBXGroup;
+			children = (
+				AC83977D1C9612AB0020B943 /* ImageAssetEntity+CoreDataProperties.swift */,
+				AC83977E1C9612AB0020B943 /* ImageAssetEntity.swift */,
+				AC83977F1C9612AB0020B943 /* LocketSkinEntity+CoreDataProperties.swift */,
+				AC8397801C9612AB0020B943 /* LocketSkinEntity.swift */,
+				AC8397811C9612AB0020B943 /* ColorEntity+CoreDataProperties.swift */,
+				AC8397821C9612AB0020B943 /* ColorEntity.swift */,
+				AC8397831C9612AB0020B943 /* UserLocketEntity+CoreDataProperties.swift */,
+				AC8397841C9612AB0020B943 /* UserLocketEntity.swift */,
+				17C4E01A198E444000E0B395 /* Locket.swift */,
+				AC7F44081C95EDE00049DD2B /* LocketModel.xcdatamodeld */,
+			);
+			name = DataModel;
+			sourceTree = "<group>";
+		};
+		AC83976B1C9608730020B943 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				ACD182121C75735D00264B2D /* FileManager.swift */,
+				ACD182091C6D97DB00264B2D /* DataManager.swift */,
+				AC3D8A401C7AB8C800BB3530 /* SettingsManager.swift */,
+			);
+			name = Managers;
+			sourceTree = "<group>";
+		};
+		AC83976C1C9608DD0020B943 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				178B5A5C198E7379006414ED /* ContainerViewController.swift */,
+				17C4E022198E504400E0B395 /* SidePanelViewController.swift */,
+				AC3D8A441C7AC37B00BB3530 /* RightPanelViewController.swift */,
+				17C4E01E198E477C00E0B395 /* CenterViewController.swift */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
 		AC8CC5FC1C854CB9002789CA /* User Interfaces */ = {
 			isa = PBXGroup;
 			children = (
+				ACD182071C6D432100264B2D /* LocketCell.swift */,
+				AC3D8A421C7ABED700BB3530 /* UserLocketCell.swift */,
 				179191C81A1D4F0D00072138 /* LaunchScreen.xib */,
 				17C4DFD3198E428000E0B395 /* Main.storyboard */,
 				AC8CC5FA1C854C5E002789CA /* EditColorView.swift */,
@@ -226,21 +284,14 @@
 		AC8CC5FD1C854CE7002789CA /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				AC83976B1C9608730020B943 /* Managers */,
+				AC83976C1C9608DD0020B943 /* View Controllers */,
+				AC83976A1C9608420020B943 /* DataModel */,
 				17C4DFCF198E428000E0B395 /* AppDelegate.swift */,
-				178B5A5C198E7379006414ED /* ContainerViewController.swift */,
-				17C4E022198E504400E0B395 /* SidePanelViewController.swift */,
-				AC3D8A441C7AC37B00BB3530 /* RightPanelViewController.swift */,
-				17C4E01E198E477C00E0B395 /* CenterViewController.swift */,
 				AC3937881C347FB200BEC4B7 /* LocketView.swift */,
 				ACA045181C7BB1CA00C1679C /* LocketPhotoView.swift */,
 				ACF6DA901C81429400B0095A /* MaskView.swift */,
 				AC3D8A341C7A7D3D00BB3530 /* DownloadableImageView.swift */,
-				17C4E01A198E444000E0B395 /* Locket.swift */,
-				ACD182071C6D432100264B2D /* LocketCell.swift */,
-				AC3D8A421C7ABED700BB3530 /* UserLocketCell.swift */,
-				ACD182091C6D97DB00264B2D /* DataManager.swift */,
-				ACD182121C75735D00264B2D /* FileManager.swift */,
-				AC3D8A401C7AB8C800BB3530 /* SettingsManager.swift */,
 				ACDD19941C8F4FCE007D2439 /* Constants.swift */,
 			);
 			name = Source;
@@ -417,11 +468,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AC8397871C9612AB0020B943 /* LocketSkinEntity+CoreDataProperties.swift in Sources */,
 				AC8CC6011C855889002789CA /* UIView+LoadFromNIB.swift in Sources */,
+				AC8397861C9612AB0020B943 /* ImageAssetEntity.swift in Sources */,
 				AC3D8A431C7ABED700BB3530 /* UserLocketCell.swift in Sources */,
 				AC3D8A351C7A7D3D00BB3530 /* DownloadableImageView.swift in Sources */,
+				AC83978B1C9612AB0020B943 /* UserLocketEntity+CoreDataProperties.swift in Sources */,
 				AC3937891C347FB200BEC4B7 /* LocketView.swift in Sources */,
 				ACD1820A1C6D97DB00264B2D /* DataManager.swift in Sources */,
+				AC8397851C9612AB0020B943 /* ImageAssetEntity+CoreDataProperties.swift in Sources */,
 				17C4DFD0198E428000E0B395 /* AppDelegate.swift in Sources */,
 				AC8CC5FB1C854C5E002789CA /* EditColorView.swift in Sources */,
 				ACDD19931C8E580F007D2439 /* UIColor+CIColor.swift in Sources */,
@@ -431,13 +486,18 @@
 				ACD182081C6D432100264B2D /* LocketCell.swift in Sources */,
 				17C4E01B198E444000E0B395 /* Locket.swift in Sources */,
 				178B5A5D198E7379006414ED /* ContainerViewController.swift in Sources */,
+				AC8397891C9612AB0020B943 /* ColorEntity+CoreDataProperties.swift in Sources */,
 				ACD182131C75735D00264B2D /* FileManager.swift in Sources */,
+				AC7F440A1C95EDE00049DD2B /* LocketModel.xcdatamodeld in Sources */,
+				AC83978A1C9612AB0020B943 /* ColorEntity.swift in Sources */,
 				ACDD19951C8F4FCE007D2439 /* Constants.swift in Sources */,
+				AC83978C1C9612AB0020B943 /* UserLocketEntity.swift in Sources */,
 				17C4E023198E504400E0B395 /* SidePanelViewController.swift in Sources */,
 				AC3D8A411C7AB8C800BB3530 /* SettingsManager.swift in Sources */,
 				ACDD19991C8F6BC4007D2439 /* EditTextView.swift in Sources */,
 				17C4E01F198E477C00E0B395 /* CenterViewController.swift in Sources */,
 				ACF6DA941C814BC600B0095A /* UIView+CaptureImage.swift in Sources */,
+				AC8397881C9612AB0020B943 /* LocketSkinEntity.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -488,7 +548,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Kain Osterholt (6LU4Z28QWC)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Kain Osterholt (6LU4Z28QWC)";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -509,6 +570,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "a057fe67-fa26-485b-9ea7-f1a2df43d4ba";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -531,7 +593,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Kain Osterholt (6LU4Z28QWC)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Kain Osterholt (6LU4Z28QWC)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -544,6 +607,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PROVISIONING_PROFILE = "a057fe67-fa26-485b-9ea7-f1a2df43d4ba";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -555,11 +619,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Kain Osterholt (6LU4Z28QWC)";
 				INFOPLIST_FILE = "SlideOutNavigation/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.kainosterholt.Locket;
+				PRODUCT_BUNDLE_IDENTIFIER = Locket;
 				PRODUCT_NAME = Locket;
 			};
 			name = Debug;
@@ -570,11 +634,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Kain Osterholt (6LU4Z28QWC)";
 				INFOPLIST_FILE = "SlideOutNavigation/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.kainosterholt.Locket;
+				PRODUCT_BUNDLE_IDENTIFIER = Locket;
 				PRODUCT_NAME = Locket;
 			};
 			name = Release;
@@ -646,6 +710,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		AC7F44081C95EDE00049DD2B /* LocketModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				AC7F44091C95EDE00049DD2B /* LocketModel.xcdatamodel */,
+			);
+			currentVersion = AC7F44091C95EDE00049DD2B /* LocketModel.xcdatamodel */;
+			path = LocketModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 17C4DFC2198E428000E0B395 /* Project object */;
 }

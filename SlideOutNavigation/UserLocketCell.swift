@@ -14,11 +14,12 @@ class UserLocketCell: UITableViewCell
     @IBOutlet weak var locketThumbnailView: DownloadableImageView!
     @IBOutlet weak var locketTitleLabel: UILabel!
     
-    func configureForLocket(userLocket: UserLocket)
+    func configureForLocket(userLocket: UserLocketEntity)
     {
-        locketTitleLabel.text = userLocket.captionText
-        locketTitleLabel.font = UIFont(name: userLocket.captionFont, size: gTableCellFontSize)
-        locketThumbnailView.loadImageFromUrl(userLocket.locket.getThumbUrl())
-        self.backgroundColor = userLocket.backgroundColor
+        locketTitleLabel.text = userLocket.caption_text
+        locketTitleLabel.textColor = userLocket.caption_color.uicolor
+        locketTitleLabel.font = UIFont(name: userLocket.caption_font, size: gTableCellFontSize)
+        locketThumbnailView.loadImageFromUrl(userLocket.locket_skin.closed_image.thumbURL)
+        self.backgroundColor = userLocket.background_color.uicolor
     }
 }

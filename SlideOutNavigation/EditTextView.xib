@@ -12,7 +12,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="caption" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wpG-LG-xmO">
-                    <rect key="frame" x="60" y="176" width="480" height="45"/>
+                    <rect key="frame" x="60" y="207" width="480" height="45"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="45" id="GdI-kI-Snu"/>
                     </constraints>
@@ -20,7 +20,7 @@
                     <textInputTraits key="textInputTraits"/>
                 </textField>
                 <toolbar hidden="YES" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kwr-tm-Dkt">
-                    <rect key="frame" x="0.0" y="404" width="600" height="44"/>
+                    <rect key="frame" x="0.0" y="346" width="600" height="44"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="FCh-TL-f5T"/>
                     </constraints>
@@ -31,17 +31,23 @@
                     </items>
                 </toolbar>
                 <pickerView hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZTw-v9-eag">
-                    <rect key="frame" x="0.0" y="448" width="600" height="152"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <rect key="frame" x="0.0" y="390" width="600" height="210"/>
+                    <color key="backgroundColor" white="1" alpha="0.70106630067567566" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="152" id="Wlt-hc-eUs"/>
+                        <constraint firstAttribute="height" constant="230" id="Wlt-hc-eUs"/>
                     </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="Wlt-hc-eUs"/>
+                        </mask>
+                    </variation>
                 </pickerView>
             </subviews>
             <constraints>
+                <constraint firstItem="ZTw-v9-eag" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" multiplier="0.35" id="38Y-y8-1ad"/>
                 <constraint firstItem="wpG-LG-xmO" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" multiplier="0.8" id="3F3-n9-cZD"/>
                 <constraint firstItem="ZTw-v9-eag" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="5Zy-fD-4rL"/>
-                <constraint firstItem="wpG-LG-xmO" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="bottom" multiplier="0.33" id="9pR-i7-A42"/>
+                <constraint firstItem="wpG-LG-xmO" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" constant="-70" id="9pR-i7-A42"/>
                 <constraint firstAttribute="bottom" secondItem="ZTw-v9-eag" secondAttribute="bottom" id="AOc-Cu-PaQ"/>
                 <constraint firstItem="ZTw-v9-eag" firstAttribute="top" secondItem="kwr-tm-Dkt" secondAttribute="bottom" id="ENi-hG-BBf"/>
                 <constraint firstItem="kwr-tm-Dkt" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="MNO-hu-H7O"/>

@@ -40,17 +40,17 @@ class CenterViewController: UIViewController, UINavigationControllerDelegate
 
 extension CenterViewController: RightPanelViewControllerDelegate
 {
-    func userLocketSelected(locket: UserLocket) {
+    func userLocketSelected(locket: UserLocketEntity) {
         locketView?.setUserLocket(locket)
     }
 }
 
 extension CenterViewController: SidePanelViewControllerDelegate
 {
-    func locketSelected(locket: Locket)
+    func locketSkinSelected(skin: LocketSkinEntity)
     {
         let userLocket = SettingsManager.sharedManager.selectedLocket!
-        userLocket.setLocket(locket);
+        userLocket.locket_skin = skin
         
         locketView?.setUserLocket(userLocket)
         

@@ -105,7 +105,6 @@ extension ContainerViewController: CenterViewControllerDelegate
         if (leftViewController == nil)
         {
             leftViewController = UIStoryboard.leftViewController()
-            leftViewController?.lockets = DataManager.sharedManager.lockets
             self.addChildSidePanelController(self.leftViewController!)
         }
     }
@@ -113,7 +112,6 @@ extension ContainerViewController: CenterViewControllerDelegate
     func addRightPanelViewController() {
         if (rightViewController == nil) {
             rightViewController = UIStoryboard.rightViewController()
-            rightViewController!.lockets = SettingsManager.sharedManager.userLockets
             
             rightViewController!.delegate = centerViewController
             view.insertSubview(rightViewController!.view, atIndex: 0)

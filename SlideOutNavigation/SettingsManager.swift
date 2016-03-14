@@ -12,20 +12,16 @@ class SettingsManager
 {
     static let sharedManager = SettingsManager()
     
-    private (set) var userLockets : [UserLocket] = Array<UserLocket>()
-    private (set) var selectedLocket : UserLocket?
+    private (set) var userLockets : [UserLocketEntity]! = [UserLocketEntity]()
+    private (set) var selectedLocket : UserLocketEntity!
     
     init()
     {
+        self.userLockets = UserLocketEntity.fetchAll()
         
-    }
-    
-    func loadUserLockets()
-    {
-        // TODO: currently this runs as if it's always the first app open
-        // need to update this load user lockets with core data
-        
-        self.userLockets.append(UserLocket.createDefaultUserLocket())
+        if self.userLockets.count == 0 {
+            self.userLockets.append(UserLocketEntity.createWithData(gDefaultUserLocketData))
+        }
         
         self.selectedLocket = self.userLockets[0]
     }

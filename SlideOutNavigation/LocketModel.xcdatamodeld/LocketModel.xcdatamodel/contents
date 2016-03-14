@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="15B42" minimumToolsVersion="Xcode 7.0">
+    <entity name="ColorEntity" representedClassName=".ColorEntity" syncable="YES">
+        <attribute name="alpha" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="blue" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="green" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="red" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <relationship name="bg_color_owner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UserLocketEntity" inverseName="background_color" inverseEntity="UserLocketEntity" syncable="YES"/>
+        <relationship name="caption_color_owner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UserLocketEntity" inverseName="caption_color" inverseEntity="UserLocketEntity" syncable="YES"/>
+    </entity>
+    <entity name="ImageAssetEntity" representedClassName=".ImageAssetEntity" syncable="YES">
+        <attribute name="anchor_x" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="anchor_y" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="height" attributeType="Float" defaultValueString="0" syncable="YES"/>
+        <attribute name="image_full" attributeType="String" syncable="YES"/>
+        <attribute name="image_thumb" attributeType="String" syncable="YES"/>
+        <attribute name="title" attributeType="String" syncable="YES"/>
+        <attribute name="width" attributeType="Float" defaultValueString="0" syncable="YES"/>
+        <relationship name="chain_image_owner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LocketSkinEntity" inverseName="chain_image" inverseEntity="LocketSkinEntity" syncable="YES"/>
+        <relationship name="closed_image_owner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LocketSkinEntity" inverseName="closed_image" inverseEntity="LocketSkinEntity" syncable="YES"/>
+        <relationship name="mask_image_owner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LocketSkinEntity" inverseName="mask_image" inverseEntity="LocketSkinEntity" syncable="YES"/>
+        <relationship name="open_image_owner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LocketSkinEntity" inverseName="open_image" inverseEntity="LocketSkinEntity" syncable="YES"/>
+        <relationship name="user_locket_image" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UserLocketEntity" inverseName="image" inverseEntity="UserLocketEntity" syncable="YES"/>
+    </entity>
+    <entity name="LocketSkinEntity" representedClassName=".LocketSkinEntity" syncable="YES">
+        <attribute name="title" attributeType="String" syncable="YES"/>
+        <relationship name="chain_image" maxCount="1" deletionRule="Nullify" destinationEntity="ImageAssetEntity" inverseName="chain_image_owner" inverseEntity="ImageAssetEntity" syncable="YES"/>
+        <relationship name="closed_image" maxCount="1" deletionRule="Nullify" destinationEntity="ImageAssetEntity" inverseName="closed_image_owner" inverseEntity="ImageAssetEntity" syncable="YES"/>
+        <relationship name="locket_skin_owner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UserLocketEntity" inverseName="locket_skin" inverseEntity="UserLocketEntity" syncable="YES"/>
+        <relationship name="mask_image" maxCount="1" deletionRule="Nullify" destinationEntity="ImageAssetEntity" inverseName="mask_image_owner" inverseEntity="ImageAssetEntity" syncable="YES"/>
+        <relationship name="open_image" maxCount="1" deletionRule="Nullify" destinationEntity="ImageAssetEntity" inverseName="open_image_owner" inverseEntity="ImageAssetEntity" syncable="YES"/>
+    </entity>
+    <entity name="UserLocketEntity" representedClassName=".UserLocketEntity" syncable="YES">
+        <attribute name="caption_font" attributeType="String" syncable="YES"/>
+        <attribute name="caption_text" attributeType="String" syncable="YES"/>
+        <attribute name="title" attributeType="String" syncable="YES"/>
+        <relationship name="background_color" maxCount="1" deletionRule="Nullify" destinationEntity="ColorEntity" inverseName="bg_color_owner" inverseEntity="ColorEntity" syncable="YES"/>
+        <relationship name="caption_color" maxCount="1" deletionRule="Nullify" destinationEntity="ColorEntity" inverseName="caption_color_owner" inverseEntity="ColorEntity" syncable="YES"/>
+        <relationship name="image" maxCount="1" deletionRule="Nullify" destinationEntity="ImageAssetEntity" inverseName="user_locket_image" inverseEntity="ImageAssetEntity" syncable="YES"/>
+        <relationship name="locket_skin" maxCount="1" deletionRule="Nullify" destinationEntity="LocketSkinEntity" inverseName="locket_skin_owner" inverseEntity="LocketSkinEntity" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="ColorEntity" positionX="-27" positionY="81" width="128" height="135"/>
+        <element name="ImageAssetEntity" positionX="-63" positionY="-18" width="128" height="225"/>
+        <element name="LocketSkinEntity" positionX="-54" positionY="0" width="128" height="135"/>
+        <element name="UserLocketEntity" positionX="-36" positionY="0" width="128" height="150"/>
+    </elements>
+</model>
