@@ -51,6 +51,7 @@ extension CenterViewController: SidePanelViewControllerDelegate
     {
         let userLocket = SettingsManager.sharedManager.selectedLocket!
         userLocket.locket_skin = skin
+        DataManager.sharedManager.saveAllRecords()
         
         locketView?.setUserLocket(userLocket)
         

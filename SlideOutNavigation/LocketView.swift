@@ -118,6 +118,10 @@ class LocketView : UIView
     
     func setPhoto(image: UIImage)
     {
+        let urlStr = "http://file.app/saved_image.png"
+        DataManager.sharedManager.cacheImage(NSURL(string: urlStr)!, image: image)
+        self.userLocket.image.image_full = urlStr
+        self.userLocket.image.image_thumb = urlStr
         photoImageView?.setPhoto(image)
     }
     
@@ -362,8 +366,10 @@ extension LocketView : EditTextViewDelegate
 extension LocketView : LocketPhotoViewDelegate
 {
     func didFinishEditing() {
-        self.userLocket.image.anchor_x = self.photoImageView?.colorImageFrame.origin.x
-        self.userLocket.image.anchor_y = self.photoImageView?.colorImageFrame.origin.y
+        let anchorX = (self.closedLocketImageView?.frame.origin.x)! + CGFloat(self.userLocket.locket_skin.closed_image.anchor_x) - (self.photoImageView?.colorImageFrame.origin.x)!
+        let anchorY = (self.closedLocketImageView?.frame.origin.y)! + CGFloat(self.userLocket.locket_skin.closed_image.anchor_y) - (self.photoImageView?.colorImageFrame.origin.y)!
+        self.userLocket.image.anchor_x = NSNumber(float: Float(anchorX))
+        self.userLocket.image.anchor_y = NSNumber(float: Float(anchorY))
         self.userLocket.image.width = self.photoImageView?.colorImageFrame.width
         self.userLocket.image.height = self.photoImageView?.colorImageFrame.height
         DataManager.sharedManager.saveAllRecords()

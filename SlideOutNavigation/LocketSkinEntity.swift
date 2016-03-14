@@ -71,8 +71,8 @@ class LocketSkinEntity: NSManagedObject {
         let locketPos : CGPoint = getClosedLocketPosition()
         let locketAnchor : CGPoint = closed_image.frame.origin
         
-        let chainPoint : CGPoint = CGPoint( x: locketPos.x + locketAnchor.x - anchor.x, y: locketPos.y + locketAnchor.y - anchor.y )
+        let pos : CGPoint = CGPoint( x: locketPos.x + locketAnchor.x - anchor.x, y: locketPos.y + locketAnchor.y - anchor.y )
         
-        return chainPoint
+        return pos
     }
 }

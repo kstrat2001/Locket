@@ -23,10 +23,10 @@ let gEditAnimationDamping = CGFloat(0.9)
 
 let gDefaultImageAssetData : NSDictionary = [
     "title" : "default",
-    "anchor_x" : 500,
+    "anchor_x" : 621,
     "anchor_y" : 0,
-    "width" : 1000,
-    "height" : 750,
+    "width" : 1242,
+    "height" : 932,
     "image_full" : "http://mainbundle.app/default_image.png",
     "image_thumb" : "http://mainbundle.app/default_image.png"
 ]

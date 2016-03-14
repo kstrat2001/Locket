@@ -42,6 +42,10 @@ class FileManager
                 return path!
             }
         }
+        else if url.host?.compare("file.app") == NSComparisonResult.OrderedSame {
+            
+            return self.docRoot + url.path!
+        }
         
         return self.docRoot + url.path!
     }

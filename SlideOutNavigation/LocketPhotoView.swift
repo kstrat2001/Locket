@@ -191,26 +191,26 @@ class LocketPhotoView : UIView
         var newFrame = CGRect(origin: location, size: colorImageFrame.size)
         
         // clamp the new frame
-        if newFrame.origin.x > maskDownload?.frame.origin.x {
-            newFrame.origin.x = (maskDownload?.frame.origin.x)!
+        if newFrame.origin.x >= (maskDownload?.frame.origin.x)! - 1 {
+            newFrame.origin.x = (maskDownload?.frame.origin.x)! - 1
         }
         
-        if (newFrame.origin.x + colorImageFrame.width) < ((maskDownload?.frame.width)! + (maskDownload?.frame.origin.x)!) {
-            newFrame.origin.x = (maskDownload?.frame.origin.x)! + (maskDownload?.frame.width)! - colorImageFrame.width
+        if (newFrame.origin.x + colorImageFrame.width) <= ((maskDownload?.frame.width)! + (maskDownload?.frame.origin.x)! + 1) {
+            newFrame.origin.x = (maskDownload?.frame.origin.x)! + (maskDownload?.frame.width)! - colorImageFrame.width + 1
         }
         
-        if newFrame.origin.y > maskDownload?.frame.origin.y {
-            newFrame.origin.y = (maskDownload?.frame.origin.y)!
+        if newFrame.origin.y >= (maskDownload?.frame.origin.y)! - 1 {
+            newFrame.origin.y = (maskDownload?.frame.origin.y)! - 1
         }
         
-        if (newFrame.origin.y + colorImageFrame.height) < ((maskDownload?.frame.height)! + (maskDownload?.frame.origin.y)!) {
-            newFrame.origin.y = (maskDownload?.frame.origin.y)! + (maskDownload?.frame.height)! - colorImageFrame.height
+        if (newFrame.origin.y + colorImageFrame.height) <= ((maskDownload?.frame.height)! + (maskDownload?.frame.origin.y)! + 1) {
+            newFrame.origin.y = (maskDownload?.frame.origin.y)! + (maskDownload?.frame.height)! - colorImageFrame.height + 1
         }
         
         colorImageView?.frame = newFrame
         
         if sender.state == UIGestureRecognizerState.Ended {
-            colorImageFrame = (colorImageView?.frame)!
+            colorImageFrame = newFrame
         }
     }
     
