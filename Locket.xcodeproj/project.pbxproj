@@ -269,10 +269,10 @@
 		AC8CC5FC1C854CB9002789CA /* User Interfaces */ = {
 			isa = PBXGroup;
 			children = (
+				17C4DFD3198E428000E0B395 /* Main.storyboard */,
 				ACD182071C6D432100264B2D /* LocketCell.swift */,
 				AC3D8A421C7ABED700BB3530 /* UserLocketCell.swift */,
 				179191C81A1D4F0D00072138 /* LaunchScreen.xib */,
-				17C4DFD3198E428000E0B395 /* Main.storyboard */,
 				AC8CC5FA1C854C5E002789CA /* EditColorView.swift */,
 				AC8CC5FE1C854D2F002789CA /* EditColorView.xib */,
 				ACDD19981C8F6BC4007D2439 /* EditTextView.swift */,

@@ -54,8 +54,10 @@ code_sign_if_enabled() {
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework 'Pods-Locket/Alamofire.framework'
   install_framework 'Pods-Locket/AlamofireImage.framework'
+  install_framework 'Pods-Locket/CryptoSwift.framework'
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework 'Pods-Locket/Alamofire.framework'
   install_framework 'Pods-Locket/AlamofireImage.framework'
+  install_framework 'Pods-Locket/CryptoSwift.framework'
 fi

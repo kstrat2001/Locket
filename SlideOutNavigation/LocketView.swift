@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import Alamofire
+import CryptoSwift
 
 protocol LocketViewDelegate
 {
@@ -69,8 +70,8 @@ class LocketView : UIView
     func setUserLocket(userLocket: UserLocketEntity!)
     {
         self.userLocket = userLocket
-        
         self.loadLocketSkin(userLocket.locket_skin)
+        
         self.loadCaption()
         self.loadBackgroundColor()
     }
@@ -118,10 +119,12 @@ class LocketView : UIView
     
     func setPhoto(image: UIImage)
     {
-        let urlStr = "http://file.app/saved_image.png"
-        DataManager.sharedManager.cacheImage(NSURL(string: urlStr)!, image: image)
-        self.userLocket.image.image_full = urlStr
-        self.userLocket.image.image_thumb = urlStr
+        let imageData = UIImagePNGRepresentation(image)!
+        let md5 = imageData.md5().toHexString()
+        let url = NSURL(string:"http://file.app/" + md5 + ".png")!
+        DataManager.sharedManager.cacheImage(url, image: image)
+        self.userLocket.image.image_full = url.absoluteString
+        self.userLocket.image.image_thumb = url.absoluteString
         photoImageView?.setPhoto(image)
     }
     

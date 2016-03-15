@@ -25,4 +25,11 @@ class SettingsManager
         
         self.selectedLocket = self.userLockets[0]
     }
+    
+    func addNewLocket() -> UserLocketEntity
+    {
+        let locket = UserLocketEntity.createWithData(gDefaultUserLocketData)
+        self.userLockets.append(locket)
+        return locket
+    }
 }

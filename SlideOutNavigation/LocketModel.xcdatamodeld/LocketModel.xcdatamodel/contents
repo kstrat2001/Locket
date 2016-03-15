@@ -26,7 +26,7 @@
         <attribute name="title" attributeType="String" syncable="YES"/>
         <relationship name="chain_image" maxCount="1" deletionRule="Nullify" destinationEntity="ImageAssetEntity" inverseName="chain_image_owner" inverseEntity="ImageAssetEntity" syncable="YES"/>
         <relationship name="closed_image" maxCount="1" deletionRule="Nullify" destinationEntity="ImageAssetEntity" inverseName="closed_image_owner" inverseEntity="ImageAssetEntity" syncable="YES"/>
-        <relationship name="locket_skin_owner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UserLocketEntity" inverseName="locket_skin" inverseEntity="UserLocketEntity" syncable="YES"/>
+        <relationship name="locket_skin_owner" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="UserLocketEntity" inverseName="locket_skin" inverseEntity="UserLocketEntity" syncable="YES"/>
         <relationship name="mask_image" maxCount="1" deletionRule="Nullify" destinationEntity="ImageAssetEntity" inverseName="mask_image_owner" inverseEntity="ImageAssetEntity" syncable="YES"/>
         <relationship name="open_image" maxCount="1" deletionRule="Nullify" destinationEntity="ImageAssetEntity" inverseName="open_image_owner" inverseEntity="ImageAssetEntity" syncable="YES"/>
     </entity>
