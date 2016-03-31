@@ -70,7 +70,28 @@ class LocketView : UIView
     func setUserLocket(userLocket: UserLocketEntity!)
     {
         self.userLocket = userLocket
-        self.loadLocketSkin(userLocket.locket_skin)
+        let skin = self.userLocket.locket_skin
+        
+        self.loadLocketSkin(skin)
+        
+        if photoImageView == nil {
+            photoImageView = LocketPhotoView(frame: self.frame,
+                colorFrame: self.userLocket.getImageFrame(),
+                maskFrame: skin.getMaskFrame(),
+                colorUrl: self.userLocket.image.imageURL,
+                maskUrl: skin.mask_image.imageURL)
+            photoImageView?.delegate = self
+            
+        } else {
+            photoImageView?.loadAssets(
+                self.userLocket.getImageFrame(),
+                maskFrame: skin.getMaskFrame(),
+                colorUrl: self.userLocket.image.imageURL,
+                maskUrl: skin.mask_image.imageURL)
+        }
+        
+        photoImageView?.removeFromSuperview()
+        contentView.insertSubview(photoImageView!, aboveSubview: locketChainImageView!)
         
         self.loadCaption()
         self.loadBackgroundColor()
@@ -81,21 +102,13 @@ class LocketView : UIView
         locketChainImageView?.removeFromSuperview()
         closedLocketImageView?.removeFromSuperview()
         openLocketImageView?.removeFromSuperview()
-        photoImageView?.removeFromSuperview()
+        
+        locketChainImageView = nil
+        closedLocketImageView = nil
+        openLocketImageView = nil
         
         locketChainImageView = loadImage(skin.chain_image.imageURL, size: skin.chain_image.frame.size, position: skin.getChainPosition())
         locketChainImageView?.userInteractionEnabled = false
-        
-        photoImageView = LocketPhotoView(frame: self.frame,
-            colorFrame: self.userLocket.getImageFrame(),
-            maskFrame: skin.getMaskFrame(),
-            colorUrl: self.userLocket.image.imageURL,
-            maskUrl: skin.mask_image.imageURL)
-        
-        photoImageView?.delegate = self
-        
-        contentView.addSubview(photoImageView!)
-        
         openLocketImageView = loadImage(skin.open_image.imageURL, size: skin.open_image.frame.size, position: skin.getOpenLocketPosition())
         closedLocketImageView = loadImage(skin.closed_image.imageURL, size: skin.closed_image.frame.size, position: skin.getClosedLocketPosition())
         
@@ -109,6 +122,12 @@ class LocketView : UIView
         self.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: "viewLongPress:"))
         
         self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "viewTapped:"))
+        
+        photoImageView?.loadAssets(
+            self.userLocket.getImageFrame(),
+            maskFrame: skin.getMaskFrame(),
+            colorUrl: self.userLocket.image.imageURL,
+            maskUrl: skin.mask_image.imageURL)
     }
     
     func loadBackgroundColor()
@@ -119,12 +138,14 @@ class LocketView : UIView
     
     func setPhoto(image: UIImage)
     {
-        let imageData = UIImagePNGRepresentation(image)!
-        let md5 = imageData.md5().toHexString()
-        let url = NSURL(string:"http://file.app/" + md5 + ".png")!
-        DataManager.sharedManager.cacheImage(url, image: image)
+        let url = NSURL(string:"http://file.app/" + image.getUniqueString() + ".png")!
+        if !FileManager.sharedManager.fileIsCached(url) {
+            DataManager.sharedManager.cacheImage(url, image: image)
+        }
+
         self.userLocket.image.image_full = url.absoluteString
         self.userLocket.image.image_thumb = url.absoluteString
+        DataManager.sharedManager.saveAllRecords()
         photoImageView?.setPhoto(image)
     }
     

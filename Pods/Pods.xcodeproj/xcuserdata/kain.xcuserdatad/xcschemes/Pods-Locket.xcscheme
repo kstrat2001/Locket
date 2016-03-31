@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "937C546ACDDEC304596C7C6D"
+               BlueprintIdentifier = "DF3CA13CE43657328D8BD6AA"
                BuildableName = "Pods_Locket.framework"
                BlueprintName = "Pods-Locket"
                ReferencedContainer = "container:Pods.xcodeproj">

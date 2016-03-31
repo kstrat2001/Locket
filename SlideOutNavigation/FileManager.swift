@@ -55,6 +55,11 @@ class FileManager
         return NSFileManager.defaultManager().fileExistsAtPath(path)
     }
     
+    func fileIsCached(url: NSURL) -> Bool
+    {
+        return fileExists(self.urlToFilePath(url))
+    }
+    
     func createDirectoryForFile(filePath: String)
     {
         let dir: NSString = NSString(string: filePath).stringByDeletingLastPathComponent

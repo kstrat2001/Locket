@@ -21,7 +21,7 @@ class LocketSkinEntity: NSManagedObject {
         
         let entity : LocketSkinEntity = NSEntityDescription.insertNewObjectForEntityForName("LocketSkinEntity", inManagedObjectContext: DataManager.sharedManager.managedObjectContext) as! LocketSkinEntity
         
-        entity.title = data["title"] as! String
+        entity.title = data["title"] as? String
         entity.open_image = open_image
         entity.closed_image = closed_image
         entity.chain_image = chain_image

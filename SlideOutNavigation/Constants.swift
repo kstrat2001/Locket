@@ -21,6 +21,8 @@ let gCaptionCenterYMultiplier = CGFloat(0.85)
 let gEditAnimationDuration = NSTimeInterval(0.7)
 let gEditAnimationDamping = CGFloat(0.9)
 
+let gMaxCryptoBufferLength = 1024 * 50
+
 let gDefaultImageAssetData : NSDictionary = [
     "title" : "default",
     "anchor_x" : 621,

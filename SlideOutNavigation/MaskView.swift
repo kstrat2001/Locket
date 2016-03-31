@@ -15,6 +15,7 @@ class MaskView : UIView
     private (set) var mask: CGImage?
     
     private (set) var whiteFullScreenImage: UIImage?
+    private (set) var blackFullScreenImage: UIImage?
     
     private (set) var inverseMask: CGImage?
     private (set) var inverseMaskView: UIView?
@@ -26,9 +27,12 @@ class MaskView : UIView
         inverseMaskView = UIView(frame: frame)
         inverseMaskView?.userInteractionEnabled = false
         
-        let whiteView = UIView(frame: frame)
-        whiteView.backgroundColor = UIColor.whiteColor()
-        whiteFullScreenImage = whiteView.captureImage()
+        let colorView = UIView(frame: frame)
+        colorView.backgroundColor = UIColor.whiteColor()
+        whiteFullScreenImage = colorView.captureImage()
+        
+        colorView.backgroundColor = UIColor.blackColor()
+        blackFullScreenImage = colorView.captureImage()
         
         // Set up the background to mask transparent
         // Any color added to the view will mask in image data
@@ -44,30 +48,32 @@ class MaskView : UIView
         maskViewImage = self.captureImage()
         self.mask = createMask(maskViewImage!)
         
-        let whiteMaskPattern = maskImage(whiteFullScreenImage!)
+        let whiteMaskPattern = applyMaskToImage(whiteFullScreenImage!)
+        
+        // reallocate the inverseMaskView here to clear all previous subviews
+        inverseMaskView = UIView(frame: frame)
+        inverseMaskView?.userInteractionEnabled = false
         
         let whiteMaskPatternImageView = UIImageView(image: whiteMaskPattern)
         whiteMaskPatternImageView.frame = self.frame
         inverseMaskView?.addSubview(whiteMaskPatternImageView)
         inverseMaskView?.backgroundColor = UIColor(white: 0.5, alpha: 1.0)
         let inverseMaskImage = inverseMaskView?.captureImage()
-        inverseMask = createMask(inverseMaskImage!)
+        self.inverseMask = createMask(inverseMaskImage!)
         
         // No longer need the white pattern
         whiteMaskPatternImageView.removeFromSuperview()
 
-        inverseMaskView?.backgroundColor = UIColor.blackColor()
-        let blackImage = inverseMaskView?.captureImage()
-        let blackOverlay = UIImage(CGImage: CGImageCreateWithMask(blackImage!.CGImage, self.inverseMask)!)
+        let blackOverlay = UIImage(CGImage: CGImageCreateWithMask(blackFullScreenImage!.CGImage, self.inverseMask)!)
         inverseMaskView?.backgroundColor = UIColor.clearColor()
         let blackOverlayView = UIImageView(image: blackOverlay)
         blackOverlayView.frame = self.frame
         inverseMaskView?.addSubview(blackOverlayView)
     }
     
-    func maskImage(imageToMask: UIImage) -> UIImage
+    func applyMaskToImage(image: UIImage) -> UIImage
     {
-        return UIImage(CGImage: CGImageCreateWithMask(imageToMask.CGImage, self.mask)!)
+        return UIImage(CGImage: CGImageCreateWithMask(image.CGImage, self.mask)!)
     }
     
     private func createMask(image: UIImage) -> CGImage

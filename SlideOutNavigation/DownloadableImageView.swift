@@ -35,7 +35,6 @@ class DownloadableImageView : UIImageView
         
         if let image = DataManager.sharedManager.getCachedImage(url)
         {
-            print("Successfully loaded cached image at url: \(url)")
             self.image = image
             self.imageLoadedCallback()
         }
@@ -60,7 +59,6 @@ class DownloadableImageView : UIImageView
                 case .Success(let value):
                     if DataManager.sharedManager.cacheImage(self.url, image: value)
                     {
-                        print("successfully cached image at url: \(self.url)")
                         self.imageLoadedCallback()
                     }
                     else

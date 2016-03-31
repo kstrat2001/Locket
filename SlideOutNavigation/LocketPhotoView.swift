@@ -19,8 +19,8 @@ protocol LocketPhotoViewDelegate
 
 class LocketPhotoView : UIView
 {
-    private (set) var colorImageView : DownloadableImageView?
-    private (set) var fullScreenColorImageView: UIView?
+    private (set) var colorDownload : DownloadableImageView?
+    private (set) var fullScreencolorDownload: UIView?
 
     private (set) var maskDownload : DownloadableImageView?
     private (set) var maskImageView : MaskView?
@@ -40,26 +40,15 @@ class LocketPhotoView : UIView
     
     var delegate : LocketPhotoViewDelegate?
     
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
     init(frame: CGRect, colorFrame: CGRect, maskFrame: CGRect, colorUrl: NSURL, maskUrl: NSURL)
     {
         super.init(frame: frame)
         
-        fullScreenColorImageView = UIView(frame: frame)
-        
-        self.maskImageFrame = maskFrame
-        calculateColorImageFrame(colorFrame, maskFrame: maskFrame)
-        
-        colorImageView = DownloadableImageView(frame: colorImageFrame)
-        colorImageView?.delegate = self
-        
-        fullScreenColorImageView?.addSubview(colorImageView!)
-        fullScreenColorImageView?.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: "panHandler:"))
-        fullScreenColorImageView?.addGestureRecognizer(UIPinchGestureRecognizer(target: self, action: "pinchHandler:"))
-        
-        maskImageView = MaskView(frame: frame)
-        
-        maskDownload = DownloadableImageView(frame: maskFrame)
-        maskDownload?.delegate = self
+        fullScreencolorDownload = UIView(frame: frame)
         
         finalImageView = UIImageView(frame: frame)
         
@@ -67,12 +56,44 @@ class LocketPhotoView : UIView
         loadSelectPhotoButton()
         loadTakePhotoButton()
         
-        colorImageView?.loadImageFromUrl(colorUrl)
-        maskDownload?.loadImageFromUrl(maskUrl)
-    }
+        colorDownload = DownloadableImageView(frame: colorImageFrame)
+        colorDownload?.delegate = self
+        
+        fullScreencolorDownload?.addSubview(colorDownload!)
+        fullScreencolorDownload?.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: "panHandler:"))
+        fullScreencolorDownload?.addGestureRecognizer(UIPinchGestureRecognizer(target: self, action: "pinchHandler:"))
+        
+        maskDownload = DownloadableImageView(frame: maskFrame)
+        maskDownload?.delegate = self
 
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+        maskImageView = MaskView(frame: frame)
+        maskImageView?.addSubview(maskDownload!)
+        
+        self.addSubview(fullScreencolorDownload!)
+        self.addSubview(finalImageView!)
+        
+        self.takePhotoButton?.hidden = true
+        self.selectPhotoButton?.hidden = true
+        self.editButton?.hidden = true
+        self.bringSubviewToFront(self.editButton!)
+        self.bringSubviewToFront(self.selectPhotoButton!)
+        self.bringSubviewToFront(self.takePhotoButton!)
+        
+        loadAssets(colorFrame, maskFrame: maskFrame, colorUrl: colorUrl, maskUrl: maskUrl)
+    }
+    
+    func loadAssets(colorFrame: CGRect, maskFrame: CGRect, colorUrl: NSURL, maskUrl: NSURL)
+    {
+        colorImageLoaded = false
+        maskImageLoaded = false
+        
+        self.maskImageFrame = maskFrame
+        calculateColorImageFrame(colorFrame, maskFrame: maskFrame)
+        
+        colorDownload?.frame = colorImageFrame
+        maskDownload?.frame = maskFrame
+        colorDownload?.loadImageFromUrl(colorUrl)
+        maskDownload?.loadImageFromUrl(maskUrl)
     }
     
     func setPhoto(image: UIImage)
@@ -84,8 +105,8 @@ class LocketPhotoView : UIView
         
         calculateColorImageFrame(desiredFrame, maskFrame: self.maskImageFrame)
         
-        colorImageView?.image = image
-        colorImageView?.frame = colorImageFrame
+        colorDownload?.image = image
+        colorDownload?.frame = colorImageFrame
     }
     
     private func calculateColorImageFrame(photoFrame: CGRect, maskFrame: CGRect)
@@ -111,33 +132,24 @@ class LocketPhotoView : UIView
     
     private func setupLayers()
     {
-        maskImageView?.addSubview(maskDownload!)
-        maskImageView?.backgroundColor = UIColor.whiteColor()
+        maskImageView?.inverseMaskView?.removeFromSuperview()
         maskImageView?.updateMask()
+        self.insertSubview((maskImageView?.inverseMaskView)!, aboveSubview: fullScreencolorDownload!)
         
         // Update the final image with the mask image
         self.updateFinalImage()
         
         (maskImageView?.inverseMaskView)!.alpha = 0.0
-        fullScreenColorImageView!.alpha = 0.0
-        self.addSubview(fullScreenColorImageView!)
-        self.addSubview((maskImageView?.inverseMaskView)!)
-        
-        self.addSubview(finalImageView!)
-        
-        self.takePhotoButton?.hidden = true
-        self.selectPhotoButton?.hidden = true
-        self.editButton?.hidden = true
-        self.bringSubviewToFront(self.editButton!)
-        self.bringSubviewToFront(self.selectPhotoButton!)
-        self.bringSubviewToFront(self.takePhotoButton!)
+        fullScreencolorDownload!.alpha = 0.0
     }
     
     private func updateFinalImage()
     {
-        let fullScreenColor = fullScreenColorImageView?.captureImage()
+        fullScreencolorDownload!.alpha = 1.0
+        let fullScreenColor = fullScreencolorDownload?.captureImage()
         
-        finalImageView?.image = maskImageView?.maskImage(fullScreenColor!)
+        finalImageView?.image = maskImageView?.applyMaskToImage(fullScreenColor!)
+        self.bringSubviewToFront(finalImageView!)
     }
     
     func toggleEditMode()
@@ -151,7 +163,7 @@ class LocketPhotoView : UIView
             self.editButton?.hidden = false
             
             UIView.animateWithDuration(gEditAnimationDuration, delay: 0, usingSpringWithDamping: gEditAnimationDamping, initialSpringVelocity: 1, options: UIViewAnimationOptions.CurveEaseOut, animations: {
-                    self.fullScreenColorImageView?.alpha = 1.0
+                    self.fullScreencolorDownload?.alpha = 1.0
                     (self.maskImageView?.inverseMaskView)!.alpha = 1.0
                     let transform = CGAffineTransformMakeTranslation(0, 0)
                     self.takePhotoButton?.transform = transform
@@ -169,7 +181,7 @@ class LocketPhotoView : UIView
             finalImageView!.hidden = false
             
             UIView.animateWithDuration(gEditAnimationDuration, delay: 0, usingSpringWithDamping: gEditAnimationDamping, initialSpringVelocity: 1, options: UIViewAnimationOptions.CurveEaseOut, animations: {
-                    self.fullScreenColorImageView?.alpha = 0.0
+                    self.fullScreencolorDownload?.alpha = 0.0
                     (self.maskImageView?.inverseMaskView)!.alpha = 0.0
                     self.takePhotoButton?.transform = CGAffineTransformMakeTranslation(0, -100)
                     self.selectPhotoButton?.transform = CGAffineTransformMakeTranslation(0, -100)
@@ -185,7 +197,7 @@ class LocketPhotoView : UIView
     
     func panHandler(sender: UIPanGestureRecognizer)
     {
-        let translation = sender.translationInView(fullScreenColorImageView!)
+        let translation = sender.translationInView(fullScreencolorDownload!)
         let location = CGPoint(x: translation.x + colorImageFrame.origin.x, y: translation.y + colorImageFrame.origin.y)
         
         var newFrame = CGRect(origin: location, size: colorImageFrame.size)
@@ -207,7 +219,7 @@ class LocketPhotoView : UIView
             newFrame.origin.y = (maskDownload?.frame.origin.y)! + (maskDownload?.frame.height)! - colorImageFrame.height + 1
         }
         
-        colorImageView?.frame = newFrame
+        colorDownload?.frame = newFrame
         
         if sender.state == UIGestureRecognizerState.Ended {
             colorImageFrame = newFrame
@@ -227,11 +239,11 @@ class LocketPhotoView : UIView
         let newFrame = CGRectMake(newX, newY, newWidth, newHeight)
         
         if newFrame.contains((maskDownload?.frame)!){
-            colorImageView?.frame = newFrame
+            colorDownload?.frame = newFrame
         }
         
         if sender.state == UIGestureRecognizerState.Ended {
-            colorImageFrame = (colorImageView?.frame)!
+            colorImageFrame = (colorDownload?.frame)!
         }
     }
     
@@ -300,17 +312,20 @@ class LocketPhotoView : UIView
 extension LocketPhotoView : DownloadableImageViewDelegate
 {
     func imageLoaded(imageView: DownloadableImageView) {
-        if imageView == colorImageView
+        if imageView == colorDownload
         {
             self.colorImageLoaded = true
+            print("color image loaded")
         }
         else if imageView == maskDownload
         {
             self.maskImageLoaded = true
+            print("mask image loaded")
         }
         
         if self.colorImageLoaded && self.maskImageLoaded
         {
+            print("setting up layers")
             self.setupLayers()
         }
     }
