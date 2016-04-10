@@ -2,7 +2,7 @@
 //  LocketSkinEntity+CoreDataProperties.swift
 //  Locket
 //
-//  Created by Kain Osterholt on 3/14/16.
+//  Created by Kain Osterholt on 4/9/16.
 //  Copyright © 2016 James Frost. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -14,11 +14,13 @@ import CoreData
 
 extension LocketSkinEntity {
 
-    @NSManaged var title: String?
-    @NSManaged var chain_image: ImageAssetEntity
-    @NSManaged var closed_image: ImageAssetEntity
-    @NSManaged var locket_skin_owner: NSSet?
-    @NSManaged var mask_image: ImageAssetEntity
-    @NSManaged var open_image: ImageAssetEntity
+    @NSManaged var title: String!
+    @NSManaged var updated_at: NSDate!
+    @NSManaged var id: NSNumber!
+    @NSManaged var chain_image: ImageAssetEntity!
+    @NSManaged var closed_image: ImageAssetEntity!
+    @NSManaged var locket_skin_owner: NSSet!
+    @NSManaged var mask_image: ImageAssetEntity!
+    @NSManaged var open_image: ImageAssetEntity!
 
 }

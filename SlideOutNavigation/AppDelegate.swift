@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     UILabel.appearanceWhenContainedInInstancesOfClasses([LocketCell.self]).font = gTableCellFont
     
-    DataManager.sharedManager.loadAppData()
+    DataManager.sharedManager.syncAppData()
     
     let containerViewController = ContainerViewController()
     

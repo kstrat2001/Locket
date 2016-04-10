@@ -60,31 +60,47 @@ class DataManager
         return [AnyObject]()
     }
     
+    func fetchWithId(entityName: String, id: NSNumber ) -> [AnyObject]
+    {
+        let fetchRequest = NSFetchRequest()
+        let entityDesc = NSEntityDescription.entityForName(entityName, inManagedObjectContext: self.managedObjectContext)
+        fetchRequest.entity = entityDesc
+        
+        fetchRequest.predicate = NSPredicate(format: "id == %@", id)
+        
+        do {
+            let result = try managedObjectContext.executeFetchRequest(fetchRequest)
+            return result
+        }
+        catch {
+            let fetchError = error as NSError
+            print(fetchError)
+        }
+        
+        return [AnyObject]()
+    }
+    
     func saveAllRecords()
     {
         do {
             try self.managedObjectContext.save()
         } catch {
-            print("Error saving all records: \(error)")
+            print("Error saving records: \(error)")
         }
     }
     
-    func loadAppData()
+    func syncAppData()
     {
-        let skins = self.fetchAll("LocketSkinEntity")
+        LocketSkinEntity.createWithData(gDefaultLocketData)
+        self.downloadLocketSkins()
         
-        // Make sure that the default locket skin is saved as the first locket skin
-        if skins.count == 0 {
-            locketSkins.append(LocketSkinEntity.createWithData(gDefaultLocketData))
-            self.downloadLocketSkins()
-        } else {
-            locketSkins = skins as! [LocketSkinEntity]
-        }
+        let skins = self.fetchAll("LocketSkinEntity")
+        locketSkins = skins as! [LocketSkinEntity]
     }
     
     private func downloadLocketSkins()
     {
-        Alamofire.request(.GET, "http://api.mobilelocket.com/lockets").responseJSON()
+        Alamofire.request(.GET, gServerApiGetLockets).responseJSON()
         {
                 response in
                 
@@ -99,8 +115,11 @@ class DataManager
                     
                     for locket in lockets
                     {
-                        self.locketSkins.append(LocketSkinEntity.createWithData(locket))
+                        LocketSkinEntity.createWithData(locket)
                     }
+                    
+                    let skins = self.fetchAll("LocketSkinEntity")
+                    self.locketSkins = skins as! [LocketSkinEntity]
                 }
         }
     }

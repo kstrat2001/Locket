@@ -113,7 +113,7 @@ class LocketView : UIView
         closedLocketImageView = loadImage(skin.closed_image.imageURL, size: skin.closed_image.frame.size, position: skin.getClosedLocketPosition())
         
         // Init open/closed state
-        closedLocketImageView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action:Selector("locketTapped:")))
+        closedLocketImageView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action:#selector(LocketView.locketTapped(_:))))
         closedLocketImageView?.userInteractionEnabled = true
         
         openLocketImageView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action:"locketTapped:"))

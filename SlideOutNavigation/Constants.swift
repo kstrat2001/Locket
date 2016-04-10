@@ -9,6 +9,10 @@
 import Foundation
 import UIKit
 
+let gServerApiGetLockets = "http://api.mobilelocket.com/lockets"
+
+let gServerDateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+
 let gBGEditViewHeight = CGFloat(160.0)
 
 let gTableCellFontSize = CGFloat(20.0)
@@ -25,6 +29,8 @@ let gMaxCryptoBufferLength = 1024 * 50
 
 let gDefaultImageAssetData : NSDictionary = [
     "title" : "default",
+    "updated_at" : "2016-04-09T22:21:14+0000",
+    "id" : -1,
     "anchor_x" : 621,
     "anchor_y" : 0,
     "width" : 1242,
@@ -35,8 +41,12 @@ let gDefaultImageAssetData : NSDictionary = [
 
 let gDefaultLocketData : NSDictionary = [
     "title" : "default",
+    "updated_at" : "2016-04-09T22:21:14+0000",
+    "id" : 0,
     "open_image" : [
         "title" : "default_open",
+        "updated_at" : "2016-04-09T22:21:14+0000",
+        "id" : -2,
         "anchor_x" : 678,
         "anchor_y" : 35,
         "width" : 1187,
@@ -46,6 +56,8 @@ let gDefaultLocketData : NSDictionary = [
     ],
     "closed_image" :[
         "title" : "default_closed",
+        "updated_at" : "2016-04-09T22:21:14+0000",
+        "id" : -3,
         "anchor_x" : 492,
         "anchor_y" : 36,
         "width" : 1017,
@@ -55,6 +67,8 @@ let gDefaultLocketData : NSDictionary = [
     ],
     "chain_image" :[
         "title" : "default_chain",
+        "updated_at" : "2016-04-09T22:21:14+0000",
+        "id" : -4,
         "anchor_x" : 254,
         "anchor_y" : 760,
         "width" : 515,
@@ -64,6 +78,8 @@ let gDefaultLocketData : NSDictionary = [
     ],
     "mask_image" :[
         "title" : "default_mask",
+        "updated_at" : "2016-04-09T22:21:14+0000",
+        "id" : -5,
         "anchor_x" : 459,
         "anchor_y" : -35,
         "width" : 919,

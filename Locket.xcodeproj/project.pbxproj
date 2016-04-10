@@ -17,6 +17,7 @@
 		17C4E01F198E477C00E0B395 /* CenterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C4E01E198E477C00E0B395 /* CenterViewController.swift */; };
 		17C4E023198E504400E0B395 /* SidePanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C4E022198E504400E0B395 /* SidePanelViewController.swift */; };
 		9A065E7DA39089CB07F20A4C /* Pods_Locket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FC1CE3055E96A4C2B4C8BA7 /* Pods_Locket.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		AC2048721CB9BB7B00E53BE6 /* LocketSkinEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2048711CB9BB7B00E53BE6 /* LocketSkinEntity+CoreDataProperties.swift */; };
 		AC3937891C347FB200BEC4B7 /* LocketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3937881C347FB200BEC4B7 /* LocketView.swift */; };
 		AC3D8A351C7A7D3D00BB3530 /* DownloadableImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3D8A341C7A7D3D00BB3530 /* DownloadableImageView.swift */; };
 		AC3D8A3C1C7AABA200BB3530 /* default_chain.png in Resources */ = {isa = PBXBuildFile; fileRef = AC3D8A381C7AABA200BB3530 /* default_chain.png */; };
@@ -30,7 +31,6 @@
 		AC7F440A1C95EDE00049DD2B /* LocketModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AC7F44081C95EDE00049DD2B /* LocketModel.xcdatamodeld */; };
 		AC8397851C9612AB0020B943 /* ImageAssetEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC83977D1C9612AB0020B943 /* ImageAssetEntity+CoreDataProperties.swift */; };
 		AC8397861C9612AB0020B943 /* ImageAssetEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC83977E1C9612AB0020B943 /* ImageAssetEntity.swift */; };
-		AC8397871C9612AB0020B943 /* LocketSkinEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC83977F1C9612AB0020B943 /* LocketSkinEntity+CoreDataProperties.swift */; };
 		AC8397881C9612AB0020B943 /* LocketSkinEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8397801C9612AB0020B943 /* LocketSkinEntity.swift */; };
 		AC8397891C9612AB0020B943 /* ColorEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8397811C9612AB0020B943 /* ColorEntity+CoreDataProperties.swift */; };
 		AC83978A1C9612AB0020B943 /* ColorEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8397821C9612AB0020B943 /* ColorEntity.swift */; };
@@ -78,6 +78,7 @@
 		17C4E022198E504400E0B395 /* SidePanelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SidePanelViewController.swift; sourceTree = "<group>"; };
 		4FC1CE3055E96A4C2B4C8BA7 /* Pods_Locket.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Locket.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B89266D1817655381BA443B /* Pods-Locket.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Locket.release.xcconfig"; path = "Pods/Target Support Files/Pods-Locket/Pods-Locket.release.xcconfig"; sourceTree = "<group>"; };
+		AC2048711CB9BB7B00E53BE6 /* LocketSkinEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LocketSkinEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		AC3937881C347FB200BEC4B7 /* LocketView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocketView.swift; sourceTree = "<group>"; };
 		AC3D8A341C7A7D3D00BB3530 /* DownloadableImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadableImageView.swift; sourceTree = "<group>"; };
 		AC3D8A381C7AABA200BB3530 /* default_chain.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default_chain.png; sourceTree = "<group>"; };
@@ -91,7 +92,6 @@
 		AC7F44091C95EDE00049DD2B /* LocketModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LocketModel.xcdatamodel; sourceTree = "<group>"; };
 		AC83977D1C9612AB0020B943 /* ImageAssetEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ImageAssetEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		AC83977E1C9612AB0020B943 /* ImageAssetEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageAssetEntity.swift; sourceTree = "<group>"; };
-		AC83977F1C9612AB0020B943 /* LocketSkinEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LocketSkinEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		AC8397801C9612AB0020B943 /* LocketSkinEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocketSkinEntity.swift; sourceTree = "<group>"; };
 		AC8397811C9612AB0020B943 /* ColorEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ColorEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		AC8397821C9612AB0020B943 /* ColorEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorEntity.swift; sourceTree = "<group>"; };
@@ -235,7 +235,7 @@
 			children = (
 				AC83977D1C9612AB0020B943 /* ImageAssetEntity+CoreDataProperties.swift */,
 				AC83977E1C9612AB0020B943 /* ImageAssetEntity.swift */,
-				AC83977F1C9612AB0020B943 /* LocketSkinEntity+CoreDataProperties.swift */,
+				AC2048711CB9BB7B00E53BE6 /* LocketSkinEntity+CoreDataProperties.swift */,
 				AC8397801C9612AB0020B943 /* LocketSkinEntity.swift */,
 				AC8397811C9612AB0020B943 /* ColorEntity+CoreDataProperties.swift */,
 				AC8397821C9612AB0020B943 /* ColorEntity.swift */,
@@ -471,13 +471,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AC8397871C9612AB0020B943 /* LocketSkinEntity+CoreDataProperties.swift in Sources */,
 				AC8CC6011C855889002789CA /* UIView+LoadFromNIB.swift in Sources */,
 				AC8397861C9612AB0020B943 /* ImageAssetEntity.swift in Sources */,
 				AC3D8A431C7ABED700BB3530 /* UserLocketCell.swift in Sources */,
 				AC3D8A351C7A7D3D00BB3530 /* DownloadableImageView.swift in Sources */,
 				AC83978B1C9612AB0020B943 /* UserLocketEntity+CoreDataProperties.swift in Sources */,
 				AC3937891C347FB200BEC4B7 /* LocketView.swift in Sources */,
+				AC2048721CB9BB7B00E53BE6 /* LocketSkinEntity+CoreDataProperties.swift in Sources */,
 				ACD1820A1C6D97DB00264B2D /* DataManager.swift in Sources */,
 				AC8397851C9612AB0020B943 /* ImageAssetEntity+CoreDataProperties.swift in Sources */,
 				17C4DFD0198E428000E0B395 /* AppDelegate.swift in Sources */,
