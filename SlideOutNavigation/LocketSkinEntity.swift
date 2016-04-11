@@ -14,11 +14,7 @@ class LocketSkinEntity: NSManagedObject {
 
     class func createWithData(data: NSDictionary) -> LocketSkinEntity
     {
-        let open_image = ImageAssetEntity.createWithData(data["open_image"] as! NSDictionary)
-        let closed_image = ImageAssetEntity.createWithData(data["closed_image"] as! NSDictionary)
-        let chain_image = ImageAssetEntity.createWithData(data["chain_image"] as! NSDictionary)
-        let mask_image = ImageAssetEntity.createWithData(data["mask_image"] as! NSDictionary)
-        
+        print(data["title"] as! String)
         let id = data["id"] as? NSNumber
         
         let formatter = NSDateFormatter();
@@ -40,16 +36,25 @@ class LocketSkinEntity: NSManagedObject {
                 return entity;
             }
         } else {
+            
+            let open_image = ImageAssetEntity.createWithData(data["open_image"] as! NSDictionary)
+            let closed_image = ImageAssetEntity.createWithData(data["closed_image"] as! NSDictionary)
+            let chain_image = ImageAssetEntity.createWithData(data["chain_image"] as! NSDictionary)
+            let mask_image = ImageAssetEntity.createWithData(data["mask_image"] as! NSDictionary)
+            
             entity = NSEntityDescription.insertNewObjectForEntityForName("LocketSkinEntity", inManagedObjectContext: DataManager.sharedManager.managedObjectContext) as! LocketSkinEntity
+            
+            entity.open_image = open_image
+            entity.closed_image = closed_image
+            entity.chain_image = chain_image
+            entity.mask_image = mask_image
         }
         
         entity.id = id
         entity.title = data["title"] as? String
         entity.updated_at = updatedDate!
-        entity.open_image = open_image
-        entity.closed_image = closed_image
-        entity.chain_image = chain_image
-        entity.mask_image = mask_image
+        
+        print(entity.title)
         
         do {
             try DataManager.sharedManager.managedObjectContext.save()

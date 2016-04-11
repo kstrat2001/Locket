@@ -50,7 +50,7 @@ class DownloadableImageView : UIImageView
             self.url,
             placeholderImage: nil,
             filter: nil,
-            imageTransition: .CrossDissolve(0.5),
+            imageTransition: .None,
             completion: { response in
                 switch response.result
                 {
@@ -59,6 +59,7 @@ class DownloadableImageView : UIImageView
                 case .Success(let value):
                     if DataManager.sharedManager.cacheImage(self.url, image: value)
                     {
+                        self.image = value
                         self.imageLoadedCallback()
                     }
                     else

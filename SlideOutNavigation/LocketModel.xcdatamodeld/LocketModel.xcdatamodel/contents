@@ -18,11 +18,11 @@
         <attribute name="title" attributeType="String" syncable="YES"/>
         <attribute name="updated_at" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="width" attributeType="Float" defaultValueString="0" syncable="YES"/>
-        <relationship name="chain_image_owner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LocketSkinEntity" inverseName="chain_image" inverseEntity="LocketSkinEntity" syncable="YES"/>
-        <relationship name="closed_image_owner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LocketSkinEntity" inverseName="closed_image" inverseEntity="LocketSkinEntity" syncable="YES"/>
-        <relationship name="mask_image_owner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LocketSkinEntity" inverseName="mask_image" inverseEntity="LocketSkinEntity" syncable="YES"/>
-        <relationship name="open_image_owner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LocketSkinEntity" inverseName="open_image" inverseEntity="LocketSkinEntity" syncable="YES"/>
-        <relationship name="user_locket_image" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UserLocketEntity" inverseName="image" inverseEntity="UserLocketEntity" syncable="YES"/>
+        <relationship name="chain_image_owner" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="LocketSkinEntity" inverseName="chain_image" inverseEntity="LocketSkinEntity" syncable="YES"/>
+        <relationship name="closed_image_owner" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="LocketSkinEntity" inverseName="closed_image" inverseEntity="LocketSkinEntity" syncable="YES"/>
+        <relationship name="mask_image_owner" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="LocketSkinEntity" inverseName="mask_image" inverseEntity="LocketSkinEntity" syncable="YES"/>
+        <relationship name="open_image_owner" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="LocketSkinEntity" inverseName="open_image" inverseEntity="LocketSkinEntity" syncable="YES"/>
+        <relationship name="user_locket_image" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="UserLocketEntity" inverseName="image" inverseEntity="UserLocketEntity" syncable="YES"/>
     </entity>
     <entity name="LocketSkinEntity" representedClassName=".LocketSkinEntity" syncable="YES">
         <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>

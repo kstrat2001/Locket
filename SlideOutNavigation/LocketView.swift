@@ -122,12 +122,6 @@ class LocketView : UIView
         self.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: "viewLongPress:"))
         
         self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "viewTapped:"))
-        
-        photoImageView?.loadAssets(
-            self.userLocket.getImageFrame(),
-            maskFrame: skin.getMaskFrame(),
-            colorUrl: self.userLocket.image.imageURL,
-            maskUrl: skin.mask_image.imageURL)
     }
     
     func loadBackgroundColor()

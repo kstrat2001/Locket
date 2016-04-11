@@ -26,14 +26,6 @@ class ImageAssetEntity: NSManagedObject {
     }
     
     class func createWithData(data: NSDictionary) -> ImageAssetEntity {
-
-        
-        let screenWidth : Float = Float(UIScreen.mainScreen().bounds.width)
-        let scaleFactor : Float = screenWidth / 1242
-        let width: NSNumber = NSNumber(float: scaleFactor * (data["width"] as! Float))
-        let height: NSNumber = NSNumber(float: scaleFactor * (data["height"] as! Float))
-        let anchorX: NSNumber = NSNumber(float: scaleFactor * (data["anchor_x"] as! Float))
-        let anchorY: NSNumber = NSNumber(float: scaleFactor * (data["anchor_y"] as! Float))
         
         let id = data["id"] as? NSNumber
         
@@ -59,6 +51,13 @@ class ImageAssetEntity: NSManagedObject {
             entity = NSEntityDescription.insertNewObjectForEntityForName("ImageAssetEntity", inManagedObjectContext: DataManager.sharedManager.managedObjectContext) as! ImageAssetEntity
         }
         
+        let screenWidth : Float = Float(UIScreen.mainScreen().bounds.width)
+        let scaleFactor : Float = screenWidth / 1242
+        let width: NSNumber = NSNumber(float: scaleFactor * (data["width"] as! Float))
+        let height: NSNumber = NSNumber(float: scaleFactor * (data["height"] as! Float))
+        let anchorX: NSNumber = NSNumber(float: scaleFactor * (data["anchor_x"] as! Float))
+        let anchorY: NSNumber = NSNumber(float: scaleFactor * (data["anchor_y"] as! Float))
+        
         entity.title = data["title"] as! String
         entity.id = id
         entity.updated_at = updatedDate
@@ -69,7 +68,12 @@ class ImageAssetEntity: NSManagedObject {
         entity.image_full = data["image_full"] as! String
         entity.image_thumb = data["image_thumb"] as! String
         
-        DataManager.sharedManager.saveAllRecords()
+        do {
+            try DataManager.sharedManager.managedObjectContext.save()
+        }
+        catch {
+            print("error saving Image Asset record, error: \(error)")
+        }
         
         return entity
     }
