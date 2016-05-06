@@ -30,6 +30,31 @@ class SettingsManager
     {
         let locket = UserLocketEntity.createWithData(gDefaultUserLocketData)
         self.userLockets.append(locket)
+        selectedLocket = locket
         return locket
+    }
+    
+    func selectUserLocket(index: Int) -> UserLocketEntity {
+        selectedLocket = self.userLockets[index]
+        return selectedLocket;
+    }
+    
+    func isUserLocketSelected(index: Int) -> Bool {
+        return selectedLocket == self.userLockets[index]
+    }
+    
+    func deleteUserLocket(index: Int) {
+        DataManager.sharedManager.deleteRecord(self.userLockets[index])
+        self.userLockets = UserLocketEntity.fetchAll()
+    }
+    
+    func locketSkinInUse(locketSkin: LocketSkinEntity) -> Bool {
+        for userLocket in self.userLockets {
+            if userLocket.locket_skin == locketSkin {
+                return true;
+            }
+        }
+        
+        return false;
     }
 }

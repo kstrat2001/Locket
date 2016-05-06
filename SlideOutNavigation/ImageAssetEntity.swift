@@ -27,7 +27,9 @@ class ImageAssetEntity: NSManagedObject {
     
     class func createWithData(data: NSDictionary) -> ImageAssetEntity {
         
+        let entityTitleStr = data["title"] as! String
         let id = data["id"] as? NSNumber
+        print("Creating ImageAssetEntity \(entityTitleStr) with id: \(id)")
         
         let formatter = NSDateFormatter();
         formatter.dateFormat = gServerDateFormat
@@ -41,10 +43,15 @@ class ImageAssetEntity: NSManagedObject {
         
         var entity : ImageAssetEntity
         
-        if entities.count > 0 {
+        // If the id is -1 which is the default image we want to make sure
+        // to create a new record instead of re-using the same entity
+        if id != -1 && entities.count > 0 {
             entity = entities[0] as! ImageAssetEntity
+            let entityDateStr = formatter.stringFromDate(entity.updated_at)
+            print("saved entity has last updated date: \(entityDateStr)")
             if entity.updated_at.compare(updatedDate!) != NSComparisonResult.OrderedAscending {
                 // The updated date is not more recent.  We should not update this record
+                print("saved entity is up to date. returning...")
                 return entity;
             }
         } else {
@@ -58,7 +65,7 @@ class ImageAssetEntity: NSManagedObject {
         let anchorX: NSNumber = NSNumber(float: scaleFactor * (data["anchor_x"] as! Float))
         let anchorY: NSNumber = NSNumber(float: scaleFactor * (data["anchor_y"] as! Float))
         
-        entity.title = data["title"] as! String
+        entity.title = entityTitleStr
         entity.id = id
         entity.updated_at = updatedDate
         entity.anchor_x = anchorX
@@ -67,6 +74,15 @@ class ImageAssetEntity: NSManagedObject {
         entity.height = height
         entity.image_full = data["image_full"] as! String
         entity.image_thumb = data["image_thumb"] as! String
+        
+        // If we are updating or downloading this image for the first time
+        // the saved data on the device needs to be purged in order to download the new asset
+        if entity.image_full.containsString(gMainBundleHost) == false &&
+            entity.image_full.containsString(gFileHost) == false &&
+            id != -1 {
+            DataManager.sharedManager.deleteCachedFile(NSURL(string: entity.image_full)!)
+            DataManager.sharedManager.deleteCachedFile(NSURL(string: entity.image_thumb)!)
+        }
         
         do {
             try DataManager.sharedManager.managedObjectContext.save()

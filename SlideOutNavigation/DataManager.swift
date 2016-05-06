@@ -92,36 +92,50 @@ class DataManager
     func syncAppData()
     {
         LocketSkinEntity.createWithData(gDefaultLocketData)
-        self.downloadLocketSkins()
         
-        let skins = self.fetchAll("LocketSkinEntity")
-        locketSkins = skins as! [LocketSkinEntity]
+        locketSkins = self.fetchAll("LocketSkinEntity") as! [LocketSkinEntity]
+        
+        self.downloadLocketSkins()
     }
     
     private func downloadLocketSkins()
     {
         Alamofire.request(.GET, gServerApiGetLockets).responseJSON()
         {
-                response in
-                
-                switch response.result
-                {
-                case .Failure(let error):
-                    print("Request failed with error: \(error)")
-                case .Success(let JSON):
-                    let response = JSON as! NSDictionary
+            response in
+            
+            switch response.result
+            {
+            case .Failure(let error):
+                print("Request failed with error: \(error)")
+            case .Success(let JSON):
+                let response = JSON as! NSDictionary
 
-                    let lockets = response["lockets"] as! Array<NSDictionary>
-                    
-                    for locket in lockets
-                    {
-                        LocketSkinEntity.createWithData(locket)
-                    }
-                    
-                    let skins = self.fetchAll("LocketSkinEntity")
-                    self.locketSkins = skins as! [LocketSkinEntity]
+                let lockets = response["lockets"] as! Array<NSDictionary>
+                
+                var ids = [ NSNumber : NSNumber? ]()
+                ids[gDefaultLocketSkinID] = gDefaultLocketSkinID
+                
+                for locket in lockets {
+                    ids[locket["id"] as! NSNumber] = locket["id"] as? NSNumber
+                    LocketSkinEntity.createWithData(locket)
                 }
+                
+                for skin in self.locketSkins {
+                    if ids[skin.id] == nil && !SettingsManager.sharedManager.locketSkinInUse(skin) {
+                        print("Deleting deleted skin: \(skin.title)")
+                        self.deleteRecord(skin)
+                    }
+                }
+                
+                self.locketSkins = self.fetchAll("LocketSkinEntity") as! [LocketSkinEntity]
+            }
         }
+    }
+    
+    func deleteRecord(record: NSManagedObject) {
+        self.managedObjectContext.deleteObject(record)
+        self.saveAllRecords()
     }
     
     func cacheImage(url: NSURL, image: UIImage) -> Bool
@@ -145,5 +159,14 @@ class DataManager
         }
         
         return nil
+    }
+    
+    func deleteCachedFile(url: NSURL)
+    {
+        let path = FileManager.sharedManager.urlToFilePath(url)
+        
+        if FileManager.sharedManager.fileExists(path) {
+            FileManager.sharedManager.deleteFile(path)
+        }
     }
 }

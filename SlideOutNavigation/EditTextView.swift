@@ -67,7 +67,7 @@ class EditTextView : UIView, UITextFieldDelegate {
         self.colorEditView.transform = CGAffineTransformMakeTranslation(0, self.colorEditView.frame.height)
         
         textField.delegate = self
-        textField.addTarget(self, action: "textFieldChanged", forControlEvents: UIControlEvents.EditingChanged)
+        textField.addTarget(self, action: #selector(EditTextView.textFieldChanged), forControlEvents: UIControlEvents.EditingChanged)
         
         pickerView.dataSource = self
         pickerView.delegate = self
@@ -108,7 +108,7 @@ class EditTextView : UIView, UITextFieldDelegate {
     private func transitionToFontEditing()
     {
         textField.resignFirstResponder()
-        self.pickerDoneItem.action = "doneSelectingFont"
+        self.pickerDoneItem.action = #selector(EditTextView.doneSelectingFont)
         UIView.animateWithDuration(gEditAnimationDuration, delay: 0, usingSpringWithDamping: gEditAnimationDamping, initialSpringVelocity: 1, options: UIViewAnimationOptions.CurveEaseOut, animations: {
                 self.textField.alpha = 0.0
                 let transform = CGAffineTransformMakeTranslation(0, 0)
@@ -127,7 +127,7 @@ class EditTextView : UIView, UITextFieldDelegate {
     
     func transitionToColorEditing()
     {
-        self.pickerDoneItem.action = "doneSelectingColor"
+        self.pickerDoneItem.action = #selector(EditTextView.doneSelectingColor)
         UIView.animateWithDuration(gEditAnimationDuration, delay: 0, usingSpringWithDamping: gEditAnimationDamping, initialSpringVelocity: 1, options: UIViewAnimationOptions.CurveEaseOut, animations: {
                 self.pickerView.transform = CGAffineTransformMakeTranslation(0, self.pickerView.frame.height + self.pickerToolbar.frame.height)
                 self.colorEditView.transform = CGAffineTransformMakeTranslation(0, 0)

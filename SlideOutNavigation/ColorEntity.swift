@@ -16,6 +16,10 @@ class ColorEntity: NSManagedObject {
         return UIColor(red: CGFloat(red), green: CGFloat(green), blue: CGFloat(blue), alpha: CGFloat(alpha))
     }
     
+    var inverse : UIColor {
+        return UIColor(red: CGFloat(1.0 - CGFloat(red)), green: CGFloat(1.0 - CGFloat(green)), blue: CGFloat(1.0 - CGFloat(blue)), alpha: CGFloat(alpha))
+    }
+    
     class func createWithData(data: NSDictionary) -> ColorEntity
     {
         let entity : ColorEntity = NSEntityDescription.insertNewObjectForEntityForName("ColorEntity", inManagedObjectContext: DataManager.sharedManager.managedObjectContext) as! ColorEntity

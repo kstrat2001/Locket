@@ -28,7 +28,7 @@ class FileManager
     
     func urlToFilePath( url : NSURL ) -> String
     {
-        if url.host?.compare("mainbundle.app") == NSComparisonResult.OrderedSame
+        if url.host?.compare(gMainBundleHost) == NSComparisonResult.OrderedSame
         {
             let resource = NSString(string: url.path!).stringByDeletingPathExtension.stringByReplacingOccurrencesOfString("/", withString: "")
             let ext = NSString(string: url.path!).pathExtension
@@ -42,7 +42,7 @@ class FileManager
                 return path!
             }
         }
-        else if url.host?.compare("file.app") == NSComparisonResult.OrderedSame {
+        else if url.host?.compare(gFileHost) == NSComparisonResult.OrderedSame {
             
             return self.docRoot + url.path!
         }

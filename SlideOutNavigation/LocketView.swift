@@ -116,12 +116,12 @@ class LocketView : UIView
         closedLocketImageView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action:#selector(LocketView.locketTapped(_:))))
         closedLocketImageView?.userInteractionEnabled = true
         
-        openLocketImageView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action:"locketTapped:"))
+        openLocketImageView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action:#selector(LocketView.locketTapped(_:))))
         self.openLocketImageView?.alpha = 0.0
         
-        self.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: "viewLongPress:"))
+        self.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(LocketView.viewLongPress(_:))))
         
-        self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "viewTapped:"))
+        self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(LocketView.viewTapped(_:))))
     }
     
     func loadBackgroundColor()
@@ -132,7 +132,7 @@ class LocketView : UIView
     
     func setPhoto(image: UIImage)
     {
-        let url = NSURL(string:"http://file.app/" + image.getUniqueString() + ".png")!
+        let url = NSURL(string:"http://" + gFileHost + "/" + image.getUniqueString() + ".png")!
         if !FileManager.sharedManager.fileIsCached(url) {
             DataManager.sharedManager.cacheImage(url, image: image)
         }

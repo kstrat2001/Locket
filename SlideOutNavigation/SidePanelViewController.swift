@@ -64,5 +64,4 @@ extension SidePanelViewController: UITableViewDelegate {
     let selectedEntity = DataManager.sharedManager.locketSkins[indexPath.row]
     delegate?.locketSkinSelected(selectedEntity)
   }
-  
 }

@@ -9,9 +9,12 @@
 import Foundation
 import UIKit
 
-let gServerApiGetLockets = "http://api.mobilelocket.com/lockets"
-
+let gServerApiGetLockets = "http://api.mobilelocket.com/lockets?workflow_state=accepted"
 let gServerDateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+let gMainBundleHost = "mainbundle.app"
+let gFileHost = "file.app"
+
+let gDefaultLocketSkinID = -1
 
 let gBGEditViewHeight = CGFloat(160.0)
 
@@ -40,9 +43,9 @@ let gDefaultImageAssetData : NSDictionary = [
 ]
 
 let gDefaultLocketData : NSDictionary = [
-    "title" : "default",
+    "title" : "Classic Red",
     "updated_at" : "2016-04-09T22:21:14+0000",
-    "id" : 0,
+    "id" : gDefaultLocketSkinID,
     "open_image" : [
         "title" : "default_open",
         "updated_at" : "2016-04-09T22:21:14+0000",
@@ -95,8 +98,8 @@ let gDefaultUserLocketData = [
     "image" : gDefaultImageAssetData,
     "caption_text" : "To cherish forever",
     "caption_font" : "Optima",
-    "bg_color" : [ "red" : 0.80,
-        "green" : 0.65,
+    "bg_color" : [ "red" : 0.90,
+        "green" : 0.80,
         "blue" : 1.0,
         "alpha" : 1.0 ],
     "caption_color" : [ "red" : 0.0,

@@ -50,9 +50,9 @@ class EditColorView : UIView {
     
     func initEvents()
     {
-        self.redSlider.addTarget(self, action: "colorChanged:", forControlEvents: UIControlEvents.ValueChanged)
-        self.greenSlider.addTarget(self, action: "colorChanged:", forControlEvents: UIControlEvents.ValueChanged)
-        self.blueSlider.addTarget(self, action: "colorChanged:", forControlEvents: UIControlEvents.ValueChanged)
+        self.redSlider.addTarget(self, action: #selector(EditColorView.colorChanged(_:)), forControlEvents: UIControlEvents.ValueChanged)
+        self.greenSlider.addTarget(self, action: #selector(EditColorView.colorChanged(_:)), forControlEvents: UIControlEvents.ValueChanged)
+        self.blueSlider.addTarget(self, action: #selector(EditColorView.colorChanged(_:)), forControlEvents: UIControlEvents.ValueChanged)
     }
     
     func colorChanged(slider: UISlider)

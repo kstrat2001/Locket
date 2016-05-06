@@ -60,8 +60,8 @@ class LocketPhotoView : UIView
         colorDownload?.delegate = self
         
         fullScreencolorDownload?.addSubview(colorDownload!)
-        fullScreencolorDownload?.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: "panHandler:"))
-        fullScreencolorDownload?.addGestureRecognizer(UIPinchGestureRecognizer(target: self, action: "pinchHandler:"))
+        fullScreencolorDownload?.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(LocketPhotoView.panHandler(_:))))
+        fullScreencolorDownload?.addGestureRecognizer(UIPinchGestureRecognizer(target: self, action: #selector(LocketPhotoView.pinchHandler(_:))))
         
         maskDownload = DownloadableImageView(frame: maskFrame)
         maskDownload?.delegate = self
@@ -290,7 +290,7 @@ class LocketPhotoView : UIView
         button.setTitle(title, forState: UIControlState.Normal)
         button.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
         
-        button.addTarget(self, action: "buttonPressed:", forControlEvents: UIControlEvents.TouchUpInside)
+        button.addTarget(self, action: #selector(LocketPhotoView.buttonPressed(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         
         return button
     }
