@@ -21,19 +21,10 @@ class DownloadableImageView : UIImageView
     
     var delegate : DownloadableImageViewDelegate?
     
-    class func createWithUrl(url: NSURL) -> DownloadableImageView
-    {
-        let imgView = DownloadableImageView()
-        imgView.loadImageFromUrl(url)
-        
-        return imgView
-    }
-    
-    func loadImageFromUrl(url: NSURL)
-    {
+    func loadImageFromUrl(url: NSURL, orientation: UIImageOrientation) {
         self.url = url
         
-        if let image = DataManager.sharedManager.getCachedImage(url)
+        if let image = DataManager.sharedManager.getCachedImage(url, orientation: orientation)
         {
             self.image = image
             self.imageLoadedCallback()
@@ -42,6 +33,11 @@ class DownloadableImageView : UIImageView
         {
             self.downloadImage()
         }
+    }
+    
+    func loadImageFromUrl(url: NSURL)
+    {
+        self.loadImageFromUrl(url, orientation: UIImageOrientation.Up)
     }
     
     private func downloadImage()

@@ -12,8 +12,12 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
   
   var window: UIWindow?
+    var tracker: GAITracker?
   
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    
+    AnalyticsManager.sharedManager.initTracker("Locket", trackingId: gGAITrackingID)
+    AnalyticsManager.sharedManager.appEvent("App Launched!")
     
     window = UIWindow(frame: UIScreen.mainScreen().bounds)
     

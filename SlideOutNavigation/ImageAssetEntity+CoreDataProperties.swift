@@ -21,6 +21,7 @@ extension ImageAssetEntity {
     @NSManaged var image_thumb: String!
     @NSManaged var title: String!
     @NSManaged var id: NSNumber!
+    @NSManaged var orientation: NSNumber!
     @NSManaged var updated_at: NSDate!
     @NSManaged var width: NSNumber!
     @NSManaged var closed_image_owner: LocketSkinEntity?

@@ -62,6 +62,7 @@ extension SidePanelViewController: UITableViewDelegate {
 
   func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
     let selectedEntity = DataManager.sharedManager.locketSkins[indexPath.row]
+    AnalyticsManager.sharedManager.locketSkinSelectAction("Selected skin: \(selectedEntity.title)")
     delegate?.locketSkinSelected(selectedEntity)
   }
 }

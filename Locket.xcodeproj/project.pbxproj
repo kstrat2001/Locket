@@ -27,6 +27,8 @@
 		AC3D8A411C7AB8C800BB3530 /* SettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3D8A401C7AB8C800BB3530 /* SettingsManager.swift */; };
 		AC3D8A431C7ABED700BB3530 /* UserLocketCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3D8A421C7ABED700BB3530 /* UserLocketCell.swift */; };
 		AC3D8A451C7AC37B00BB3530 /* RightPanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3D8A441C7AC37B00BB3530 /* RightPanelViewController.swift */; };
+		AC6DB83A1CDE7CCF0098F271 /* UserEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6DB8381CDE7CCF0098F271 /* UserEntity+CoreDataProperties.swift */; };
+		AC6DB83B1CDE7CCF0098F271 /* UserEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6DB8391CDE7CCF0098F271 /* UserEntity.swift */; };
 		AC78CC501CA1028F00973756 /* UIImage+Crypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC78CC4F1CA1028F00973756 /* UIImage+Crypto.swift */; };
 		AC7F440A1C95EDE00049DD2B /* LocketModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AC7F44081C95EDE00049DD2B /* LocketModel.xcdatamodeld */; };
 		AC8397851C9612AB0020B943 /* ImageAssetEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC83977D1C9612AB0020B943 /* ImageAssetEntity+CoreDataProperties.swift */; };
@@ -41,6 +43,8 @@
 		AC8CC6011C855889002789CA /* UIView+LoadFromNIB.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8CC6001C855889002789CA /* UIView+LoadFromNIB.swift */; };
 		ACA045191C7BB1CA00C1679C /* LocketPhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA045181C7BB1CA00C1679C /* LocketPhotoView.swift */; };
 		ACA0451B1C7BBB1D00C1679C /* default_image.png in Resources */ = {isa = PBXBuildFile; fileRef = ACA0451A1C7BBB1C00C1679C /* default_image.png */; };
+		ACCBA6DD1CFA25E30022DE3F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = ACCBA6DC1CFA25E30022DE3F /* GoogleService-Info.plist */; };
+		ACCBA6DE1CFA25EC0022DE3F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = ACCBA6DC1CFA25E30022DE3F /* GoogleService-Info.plist */; };
 		ACD182081C6D432100264B2D /* LocketCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD182071C6D432100264B2D /* LocketCell.swift */; };
 		ACD1820A1C6D97DB00264B2D /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD182091C6D97DB00264B2D /* DataManager.swift */; };
 		ACD182131C75735D00264B2D /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD182121C75735D00264B2D /* FileManager.swift */; };
@@ -48,6 +52,7 @@
 		ACDD19951C8F4FCE007D2439 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDD19941C8F4FCE007D2439 /* Constants.swift */; };
 		ACDD19971C8F6B0B007D2439 /* EditTextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = ACDD19961C8F6B0B007D2439 /* EditTextView.xib */; };
 		ACDD19991C8F6BC4007D2439 /* EditTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDD19981C8F6BC4007D2439 /* EditTextView.swift */; };
+		ACE514491CFA360A00BE5172 /* AnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE514481CFA360A00BE5172 /* AnalyticsManager.swift */; };
 		ACF6DA911C81429400B0095A /* MaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF6DA901C81429400B0095A /* MaskView.swift */; };
 		ACF6DA941C814BC600B0095A /* UIView+CaptureImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF6DA931C814BC600B0095A /* UIView+CaptureImage.swift */; };
 /* End PBXBuildFile section */
@@ -88,6 +93,8 @@
 		AC3D8A401C7AB8C800BB3530 /* SettingsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsManager.swift; sourceTree = "<group>"; };
 		AC3D8A421C7ABED700BB3530 /* UserLocketCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserLocketCell.swift; sourceTree = "<group>"; };
 		AC3D8A441C7AC37B00BB3530 /* RightPanelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RightPanelViewController.swift; sourceTree = "<group>"; };
+		AC6DB8381CDE7CCF0098F271 /* UserEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		AC6DB8391CDE7CCF0098F271 /* UserEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserEntity.swift; sourceTree = "<group>"; };
 		AC78CC4F1CA1028F00973756 /* UIImage+Crypto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Crypto.swift"; sourceTree = "<group>"; };
 		AC7F44091C95EDE00049DD2B /* LocketModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LocketModel.xcdatamodel; sourceTree = "<group>"; };
 		AC83977D1C9612AB0020B943 /* ImageAssetEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ImageAssetEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -102,6 +109,8 @@
 		AC8CC6001C855889002789CA /* UIView+LoadFromNIB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+LoadFromNIB.swift"; sourceTree = "<group>"; };
 		ACA045181C7BB1CA00C1679C /* LocketPhotoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocketPhotoView.swift; sourceTree = "<group>"; };
 		ACA0451A1C7BBB1C00C1679C /* default_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default_image.png; sourceTree = "<group>"; };
+		ACCBA6DC1CFA25E30022DE3F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		ACCBA6DF1CFA26F90022DE3F /* Locket-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Locket-Bridging-Header.h"; sourceTree = "<group>"; };
 		ACD182071C6D432100264B2D /* LocketCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocketCell.swift; sourceTree = "<group>"; };
 		ACD182091C6D97DB00264B2D /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		ACD182121C75735D00264B2D /* FileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
@@ -109,6 +118,7 @@
 		ACDD19941C8F4FCE007D2439 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		ACDD19961C8F6B0B007D2439 /* EditTextView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditTextView.xib; sourceTree = "<group>"; };
 		ACDD19981C8F6BC4007D2439 /* EditTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditTextView.swift; sourceTree = "<group>"; };
+		ACE514481CFA360A00BE5172 /* AnalyticsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsManager.swift; sourceTree = "<group>"; };
 		ACF6DA901C81429400B0095A /* MaskView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaskView.swift; sourceTree = "<group>"; };
 		ACF6DA931C814BC600B0095A /* UIView+CaptureImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+CaptureImage.swift"; sourceTree = "<group>"; };
 		CBF1ABC6A16FF43E4B647314 /* Pods-Locket.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Locket.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Locket/Pods-Locket.debug.xcconfig"; sourceTree = "<group>"; };
@@ -164,7 +174,10 @@
 		17C4DFCC198E428000E0B395 /* Locket */ = {
 			isa = PBXGroup;
 			children = (
-				AC8CC5FD1C854CE7002789CA /* Source */,
+				ACCBA6DA1CE926870022DE3F /* Main */,
+				AC83976B1C9608730020B943 /* Managers */,
+				AC83976C1C9608DD0020B943 /* View Controllers */,
+				AC83976A1C9608420020B943 /* DataModel */,
 				AC8CC5FC1C854CB9002789CA /* User Interfaces */,
 				ACF6DA921C814BA900B0095A /* Extension */,
 				AC3D8A361C7AABA200BB3530 /* Assets */,
@@ -178,6 +191,7 @@
 		17C4DFCD198E428000E0B395 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				ACCBA6DC1CFA25E30022DE3F /* GoogleService-Info.plist */,
 				17C4DFCE198E428000E0B395 /* Info.plist */,
 			);
 			path = "Supporting Files";
@@ -233,6 +247,8 @@
 		AC83976A1C9608420020B943 /* DataModel */ = {
 			isa = PBXGroup;
 			children = (
+				AC6DB8381CDE7CCF0098F271 /* UserEntity+CoreDataProperties.swift */,
+				AC6DB8391CDE7CCF0098F271 /* UserEntity.swift */,
 				AC83977D1C9612AB0020B943 /* ImageAssetEntity+CoreDataProperties.swift */,
 				AC83977E1C9612AB0020B943 /* ImageAssetEntity.swift */,
 				AC2048711CB9BB7B00E53BE6 /* LocketSkinEntity+CoreDataProperties.swift */,
@@ -253,6 +269,7 @@
 				ACD182121C75735D00264B2D /* FileManager.swift */,
 				ACD182091C6D97DB00264B2D /* DataManager.swift */,
 				AC3D8A401C7AB8C800BB3530 /* SettingsManager.swift */,
+				ACE514481CFA360A00BE5172 /* AnalyticsManager.swift */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -283,20 +300,18 @@
 			name = "User Interfaces";
 			sourceTree = "<group>";
 		};
-		AC8CC5FD1C854CE7002789CA /* Source */ = {
+		ACCBA6DA1CE926870022DE3F /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				AC83976B1C9608730020B943 /* Managers */,
-				AC83976C1C9608DD0020B943 /* View Controllers */,
-				AC83976A1C9608420020B943 /* DataModel */,
 				17C4DFCF198E428000E0B395 /* AppDelegate.swift */,
 				AC3937881C347FB200BEC4B7 /* LocketView.swift */,
 				ACA045181C7BB1CA00C1679C /* LocketPhotoView.swift */,
 				ACF6DA901C81429400B0095A /* MaskView.swift */,
 				AC3D8A341C7A7D3D00BB3530 /* DownloadableImageView.swift */,
 				ACDD19941C8F4FCE007D2439 /* Constants.swift */,
+				ACCBA6DF1CFA26F90022DE3F /* Locket-Bridging-Header.h */,
 			);
-			name = Source;
+			name = Main;
 			sourceTree = "<group>";
 		};
 		ACF6DA921C814BA900B0095A /* Extension */ = {
@@ -404,6 +419,7 @@
 				179191C91A1D4F0D00072138 /* LaunchScreen.xib in Resources */,
 				AC3D8A3F1C7AABA200BB3530 /* default_open.png in Resources */,
 				AC3D8A3C1C7AABA200BB3530 /* default_chain.png in Resources */,
+				ACCBA6DD1CFA25E30022DE3F /* GoogleService-Info.plist in Resources */,
 				AC3D8A3E1C7AABA200BB3530 /* default_mask.png in Resources */,
 				AC8CC5FF1C854D2F002789CA /* EditColorView.xib in Resources */,
 			);
@@ -413,6 +429,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ACCBA6DE1CFA25EC0022DE3F /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -489,6 +506,7 @@
 				ACD182081C6D432100264B2D /* LocketCell.swift in Sources */,
 				17C4E01B198E444000E0B395 /* Locket.swift in Sources */,
 				AC78CC501CA1028F00973756 /* UIImage+Crypto.swift in Sources */,
+				AC6DB83A1CDE7CCF0098F271 /* UserEntity+CoreDataProperties.swift in Sources */,
 				178B5A5D198E7379006414ED /* ContainerViewController.swift in Sources */,
 				AC8397891C9612AB0020B943 /* ColorEntity+CoreDataProperties.swift in Sources */,
 				ACD182131C75735D00264B2D /* FileManager.swift in Sources */,
@@ -498,10 +516,12 @@
 				AC83978C1C9612AB0020B943 /* UserLocketEntity.swift in Sources */,
 				17C4E023198E504400E0B395 /* SidePanelViewController.swift in Sources */,
 				AC3D8A411C7AB8C800BB3530 /* SettingsManager.swift in Sources */,
+				ACE514491CFA360A00BE5172 /* AnalyticsManager.swift in Sources */,
 				ACDD19991C8F6BC4007D2439 /* EditTextView.swift in Sources */,
 				17C4E01F198E477C00E0B395 /* CenterViewController.swift in Sources */,
 				ACF6DA941C814BC600B0095A /* UIView+CaptureImage.swift in Sources */,
 				AC8397881C9612AB0020B943 /* LocketSkinEntity.swift in Sources */,
+				AC6DB83B1CDE7CCF0098F271 /* UserEntity.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -623,12 +643,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Kain Osterholt (6LU4Z28QWC)";
 				INFOPLIST_FILE = "SlideOutNavigation/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Locket;
 				PRODUCT_NAME = Locket;
+				PROVISIONING_PROFILE = "ffb05f38-aa0a-49d7-91a6-4dbe3f570cfc";
+				SWIFT_OBJC_BRIDGING_HEADER = "SlideOutNavigation/Locket-Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -638,12 +660,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Kain Osterholt (6LU4Z28QWC)";
 				INFOPLIST_FILE = "SlideOutNavigation/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Locket;
 				PRODUCT_NAME = Locket;
+				PROVISIONING_PROFILE = "ffb05f38-aa0a-49d7-91a6-4dbe3f570cfc";
+				SWIFT_OBJC_BRIDGING_HEADER = "SlideOutNavigation/Locket-Bridging-Header.h";
 			};
 			name = Release;
 		};

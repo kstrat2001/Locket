@@ -2,7 +2,7 @@
 //  UserLocketEntity+CoreDataProperties.swift
 //  Locket
 //
-//  Created by Kain Osterholt on 3/13/16.
+//  Created by Kain Osterholt on 5/7/16.
 //  Copyright © 2016 James Frost. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -21,5 +21,6 @@ extension UserLocketEntity {
     @NSManaged var caption_color: ColorEntity!
     @NSManaged var image: ImageAssetEntity!
     @NSManaged var locket_skin: LocketSkinEntity!
+    @NSManaged var user: UserEntity?
 
 }

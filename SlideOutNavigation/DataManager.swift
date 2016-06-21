@@ -149,13 +149,14 @@ class DataManager
         return success!
     }
     
-    func getCachedImage(url: NSURL) -> UIImage?
+    func getCachedImage(url: NSURL, orientation: UIImageOrientation ) -> UIImage?
     {
         let path = FileManager.sharedManager.urlToFilePath(url)
         
         if FileManager.sharedManager.fileExists(path)
         {
-            return UIImage(contentsOfFile: path)
+            let image = UIImage(contentsOfFile: path)
+            return UIImage(CGImage: image!.CGImage!, scale: 1.0, orientation: orientation)
         }
         
         return nil

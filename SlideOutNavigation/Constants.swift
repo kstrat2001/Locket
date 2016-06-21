@@ -9,6 +9,8 @@
 import Foundation
 import UIKit
 
+let gGAITrackingID = "UA-78487953-1"
+
 let gServerApiGetLockets = "http://api.mobilelocket.com/lockets?workflow_state=accepted"
 let gServerDateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
 let gMainBundleHost = "mainbundle.app"
@@ -28,16 +30,14 @@ let gCaptionCenterYMultiplier = CGFloat(0.85)
 let gEditAnimationDuration = NSTimeInterval(0.7)
 let gEditAnimationDamping = CGFloat(0.9)
 
-let gMaxCryptoBufferLength = 1024 * 50
-
 let gDefaultImageAssetData : NSDictionary = [
     "title" : "default",
     "updated_at" : "2016-04-09T22:21:14+0000",
     "id" : -1,
-    "anchor_x" : 621,
-    "anchor_y" : 0,
-    "width" : 1242,
-    "height" : 932,
+    "anchor_x" : 475,
+    "anchor_y" : 35,
+    "width" : 950,
+    "height" : 950,
     "image_full" : "http://mainbundle.app/default_image.png",
     "image_thumb" : "http://mainbundle.app/default_image.png"
 ]
@@ -96,8 +96,8 @@ let gDefaultUserLocketData = [
     "title" : "default",
     "locket" : gDefaultLocketData,
     "image" : gDefaultImageAssetData,
-    "caption_text" : "To cherish forever",
-    "caption_font" : "Optima",
+    "caption_text" : "To Cherish Forever",
+    "caption_font" : "Zapfino",
     "bg_color" : [ "red" : 0.90,
         "green" : 0.80,
         "blue" : 1.0,

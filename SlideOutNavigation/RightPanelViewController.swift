@@ -80,9 +80,11 @@ extension RightPanelViewController: UITableViewDelegate {
         
         if indexPath.row < SettingsManager.sharedManager.userLockets.count {
             let selectedLocket = SettingsManager.sharedManager.selectUserLocket(indexPath.row)
+            AnalyticsManager.sharedManager.userLocketSelectAction("Lckt #\(indexPath.row), cap: \(selectedLocket.caption_text), skin: \(selectedLocket.locket_skin.title)")
             delegate?.userLocketSelected(selectedLocket)
         } else {
             let selectedLocket = SettingsManager.sharedManager.addNewLocket()
+            AnalyticsManager.sharedManager.valueChangedEvent("Saved Lockets", action: "Add New Locket", value: SettingsManager.sharedManager.userLockets.count)
             delegate?.userLocketSelected(selectedLocket)
             tableView.reloadData()
         }
@@ -99,6 +101,7 @@ extension RightPanelViewController: UITableViewDelegate {
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == UITableViewCellEditingStyle.Delete {
             SettingsManager.sharedManager.deleteUserLocket(indexPath.row )
+            AnalyticsManager.sharedManager.valueChangedEvent("Saved Lockets", action: "Delete Locket", value: SettingsManager.sharedManager.userLockets.count)
             tableView.reloadData()
         }
     }

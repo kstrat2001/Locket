@@ -9,7 +9,6 @@
 import Foundation
 import UIKit
 import Alamofire
-import CryptoSwift
 
 protocol LocketViewDelegate
 {
@@ -79,6 +78,7 @@ class LocketView : UIView
                 colorFrame: self.userLocket.getImageFrame(),
                 maskFrame: skin.getMaskFrame(),
                 colorUrl: self.userLocket.image.imageURL,
+                colorOrientation: UIImageOrientation(rawValue: Int(self.userLocket.image.orientation.intValue))!,
                 maskUrl: skin.mask_image.imageURL)
             photoImageView?.delegate = self
             
@@ -87,6 +87,7 @@ class LocketView : UIView
                 self.userLocket.getImageFrame(),
                 maskFrame: skin.getMaskFrame(),
                 colorUrl: self.userLocket.image.imageURL,
+                colorOrientation: UIImageOrientation(rawValue: Int(self.userLocket.image.orientation.intValue))!,
                 maskUrl: skin.mask_image.imageURL)
         }
         
@@ -132,20 +133,36 @@ class LocketView : UIView
     
     func setPhoto(image: UIImage)
     {
+        AnalyticsManager.sharedManager.settingsEvent("Locket Photo Set")
+        
         let url = NSURL(string:"http://" + gFileHost + "/" + image.getUniqueString() + ".png")!
         if !FileManager.sharedManager.fileIsCached(url) {
             DataManager.sharedManager.cacheImage(url, image: image)
         }
-
+        
+        self.userLocket.image.orientation = image.imageOrientation.rawValue
         self.userLocket.image.image_full = url.absoluteString
         self.userLocket.image.image_thumb = url.absoluteString
         DataManager.sharedManager.saveAllRecords()
         photoImageView?.setPhoto(image)
     }
     
-    func viewTapped(tap: UITapGestureRecognizer)
+    func viewTapped(press: UITapGestureRecognizer)
     {
-        if tap.locationInView(self).y > bgEditView?.frame.height {
+        let location = press.locationInView(self)
+        let height = self.frame.height
+        
+        if location.y < (height * 0.33) {
+            if self.photoImageView?.inEditMode == false &&
+                self.editingBackground == false {
+                editBackground()
+            }
+        } else if location.y > (height * 0.66) {
+            if self.photoImageView?.inEditMode == false &&
+                self.editingCaption == false {
+                editCaption()
+            }
+        } else if location.y > (height * 0.33) {
             if editingBackground == true {
                 DataManager.sharedManager.saveAllRecords()
                 self.stopEditingBackground()
@@ -169,18 +186,6 @@ class LocketView : UIView
                 editPhoto()
             }
         }
-        else if location.y < (height * 0.33) {
-            if self.photoImageView?.inEditMode == false &&
-                self.editingBackground == false {
-                editBackground()
-            }
-        }
-        else if location.y > (height * 0.66) {
-            if self.photoImageView?.inEditMode == false &&
-                self.editingCaption == false {
-                editCaption()
-            }
-        }
     }
     
     private func cleanupEditMode()
@@ -195,6 +200,7 @@ class LocketView : UIView
     
     private func editPhoto()
     {
+        AnalyticsManager.sharedManager.settingsEvent("Edit Photo")
         delegate?.locketViewDidStartEditing()
         
         self.photoImageView?.toggleEditMode()
@@ -225,6 +231,8 @@ class LocketView : UIView
     
     private func editBackground()
     {
+        AnalyticsManager.sharedManager.settingsEvent("Edit Background")
+        
         self.contentView.userInteractionEnabled = false
         editingBackground = true
         delegate?.locketViewDidStartEditing()
@@ -250,6 +258,8 @@ class LocketView : UIView
     
     private func editCaption()
     {
+        AnalyticsManager.sharedManager.settingsEvent("Edit Caption")
+        
         contentView.userInteractionEnabled = false
         delegate?.locketViewDidStartEditing()
         captionEditTextView?.setTextFieldText(self.captionLabel!.text!)
@@ -311,6 +321,11 @@ class LocketView : UIView
         
         imageView.loadImageFromUrl(url)
         
+        imageView.layer.shadowColor = UIColor.blackColor().CGColor
+        imageView.layer.shadowOffset = CGSizeMake(4, 4)
+        imageView.layer.shadowRadius = 7
+        imageView.layer.shadowOpacity = 1.0
+        
         return imageView
     }
     
@@ -328,7 +343,7 @@ class LocketView : UIView
         label.translatesAutoresizingMaskIntoConstraints = false
         
         self.addConstraint(NSLayoutConstraint(item: label, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Width, multiplier: 0.85, constant: 0))
-        self.addConstraint(NSLayoutConstraint(item: label, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 80))
+        self.addConstraint(NSLayoutConstraint(item: label, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 100))
         self.addConstraint(NSLayoutConstraint(item: label, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0))
         self.addConstraint(NSLayoutConstraint(item: label, attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Bottom, multiplier: gCaptionCenterYMultiplier, constant: 0))
         

@@ -49,7 +49,7 @@ extension CenterViewController: SidePanelViewControllerDelegate
 {
     func locketSkinSelected(skin: LocketSkinEntity)
     {
-        let userLocket = SettingsManager.sharedManager.selectedLocket!
+        let userLocket = SettingsManager.sharedManager.selectedLocket
         userLocket.locket_skin = skin
         DataManager.sharedManager.saveAllRecords()
         

@@ -1,17 +1,17 @@
 PODS:
-  - Alamofire (3.2.0)
-  - AlamofireImage (2.3.1):
-    - Alamofire (~> 3.2)
-  - CryptoSwift (0.2.3)
+  - Alamofire (3.4.0)
+  - AlamofireImage (2.4.0):
+    - Alamofire (~> 3.3)
+  - GoogleAnalytics (3.14.0)
 
 DEPENDENCIES:
-  - Alamofire (~> 3.0)
-  - AlamofireImage (~> 2.0)
-  - CryptoSwift
+  - Alamofire (~> 3.4.0)
+  - AlamofireImage (~> 2.4.0)
+  - GoogleAnalytics
 
 SPEC CHECKSUMS:
-  Alamofire: 4da478599fccddff361205c8929333d7fe18dceb
-  AlamofireImage: e52336282757bbe1644f075d6cb85f19c891f939
-  CryptoSwift: b2bf37b8e7cc6d682ef3365cb966bc5ae5174aa5
+  Alamofire: c19a627cefd6a95f840401c49ab1f124e07f54ee
+  AlamofireImage: 87408b652e0f5ae5fe364035f15aea8b9b24c77e
+  GoogleAnalytics: 9be1afdb8deeac4bb5f13ca7f7d3b9db2a1f43dc
 
 COCOAPODS: 0.38.2

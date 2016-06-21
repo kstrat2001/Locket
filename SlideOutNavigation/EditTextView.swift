@@ -33,16 +33,30 @@ class EditTextView : UIView, UITextFieldDelegate {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
 
+        var numTotalFonts = 0;
+        
         fontNames = Array<NSAttributedString>()
         let fontFamilyNames = UIFont.familyNames()
         for familyName in fontFamilyNames {
             let names = UIFont.fontNamesForFamilyName(familyName)
             
+            var indexInFamily = 0
+            
             for name in names {
                 let attrStr = NSAttributedString(string: name)
                 fontNames.append(attrStr)
+                numTotalFonts += 1
+                
+                // limit the number of fonts. currently only 1 per family
+                if indexInFamily == 0 {
+                    break;
+                }
+                
+                indexInFamily += 1
             }
         }
+        
+        print("Total fonts loaded: \(numTotalFonts)")
         
         colorEditView = EditColorView.loadFromNibNamed("EditColorView") as! EditColorView
 

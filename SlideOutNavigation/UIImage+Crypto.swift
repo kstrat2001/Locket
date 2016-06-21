@@ -7,20 +7,18 @@
 //
 
 import Foundation
-import CryptoSwift
 import UIKit
 
 extension UIImage {
     
     func getUniqueString() -> String {
-        /*
-        let imageData = UIImagePNGRepresentation(self)!
-        let buffer_length = imageData.length < gMaxCryptoBufferLength ? imageData.length : gMaxCryptoBufferLength
-        var image_buffer = [UInt8](count: buffer_length, repeatedValue: 0)
-        imageData.getBytes(&image_buffer, length: buffer_length)
+        let user = SettingsManager.sharedManager.user
+        let imageNumber = user.photo_index
         
-        return NSData.withBytes(Hash.md5(image_buffer).calculate()).toHexString()
-        */
-        return "\(rand())"
+        // increment the photo number so that the stored value is unique
+        user.photo_index = NSNumber(int: user.photo_index.intValue + 1)
+        DataManager.sharedManager.saveAllRecords()
+        
+        return "locket_user_photo_\(imageNumber)"
     }
 }
