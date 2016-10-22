@@ -1,29 +1,22 @@
-# README #
+# Locket for iOS #
 
-This README would normally document whatever steps are necessary to get your application up and running.
+Locket is a free app on the iTunes App Store
 
-### What is this repository for? ###
+[GET THE APP HERE](https://itunes.apple.com/us/app/locket/id306891305?mt=8) 
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+See my other repo for the server `locket_server`
+
+Locket accesses the images and data from my personal Amazon AWS account.
+You will need your own S3 account to set up the paperclip back end to store lockets
+Also, feel free to use the default settings which will access my server
 
 ### How do I get set up? ###
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+Pods are checked in so a `pod install` should not be necessary
 
-### Contribution guidelines ###
+ * Open the `Locket.xcworkspace` file (not the xcodeproj file)
+ * Build and run
 
-* Writing tests
-* Code review
-* Other guidelines
+### Open Source ###
 
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
+Locket is released under the MIT license.  See LICENSE.md for more details.
