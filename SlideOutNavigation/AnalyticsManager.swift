@@ -3,7 +3,7 @@
 //  Locket
 //
 //  Created by Kain Osterholt on 5/28/16.
-//  Copyright © 2016 James Frost. All rights reserved.
+//  Copyright © 2016 Kain Osterholt. All rights reserved.
 //
 
 import Foundation
@@ -48,7 +48,7 @@ class AnalyticsManager
     }
     
     fileprivate func baseEvent(_ category: String, action: String, label: String, value: NSNumber?) {
-        let dict : NSMutableDictionary = GAIDictionaryBuilder.createEvent(withCategory: category, action: action, label: label, value: value).build()
-        self.tracker?.send(dict as [AnyHashable: Any])
+        let dict = GAIDictionaryBuilder.createEvent(withCategory: category, action: action, label: label, value: value).build()
+        self.tracker?.send(dict as NSDictionary? as? [AnyHashable: Any])
     }
 }

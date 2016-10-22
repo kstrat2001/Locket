@@ -3,7 +3,7 @@
 //  Locket
 //
 //  Created by Kain Osterholt on 5/28/16.
-//  Copyright © 2016 James Frost. All rights reserved.
+//  Copyright © 2016 Kain Osterholt. All rights reserved.
 //
 
 #ifndef Locket_Bridging_Header_h

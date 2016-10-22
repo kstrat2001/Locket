@@ -85,10 +85,10 @@ class LocketView : UIView
         } else {
             photoImageView?.loadAssets(
                 self.userLocket.getImageFrame(),
-                maskFrame: skin.getMaskFrame(),
+                maskFrame: (skin?.getMaskFrame())!,
                 colorUrl: self.userLocket.image.imageURL,
                 colorOrientation: UIImageOrientation(rawValue: Int(self.userLocket.image.orientation.int32Value))!,
-                maskUrl: skin.mask_image.imageURL)
+                maskUrl: (skin?.mask_image.imageURL)!)
         }
         
         photoImageView?.removeFromSuperview()
@@ -137,7 +137,7 @@ class LocketView : UIView
         
         let url = URL(string:"http://" + gFileHost + "/" + image.getUniqueString() + ".png")!
         if !FileManager.sharedManager.fileIsCached(url) {
-            DataManager.sharedManager.cacheImage(url, image: image)
+            assert(DataManager.sharedManager.cacheImage(url, image: image))
         }
         
         self.userLocket.image.orientation = image.imageOrientation.rawValue as NSNumber!

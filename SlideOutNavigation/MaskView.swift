@@ -3,7 +3,7 @@
 //  Locket
 //
 //  Created by Kain Osterholt on 2/26/16.
-//  Copyright © 2016 James Frost. All rights reserved.
+//  Copyright © 2016 Kain Osterholt. All rights reserved.
 //
 
 import Foundation
@@ -12,7 +12,7 @@ import UIKit
 class MaskView : UIView
 {
     fileprivate (set) var maskViewImage : UIImage?
-    var mask: CGImage?
+    var imageMask: CGImage?
     
     fileprivate (set) var whiteFullScreenImage: UIImage?
     fileprivate (set) var blackFullScreenImage: UIImage?
@@ -46,7 +46,7 @@ class MaskView : UIView
     func updateMask()
     {
         maskViewImage = self.captureImage()
-        self.mask = createMask(maskViewImage!)
+        self.imageMask = createMask(maskViewImage!)
         
         let whiteMaskPattern = applyMaskToImage(whiteFullScreenImage!)
         
@@ -73,7 +73,7 @@ class MaskView : UIView
     
     func applyMaskToImage(_ image: UIImage) -> UIImage
     {
-        return UIImage(cgImage: image.cgImage!.masking(self.mask!)!)
+        return UIImage(cgImage: image.cgImage!.masking(self.imageMask!)!)
     }
     
     fileprivate func createMask(_ image: UIImage) -> CGImage

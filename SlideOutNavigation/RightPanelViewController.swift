@@ -3,7 +3,7 @@
 //  Locket
 //
 //  Created by Kain Osterholt on 2/21/16.
-//  Copyright © 2016 James Frost. All rights reserved.
+//  Copyright © 2016 Kain Osterholt. All rights reserved.
 //
 
 import Foundation
@@ -84,13 +84,13 @@ extension RightPanelViewController: UITableViewDelegate {
             delegate?.userLocketSelected(selectedLocket)
         } else {
             let selectedLocket = SettingsManager.sharedManager.addNewLocket()
-            AnalyticsManager.sharedManager.valueChangedEvent("Saved Lockets", action: "Add New Locket", value: SettingsManager.sharedManager.userLockets.count)
+            AnalyticsManager.sharedManager.valueChangedEvent("Saved Lockets", action: "Add New Locket", value: SettingsManager.sharedManager.userLockets.count as NSNumber)
             delegate?.userLocketSelected(selectedLocket)
             tableView.reloadData()
         }
     }
     
-    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+    private func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         if (indexPath as NSIndexPath).row < SettingsManager.sharedManager.userLockets.count {
             return !SettingsManager.sharedManager.isUserLocketSelected((indexPath as NSIndexPath).row)
         } else {
@@ -98,10 +98,10 @@ extension RightPanelViewController: UITableViewDelegate {
         }
     }
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    private func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == UITableViewCellEditingStyle.delete {
             SettingsManager.sharedManager.deleteUserLocket((indexPath as NSIndexPath).row )
-            AnalyticsManager.sharedManager.valueChangedEvent("Saved Lockets", action: "Delete Locket", value: SettingsManager.sharedManager.userLockets.count)
+            AnalyticsManager.sharedManager.valueChangedEvent("Saved Lockets", action: "Delete Locket", value: SettingsManager.sharedManager.userLockets.count as NSNumber)
             tableView.reloadData()
         }
     }

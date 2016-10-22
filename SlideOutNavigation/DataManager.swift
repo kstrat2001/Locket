@@ -3,7 +3,7 @@
 //  Locket
 //
 //  Created by Kain Osterholt on 2/11/16.
-//  Copyright © 2016 James Frost. All rights reserved.
+//  Copyright © 2016 Kain Osterholt. All rights reserved.
 //
 
 import Foundation
@@ -44,13 +44,13 @@ class DataManager
     
     func fetchAll(_ entityName: String) -> [AnyObject]
     {
-        let fetchRequest = NSFetchRequest()
-        let entityDesc = NSEntityDescription.entity(forEntityName: entityName, in: self.managedObjectContext)
-        fetchRequest.entity = entityDesc
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
+        //let entityDesc = NSEntityDescription.entity(forEntityName: entityName, in: self.managedObjectContext)
+        //fetchRequest.entity = entityDesc
         
         do {
             let result = try managedObjectContext.fetch(fetchRequest)
-            return result
+            return result as [AnyObject]
         }
         catch {
             let fetchError = error as NSError
@@ -62,15 +62,15 @@ class DataManager
     
     func fetchWithId(_ entityName: String, id: NSNumber ) -> [AnyObject]
     {
-        let fetchRequest = NSFetchRequest()
-        let entityDesc = NSEntityDescription.entity(forEntityName: entityName, in: self.managedObjectContext)
-        fetchRequest.entity = entityDesc
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
+        //let entityDesc = NSEntityDescription.entity(forEntityName: entityName, in: self.managedObjectContext)
+        //fetchRequest.entity = entityDesc
         
         fetchRequest.predicate = NSPredicate(format: "id == %@", id)
         
         do {
             let result = try managedObjectContext.fetch(fetchRequest)
-            return result
+            return result as [AnyObject]
         }
         catch {
             let fetchError = error as NSError
@@ -100,21 +100,21 @@ class DataManager
     
     fileprivate func downloadLocketSkins()
     {
-        Alamofire.request(.GET, gServerApiGetLockets).responseJSON()
+        Alamofire.request(gServerApiGetLockets).responseJSON()
         {
             response in
             
             switch response.result
             {
-            case .Failure(let error):
+            case .failure(let error):
                 print("Request failed with error: \(error)")
-            case .Success(let JSON):
+            case .success(let JSON):
                 let response = JSON as! NSDictionary
 
                 let lockets = response["lockets"] as! Array<NSDictionary>
                 
-                var ids = [ NSNumber : NSNumber? ]()
-                ids[gDefaultLocketSkinID] = gDefaultLocketSkinID
+                var ids : [ NSNumber : NSNumber? ] = [ NSNumber : NSNumber? ]()
+                ids[gDefaultLocketSkinID as NSNumber] = gDefaultLocketSkinID as NSNumber
                 
                 for locket in lockets {
                     ids[locket["id"] as! NSNumber] = locket["id"] as? NSNumber
@@ -146,7 +146,7 @@ class DataManager
         
         let success = (try? UIImagePNGRepresentation(image)?.write(to: URL(fileURLWithPath: path), options: [.atomic])) != nil
         
-        return success!
+        return success
     }
     
     func getCachedImage(_ url: URL, orientation: UIImageOrientation ) -> UIImage?

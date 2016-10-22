@@ -3,7 +3,7 @@
 //  Locket
 //
 //  Created by Kain Osterholt on 3/8/16.
-//  Copyright © 2016 James Frost. All rights reserved.
+//  Copyright © 2016 Kain Osterholt. All rights reserved.
 //
 
 import Foundation

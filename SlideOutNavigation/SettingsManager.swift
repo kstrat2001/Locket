@@ -3,7 +3,7 @@
 //  Locket
 //
 //  Created by Kain Osterholt on 2/21/16.
-//  Copyright © 2016 James Frost. All rights reserved.
+//  Copyright © 2016 Kain Osterholt. All rights reserved.
 //
 
 import Foundation
@@ -30,7 +30,7 @@ class SettingsManager
         self.userLockets = UserLocketEntity.fetchAll()
         
         if self.userLockets.count == 0 {
-            let first_user_locket = UserLocketEntity.createWithData(gDefaultUserLocketData)
+            let first_user_locket = UserLocketEntity.createWithData(gDefaultUserLocketData as NSDictionary)
             self.userLockets.append(first_user_locket)
             self.user.selected_locket = first_user_locket
         } else if self.user.selected_locket == nil {
@@ -42,7 +42,7 @@ class SettingsManager
     
     func addNewLocket() -> UserLocketEntity
     {
-        let locket = UserLocketEntity.createWithData(gDefaultUserLocketData)
+        let locket = UserLocketEntity.createWithData(gDefaultUserLocketData as NSDictionary)
         self.userLockets.append(locket)
         self.user.selected_locket = locket
         DataManager.sharedManager.saveAllRecords()

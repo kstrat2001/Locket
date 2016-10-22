@@ -3,7 +3,7 @@
 //  Locket
 //
 //  Created by Kain Osterholt on 2/21/16.
-//  Copyright © 2016 James Frost. All rights reserved.
+//  Copyright © 2016 Kain Osterholt. All rights reserved.
 //
 
 import Foundation
@@ -17,7 +17,7 @@ protocol DownloadableImageViewDelegate
 
 class DownloadableImageView : UIImageView
 {
-    fileprivate (set) var url : URL = URL()
+    fileprivate (set) var url : URL = URL(string: "http://www.mobilelocket.com")!
     
     var delegate : DownloadableImageViewDelegate?
     
@@ -42,17 +42,17 @@ class DownloadableImageView : UIImageView
     
     fileprivate func downloadImage()
     {
-        self.af_setImageWithURL(
-            self.url,
+        self.af_setImage(
+            withURL: self.url,
             placeholderImage: nil,
             filter: nil,
-            imageTransition: .None,
+            imageTransition: .noTransition,
             completion: { response in
                 switch response.result
                 {
-                case .Failure(let error):
+                case .failure(let error):
                     print("Failed to download image at url: \(self.url) with error: \(error)")
-                case .Success(let value):
+                case .success(let value):
                     if DataManager.sharedManager.cacheImage(self.url, image: value)
                     {
                         self.image = value
