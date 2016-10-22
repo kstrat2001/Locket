@@ -19,20 +19,30 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-LocketTests.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>526389E73A7686308B3E3B86EBBC11B6</key>
+		<key>333E47F1004946B94926B19979768D18</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>5DDF276ED829ABA0C246A19B84BCE290</key>
+		<key>50AB0C06BCFFBEC1387A153C37703A6A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>F5E107D2AC456F9F2F094E0305D1A2D9</key>
+		<key>79C040AFDDCE1BCBF6D8B5EB0B85887F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>9F336A68F0E02A311AEFBB92DA5A334E</key>
 		<dict>
 			<key>primary</key>
 			<true/>

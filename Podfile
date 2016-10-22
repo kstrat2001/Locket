@@ -5,8 +5,8 @@ target 'Locket' do
   use_frameworks!
 
   pod 'GoogleAnalytics'
-  pod 'Alamofire', '~> 3.4.0'
-  pod 'AlamofireImage', '~> 2.4.0'
+  pod 'Alamofire', '~> 4.0'
+  pod 'AlamofireImage', '~> 3.1'
 
 end
 
