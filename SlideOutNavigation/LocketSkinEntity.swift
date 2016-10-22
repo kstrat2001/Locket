@@ -12,7 +12,7 @@ import UIKit
 
 class LocketSkinEntity: NSManagedObject {
 
-    class func createWithData(data: NSDictionary) -> LocketSkinEntity
+    class func createWithData(_ data: NSDictionary) -> LocketSkinEntity
     {
         let locketSkinTitleStr = data["title"] as! String
         print("loading locket skin: \(locketSkinTitleStr)")
@@ -25,13 +25,13 @@ class LocketSkinEntity: NSManagedObject {
         
         let id = data["id"] as? NSNumber
         
-        let formatter = NSDateFormatter();
+        let formatter = DateFormatter();
         formatter.dateFormat = gServerDateFormat
-        formatter.locale = NSLocale(localeIdentifier: "en_US")
-        formatter.timeZone = NSTimeZone(name: "UTC")
+        formatter.locale = Locale(identifier: "en_US")
+        formatter.timeZone = TimeZone(identifier: "UTC")
         
         let dateStr = (data["updated_at"] as? String)!
-        let updatedDate = formatter.dateFromString(dateStr);
+        let updatedDate = formatter.date(from: dateStr);
 
         let entities = DataManager.sharedManager.fetchWithId("LocketSkinEntity", id: id!)
     
@@ -39,16 +39,16 @@ class LocketSkinEntity: NSManagedObject {
         
         if entities.count > 0 {
             entity = entities[0] as! LocketSkinEntity
-            let savedDateStr = formatter.stringFromDate(entity.updated_at)
+            let savedDateStr = formatter.string(from: entity.updated_at as Date)
             print("entity exists with updated date: \(savedDateStr)")
             print("downloaded model has date:\(dateStr)")
-            if entity.updated_at.compare(updatedDate!) != NSComparisonResult.OrderedAscending {
+            if entity.updated_at.compare(updatedDate!) != ComparisonResult.orderedAscending {
                 // The updated date is not more recent.  We should not update this record
                 print("saved entity is up to date. returning...")
                 return entity;
             }
         } else {
-            entity = NSEntityDescription.insertNewObjectForEntityForName("LocketSkinEntity", inManagedObjectContext: DataManager.sharedManager.managedObjectContext) as! LocketSkinEntity
+            entity = NSEntityDescription.insertNewObject(forEntityName: "LocketSkinEntity", into: DataManager.sharedManager.managedObjectContext) as! LocketSkinEntity
         }
         
         entity.open_image = open_image
@@ -74,8 +74,8 @@ class LocketSkinEntity: NSManagedObject {
     
     func getClosedLocketPosition() -> CGPoint
     {
-        let width = UIScreen.mainScreen().bounds.size.width
-        let height = UIScreen.mainScreen().bounds.size.height
+        let width = UIScreen.main.bounds.size.width
+        let height = UIScreen.main.bounds.size.height
         
         let x = 0.5 * (width - self.closed_image.frame.size.width)
         let y = 0.5 * (height - self.closed_image.frame.size.height)
@@ -98,10 +98,10 @@ class LocketSkinEntity: NSManagedObject {
         let pos = getAnchoredImagePosition(self.mask_image.frame.origin)
         let size = self.mask_image.frame.size
         
-        return CGRectMake(pos.x, pos.y, size.width, size.height)
+        return CGRect(x: pos.x, y: pos.y, width: size.width, height: size.height)
     }
     
-    func getAnchoredImagePosition(anchor: CGPoint) -> CGPoint
+    func getAnchoredImagePosition(_ anchor: CGPoint) -> CGPoint
     {
         let locketPos : CGPoint = getClosedLocketPosition()
         let locketAnchor : CGPoint = closed_image.frame.origin

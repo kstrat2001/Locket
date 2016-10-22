@@ -22,7 +22,7 @@ extension ImageAssetEntity {
     @NSManaged var title: String!
     @NSManaged var id: NSNumber!
     @NSManaged var orientation: NSNumber!
-    @NSManaged var updated_at: NSDate!
+    @NSManaged var updated_at: Date!
     @NSManaged var width: NSNumber!
     @NSManaged var closed_image_owner: LocketSkinEntity?
     @NSManaged var user_locket_image: UserLocketEntity?

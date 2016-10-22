@@ -391,9 +391,11 @@
 					17C4DFC9198E428000E0B395 = {
 						CreatedOnToolsVersion = 6.0;
 						DevelopmentTeam = LR3D5ZYZX3;
+						LastSwiftMigration = 0800;
 					};
 					17C4DFDB198E428000E0B395 = {
 						CreatedOnToolsVersion = 6.0;
+						LastSwiftMigration = 0800;
 						TestTargetID = 17C4DFC9198E428000E0B395;
 					};
 				};
@@ -707,6 +709,7 @@
 				PRODUCT_NAME = Locket;
 				PROVISIONING_PROFILE = "ffb05f38-aa0a-49d7-91a6-4dbe3f570cfc";
 				SWIFT_OBJC_BRIDGING_HEADER = "SlideOutNavigation/Locket-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -724,6 +727,7 @@
 				PRODUCT_NAME = Locket;
 				PROVISIONING_PROFILE = "ffb05f38-aa0a-49d7-91a6-4dbe3f570cfc";
 				SWIFT_OBJC_BRIDGING_HEADER = "SlideOutNavigation/Locket-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -744,6 +748,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.razeware.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = Locket;
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Locket.app/Locket";
 			};
 			name = Debug;
@@ -761,6 +766,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.razeware.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = Locket;
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Locket.app/Locket";
 			};
 			name = Release;

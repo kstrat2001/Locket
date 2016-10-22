@@ -12,7 +12,7 @@ import UIKit
 
 class UserLocketEntity: NSManagedObject {
     
-    class func createWithData(data: NSDictionary) -> UserLocketEntity {
+    class func createWithData(_ data: NSDictionary) -> UserLocketEntity {
         
         let skinData = data["locket"] as! NSDictionary
         let locketSkin : LocketSkinEntity?
@@ -29,7 +29,7 @@ class UserLocketEntity: NSManagedObject {
         let bg_color = ColorEntity.createWithData(data["bg_color"] as! NSDictionary)
         let cap_color = ColorEntity.createWithData(data["caption_color"] as! NSDictionary)
         
-        let entity : UserLocketEntity = NSEntityDescription.insertNewObjectForEntityForName("UserLocketEntity", inManagedObjectContext: DataManager.sharedManager.managedObjectContext) as! UserLocketEntity
+        let entity : UserLocketEntity = NSEntityDescription.insertNewObject(forEntityName: "UserLocketEntity", into: DataManager.sharedManager.managedObjectContext) as! UserLocketEntity
         
         entity.title = data["title"] as! String
         entity.locket_skin = locketSkin!
@@ -51,7 +51,7 @@ class UserLocketEntity: NSManagedObject {
     func getImageFrame() -> CGRect
     {
         let pos = self.locket_skin.getAnchoredImagePosition(image.frame.origin)
-        return CGRectMake(pos.x, pos.y, image.frame.width, image.frame.height)
+        return CGRect(x: pos.x, y: pos.y, width: image.frame.width, height: image.frame.height)
     }
     
     class func fetchAll() -> [UserLocketEntity]

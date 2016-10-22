@@ -11,10 +11,10 @@ import UIKit
 
 protocol EditTextViewDelegate
 {
-    func editTextViewTextChanged(text: String)
+    func editTextViewTextChanged(_ text: String)
     func editTextViewFinishedEditing()
-    func editTextViewFontChanged(font: String)
-    func editTextViewColorChanged(color: UIColor)
+    func editTextViewFontChanged(_ font: String)
+    func editTextViewColorChanged(_ color: UIColor)
 }
 
 class EditTextView : UIView, UITextFieldDelegate {
@@ -23,12 +23,12 @@ class EditTextView : UIView, UITextFieldDelegate {
     @IBOutlet weak var pickerToolbar: UIToolbar!
     @IBOutlet weak var pickerDoneItem: UIBarButtonItem!
     
-    private var colorEditView: EditColorView!
+    fileprivate var colorEditView: EditColorView!
     
     var delegate : EditTextViewDelegate?
     var text : String = ""
     
-    private var fontNames : [NSAttributedString]!
+    fileprivate var fontNames : [NSAttributedString]!
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -36,9 +36,9 @@ class EditTextView : UIView, UITextFieldDelegate {
         var numTotalFonts = 0;
         
         fontNames = Array<NSAttributedString>()
-        let fontFamilyNames = UIFont.familyNames()
+        let fontFamilyNames = UIFont.familyNames
         for familyName in fontFamilyNames {
-            let names = UIFont.fontNamesForFamilyName(familyName)
+            let names = UIFont.fontNames(forFamilyName: familyName)
             
             var indexInFamily = 0
             
@@ -62,7 +62,7 @@ class EditTextView : UIView, UITextFieldDelegate {
 
         colorEditView.delegate = self
         colorEditView.initEvents()
-        colorEditView.hidden = true
+        colorEditView.isHidden = true
     }
     
     func initEvents()
@@ -73,36 +73,36 @@ class EditTextView : UIView, UITextFieldDelegate {
         
         // Start the font picker below the screen
         let offset = self.pickerView.frame.height + self.pickerToolbar.frame.height
-        let transform = CGAffineTransformMakeTranslation(0, offset)
+        let transform = CGAffineTransform(translationX: 0, y: offset)
         self.pickerView.transform = transform
         self.pickerToolbar.transform = transform
         
         self.insertSubview(colorEditView, belowSubview: self.pickerView)
-        self.colorEditView.transform = CGAffineTransformMakeTranslation(0, self.colorEditView.frame.height)
+        self.colorEditView.transform = CGAffineTransform(translationX: 0, y: self.colorEditView.frame.height)
         
         textField.delegate = self
-        textField.addTarget(self, action: #selector(EditTextView.textFieldChanged), forControlEvents: UIControlEvents.EditingChanged)
+        textField.addTarget(self, action: #selector(EditTextView.textFieldChanged), for: UIControlEvents.editingChanged)
         
         pickerView.dataSource = self
         pickerView.delegate = self
         
-        self.pickerView.hidden = false
-        self.pickerToolbar.hidden = false
-        self.colorEditView.hidden = false
+        self.pickerView.isHidden = false
+        self.pickerToolbar.isHidden = false
+        self.colorEditView.isHidden = false
     }
     
     func showKeyboard()
     {
         textField.becomeFirstResponder()
         
-        UIView.animateWithDuration(gEditAnimationDuration, delay: 0, usingSpringWithDamping: gEditAnimationDamping, initialSpringVelocity: 1, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+        UIView.animate(withDuration: gEditAnimationDuration, delay: 0, usingSpringWithDamping: gEditAnimationDamping, initialSpringVelocity: 1, options: UIViewAnimationOptions.curveEaseOut, animations: {
                 self.textField.alpha = 1.0
             },
             completion: { (value: Bool) in
         })
     }
     
-    func setTextFieldText(text: String)
+    func setTextFieldText(_ text: String)
     {
         self.text = text
         self.textField.text = text
@@ -114,18 +114,18 @@ class EditTextView : UIView, UITextFieldDelegate {
         delegate?.editTextViewTextChanged(self.text)
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.transitionToFontEditing()
         return true
     }
     
-    private func transitionToFontEditing()
+    fileprivate func transitionToFontEditing()
     {
         textField.resignFirstResponder()
         self.pickerDoneItem.action = #selector(EditTextView.doneSelectingFont)
-        UIView.animateWithDuration(gEditAnimationDuration, delay: 0, usingSpringWithDamping: gEditAnimationDamping, initialSpringVelocity: 1, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+        UIView.animate(withDuration: gEditAnimationDuration, delay: 0, usingSpringWithDamping: gEditAnimationDamping, initialSpringVelocity: 1, options: UIViewAnimationOptions.curveEaseOut, animations: {
                 self.textField.alpha = 0.0
-                let transform = CGAffineTransformMakeTranslation(0, 0)
+                let transform = CGAffineTransform(translationX: 0, y: 0)
                 self.pickerView.transform = transform
                 self.pickerToolbar.transform = transform
 
@@ -142,9 +142,9 @@ class EditTextView : UIView, UITextFieldDelegate {
     func transitionToColorEditing()
     {
         self.pickerDoneItem.action = #selector(EditTextView.doneSelectingColor)
-        UIView.animateWithDuration(gEditAnimationDuration, delay: 0, usingSpringWithDamping: gEditAnimationDamping, initialSpringVelocity: 1, options: UIViewAnimationOptions.CurveEaseOut, animations: {
-                self.pickerView.transform = CGAffineTransformMakeTranslation(0, self.pickerView.frame.height + self.pickerToolbar.frame.height)
-                self.colorEditView.transform = CGAffineTransformMakeTranslation(0, 0)
+        UIView.animate(withDuration: gEditAnimationDuration, delay: 0, usingSpringWithDamping: gEditAnimationDamping, initialSpringVelocity: 1, options: UIViewAnimationOptions.curveEaseOut, animations: {
+                self.pickerView.transform = CGAffineTransform(translationX: 0, y: self.pickerView.frame.height + self.pickerToolbar.frame.height)
+                self.colorEditView.transform = CGAffineTransform(translationX: 0, y: 0)
             },
             completion: { (value: Bool) in
         })
@@ -152,8 +152,8 @@ class EditTextView : UIView, UITextFieldDelegate {
     
     func doneSelectingColor()
     {
-        UIView.animateWithDuration(gEditAnimationDuration, delay: 0, usingSpringWithDamping: gEditAnimationDamping, initialSpringVelocity: 1, options: UIViewAnimationOptions.CurveEaseOut, animations: {
-                let transform = CGAffineTransformMakeTranslation(0, self.pickerView.frame.height + self.pickerToolbar.frame.height)
+        UIView.animate(withDuration: gEditAnimationDuration, delay: 0, usingSpringWithDamping: gEditAnimationDamping, initialSpringVelocity: 1, options: UIViewAnimationOptions.curveEaseOut, animations: {
+                let transform = CGAffineTransform(translationX: 0, y: self.pickerView.frame.height + self.pickerToolbar.frame.height)
                 self.colorEditView.transform = transform
                 self.pickerToolbar.transform = transform
             },
@@ -166,29 +166,29 @@ class EditTextView : UIView, UITextFieldDelegate {
 
 extension EditTextView : UIPickerViewDataSource, UIPickerViewDelegate
 {
-    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     
-    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return fontNames.count
     }
     
-    func pickerView(pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
         return fontNames[row]
     }
     
-    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         delegate?.editTextViewFontChanged(fontNames[row].string)
     }
     
-    func pickerView(pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusingView view: UIView?) -> UIView {
+    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
         let fontName = fontNames[row]
         let myAttribute = [ NSFontAttributeName: UIFont(name: fontName.string, size: 20.0)!]
         let attrStr = NSAttributedString(string: fontName.string, attributes: myAttribute)
         let labelView = UILabel()
         labelView.attributedText = attrStr
-        labelView.textAlignment = NSTextAlignment.Center
+        labelView.textAlignment = NSTextAlignment.center
         
         return labelView
         
@@ -197,7 +197,7 @@ extension EditTextView : UIPickerViewDataSource, UIPickerViewDelegate
 
 extension EditTextView : EditColorViewDelegate
 {
-    func EditColorViewColorChanged(color: UIColor) {
+    func EditColorViewColorChanged(_ color: UIColor) {
         delegate?.editTextViewColorChanged(color)
     }
 }

@@ -11,7 +11,7 @@ import UIKit
 
 protocol EditColorViewDelegate
 {
-    func EditColorViewColorChanged(color: UIColor)
+    func EditColorViewColorChanged(_ color: UIColor)
 }
 
 class EditColorView : UIView {
@@ -20,9 +20,9 @@ class EditColorView : UIView {
     @IBOutlet weak var greenSlider: UISlider!
     @IBOutlet weak var blueSlider: UISlider!
     
-    private (set) var red : Float! = 1.0
-    private (set) var green : Float! = 1.0
-    private (set) var blue : Float! = 1.0
+    fileprivate (set) var red : Float! = 1.0
+    fileprivate (set) var green : Float! = 1.0
+    fileprivate (set) var blue : Float! = 1.0
     
     var delegate : EditColorViewDelegate?
 
@@ -30,7 +30,7 @@ class EditColorView : UIView {
         super.init(coder: aDecoder)
     }
     
-    func setColor(red: Float, green: Float, blue: Float)
+    func setColor(_ red: Float, green: Float, blue: Float)
     {
         self.red = red
         self.green = green
@@ -41,7 +41,7 @@ class EditColorView : UIView {
         blueSlider.value = blue
     }
     
-    func setColor(color: UIColor)
+    func setColor(_ color: UIColor)
     {
         let col = color.coreImageColor
         
@@ -50,12 +50,12 @@ class EditColorView : UIView {
     
     func initEvents()
     {
-        self.redSlider.addTarget(self, action: #selector(EditColorView.colorChanged(_:)), forControlEvents: UIControlEvents.ValueChanged)
-        self.greenSlider.addTarget(self, action: #selector(EditColorView.colorChanged(_:)), forControlEvents: UIControlEvents.ValueChanged)
-        self.blueSlider.addTarget(self, action: #selector(EditColorView.colorChanged(_:)), forControlEvents: UIControlEvents.ValueChanged)
+        self.redSlider.addTarget(self, action: #selector(EditColorView.colorChanged(_:)), for: UIControlEvents.valueChanged)
+        self.greenSlider.addTarget(self, action: #selector(EditColorView.colorChanged(_:)), for: UIControlEvents.valueChanged)
+        self.blueSlider.addTarget(self, action: #selector(EditColorView.colorChanged(_:)), for: UIControlEvents.valueChanged)
     }
     
-    func colorChanged(slider: UISlider)
+    func colorChanged(_ slider: UISlider)
     {
         red = redSlider.value
         green = greenSlider.value

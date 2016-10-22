@@ -20,14 +20,14 @@ class ColorEntity: NSManagedObject {
         return UIColor(red: CGFloat(1.0 - CGFloat(red)), green: CGFloat(1.0 - CGFloat(green)), blue: CGFloat(1.0 - CGFloat(blue)), alpha: CGFloat(alpha))
     }
     
-    class func createWithData(data: NSDictionary) -> ColorEntity
+    class func createWithData(_ data: NSDictionary) -> ColorEntity
     {
-        let entity : ColorEntity = NSEntityDescription.insertNewObjectForEntityForName("ColorEntity", inManagedObjectContext: DataManager.sharedManager.managedObjectContext) as! ColorEntity
+        let entity : ColorEntity = NSEntityDescription.insertNewObject(forEntityName: "ColorEntity", into: DataManager.sharedManager.managedObjectContext) as! ColorEntity
         
-        entity.red = NSNumber(float: data["red"] as! Float)
-        entity.green = NSNumber(float: data["green"] as! Float)
-        entity.blue = NSNumber(float: data["blue"] as! Float)
-        entity.alpha = NSNumber(float: data["alpha"] as! Float)
+        entity.red = NSNumber(value: data["red"] as! Float as Float)
+        entity.green = NSNumber(value: data["green"] as! Float as Float)
+        entity.blue = NSNumber(value: data["blue"] as! Float as Float)
+        entity.alpha = NSNumber(value: data["alpha"] as! Float as Float)
         
         do {
             try DataManager.sharedManager.managedObjectContext.save()

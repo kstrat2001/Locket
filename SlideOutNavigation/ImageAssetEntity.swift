@@ -14,30 +14,30 @@ import UIKit
 class ImageAssetEntity: NSManagedObject {
     
     var frame : CGRect! {
-        return CGRectMake(CGFloat(self.anchor_x), CGFloat(self.anchor_y), CGFloat(self.width), CGFloat(self.height))
+        return CGRect(x: CGFloat(self.anchor_x), y: CGFloat(self.anchor_y), width: CGFloat(self.width), height: CGFloat(self.height))
     }
     
-    var imageURL : NSURL {
-        return NSURL(string: self.image_full)!
+    var imageURL : URL {
+        return URL(string: self.image_full)!
     }
     
-    var thumbURL : NSURL {
-        return NSURL(string: self.image_thumb)!
+    var thumbURL : URL {
+        return URL(string: self.image_thumb)!
     }
     
-    class func createWithData(data: NSDictionary) -> ImageAssetEntity {
+    class func createWithData(_ data: NSDictionary) -> ImageAssetEntity {
         
         let entityTitleStr = data["title"] as! String
         let id = data["id"] as? NSNumber
         print("Creating ImageAssetEntity \(entityTitleStr) with id: \(id)")
         
-        let formatter = NSDateFormatter();
+        let formatter = DateFormatter();
         formatter.dateFormat = gServerDateFormat
-        formatter.locale = NSLocale(localeIdentifier: "en_US")
-        formatter.timeZone = NSTimeZone.defaultTimeZone()
+        formatter.locale = Locale(identifier: "en_US")
+        formatter.timeZone = TimeZone.current
         
         let dateStr = (data["updated_at"] as? String)!
-        let updatedDate = formatter.dateFromString(dateStr);
+        let updatedDate = formatter.date(from: dateStr);
         
         let entities = DataManager.sharedManager.fetchWithId("ImageAssetEntity", id: id!)
         
@@ -47,23 +47,23 @@ class ImageAssetEntity: NSManagedObject {
         // to create a new record instead of re-using the same entity
         if id != -1 && entities.count > 0 {
             entity = entities[0] as! ImageAssetEntity
-            let entityDateStr = formatter.stringFromDate(entity.updated_at)
+            let entityDateStr = formatter.string(from: entity.updated_at as Date)
             print("saved entity has last updated date: \(entityDateStr)")
-            if entity.updated_at.compare(updatedDate!) != NSComparisonResult.OrderedAscending {
+            if entity.updated_at.compare(updatedDate!) != ComparisonResult.orderedAscending {
                 // The updated date is not more recent.  We should not update this record
                 print("saved entity is up to date. returning...")
                 return entity;
             }
         } else {
-            entity = NSEntityDescription.insertNewObjectForEntityForName("ImageAssetEntity", inManagedObjectContext: DataManager.sharedManager.managedObjectContext) as! ImageAssetEntity
+            entity = NSEntityDescription.insertNewObject(forEntityName: "ImageAssetEntity", into: DataManager.sharedManager.managedObjectContext) as! ImageAssetEntity
         }
         
-        let screenWidth : Float = Float(UIScreen.mainScreen().bounds.width)
+        let screenWidth : Float = Float(UIScreen.main.bounds.width)
         let scaleFactor : Float = screenWidth / 1242
-        let width: NSNumber = NSNumber(float: scaleFactor * (data["width"] as! Float))
-        let height: NSNumber = NSNumber(float: scaleFactor * (data["height"] as! Float))
-        let anchorX: NSNumber = NSNumber(float: scaleFactor * (data["anchor_x"] as! Float))
-        let anchorY: NSNumber = NSNumber(float: scaleFactor * (data["anchor_y"] as! Float))
+        let width: NSNumber = NSNumber(value: scaleFactor * (data["width"] as! Float) as Float)
+        let height: NSNumber = NSNumber(value: scaleFactor * (data["height"] as! Float) as Float)
+        let anchorX: NSNumber = NSNumber(value: scaleFactor * (data["anchor_x"] as! Float) as Float)
+        let anchorY: NSNumber = NSNumber(value: scaleFactor * (data["anchor_y"] as! Float) as Float)
         
         entity.title = entityTitleStr
         entity.id = id
@@ -77,11 +77,11 @@ class ImageAssetEntity: NSManagedObject {
         
         // If we are updating or downloading this image for the first time
         // the saved data on the device needs to be purged in order to download the new asset
-        if entity.image_full.containsString(gMainBundleHost) == false &&
-            entity.image_full.containsString(gFileHost) == false &&
+        if entity.image_full.contains(gMainBundleHost) == false &&
+            entity.image_full.contains(gFileHost) == false &&
             id != -1 {
-            DataManager.sharedManager.deleteCachedFile(NSURL(string: entity.image_full)!)
-            DataManager.sharedManager.deleteCachedFile(NSURL(string: entity.image_thumb)!)
+            DataManager.sharedManager.deleteCachedFile(URL(string: entity.image_full)!)
+            DataManager.sharedManager.deleteCachedFile(URL(string: entity.image_thumb)!)
         }
         
         do {

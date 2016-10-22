@@ -11,10 +11,10 @@ import UIKit
 @objc
 protocol CenterViewControllerDelegate
 {
-    optional func toggleLeftPanel()
-    optional func toggleRightPanel()
-    optional func collapseSidePanels()
-    optional func enableSlidePanels(enable: Bool)
+    @objc optional func toggleLeftPanel()
+    @objc optional func toggleRightPanel()
+    @objc optional func collapseSidePanels()
+    @objc optional func enableSlidePanels(_ enable: Bool)
 }
 
 class CenterViewController: UIViewController, UINavigationControllerDelegate
@@ -40,14 +40,14 @@ class CenterViewController: UIViewController, UINavigationControllerDelegate
 
 extension CenterViewController: RightPanelViewControllerDelegate
 {
-    func userLocketSelected(locket: UserLocketEntity) {
+    func userLocketSelected(_ locket: UserLocketEntity) {
         locketView?.setUserLocket(locket)
     }
 }
 
 extension CenterViewController: SidePanelViewControllerDelegate
 {
-    func locketSkinSelected(skin: LocketSkinEntity)
+    func locketSkinSelected(_ skin: LocketSkinEntity)
     {
         let userLocket = SettingsManager.sharedManager.selectedLocket
         userLocket.locket_skin = skin
@@ -72,22 +72,22 @@ extension CenterViewController: LocketViewDelegate
     func selectPhoto() {
         photoPicker.delegate = self
         photoPicker.allowsEditing = false
-        photoPicker.sourceType = .PhotoLibrary
-        presentViewController(photoPicker, animated: true, completion: nil)
+        photoPicker.sourceType = .photoLibrary
+        present(photoPicker, animated: true, completion: nil)
     }
     
     func takePhoto() {
         photoTaker.delegate = self
         photoTaker.allowsEditing = true
-        photoTaker.sourceType = .Camera
-        presentViewController(photoTaker, animated: true, completion: nil)
+        photoTaker.sourceType = .camera
+        present(photoTaker, animated: true, completion: nil)
     }
 }
 
 extension CenterViewController: UIImagePickerControllerDelegate
 {
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
         locketView?.setPhoto(image)
-       dismissViewControllerAnimated(true, completion: nil)
+       dismiss(animated: true, completion: nil)
     }
 }

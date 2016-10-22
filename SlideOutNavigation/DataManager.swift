@@ -14,42 +14,42 @@ class DataManager
 {
     static let sharedManager = DataManager()
     
-    private (set) var locketSkins : [LocketSkinEntity] = [LocketSkinEntity]()
+    fileprivate (set) var locketSkins : [LocketSkinEntity] = [LocketSkinEntity]()
     
     let managedObjectContext: NSManagedObjectContext!
     let managedObjectModel: NSManagedObjectModel!
     let persistantStoreCoordinator: NSPersistentStoreCoordinator!
     
-    private init()
+    fileprivate init()
     {
-        let modelURL = NSBundle.mainBundle().URLForResource("LocketModel", withExtension: "momd")
-        self.managedObjectModel = NSManagedObjectModel(contentsOfURL: modelURL!)
+        let modelURL = Bundle.main.url(forResource: "LocketModel", withExtension: "momd")
+        self.managedObjectModel = NSManagedObjectModel(contentsOf: modelURL!)
         
         self.persistantStoreCoordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
         
         let fileString = "file:///" + FileManager.sharedManager.docRoot
-        let storeURL = NSURL(string: fileString)?.URLByAppendingPathComponent("Locket.sqlite")
+        let storeURL = URL(string: fileString)?.appendingPathComponent("Locket.sqlite")
         
         do {
-            try self.persistantStoreCoordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: storeURL, options: nil)
+            try self.persistantStoreCoordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: storeURL, options: nil)
         }
         catch {
             print("Failed to create database store, error: \(error)")
             abort()
         }
         
-        self.managedObjectContext = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.MainQueueConcurrencyType)
+        self.managedObjectContext = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.mainQueueConcurrencyType)
         self.managedObjectContext.persistentStoreCoordinator = self.persistantStoreCoordinator
     }
     
-    func fetchAll(entityName: String) -> [AnyObject]
+    func fetchAll(_ entityName: String) -> [AnyObject]
     {
         let fetchRequest = NSFetchRequest()
-        let entityDesc = NSEntityDescription.entityForName(entityName, inManagedObjectContext: self.managedObjectContext)
+        let entityDesc = NSEntityDescription.entity(forEntityName: entityName, in: self.managedObjectContext)
         fetchRequest.entity = entityDesc
         
         do {
-            let result = try managedObjectContext.executeFetchRequest(fetchRequest)
+            let result = try managedObjectContext.fetch(fetchRequest)
             return result
         }
         catch {
@@ -60,16 +60,16 @@ class DataManager
         return [AnyObject]()
     }
     
-    func fetchWithId(entityName: String, id: NSNumber ) -> [AnyObject]
+    func fetchWithId(_ entityName: String, id: NSNumber ) -> [AnyObject]
     {
         let fetchRequest = NSFetchRequest()
-        let entityDesc = NSEntityDescription.entityForName(entityName, inManagedObjectContext: self.managedObjectContext)
+        let entityDesc = NSEntityDescription.entity(forEntityName: entityName, in: self.managedObjectContext)
         fetchRequest.entity = entityDesc
         
         fetchRequest.predicate = NSPredicate(format: "id == %@", id)
         
         do {
-            let result = try managedObjectContext.executeFetchRequest(fetchRequest)
+            let result = try managedObjectContext.fetch(fetchRequest)
             return result
         }
         catch {
@@ -98,7 +98,7 @@ class DataManager
         self.downloadLocketSkins()
     }
     
-    private func downloadLocketSkins()
+    fileprivate func downloadLocketSkins()
     {
         Alamofire.request(.GET, gServerApiGetLockets).responseJSON()
         {
@@ -133,36 +133,36 @@ class DataManager
         }
     }
     
-    func deleteRecord(record: NSManagedObject) {
-        self.managedObjectContext.deleteObject(record)
+    func deleteRecord(_ record: NSManagedObject) {
+        self.managedObjectContext.delete(record)
         self.saveAllRecords()
     }
     
-    func cacheImage(url: NSURL, image: UIImage) -> Bool
+    func cacheImage(_ url: URL, image: UIImage) -> Bool
     {
         let path = FileManager.sharedManager.urlToFilePath(url)
         
         FileManager.sharedManager.createDirectoryForFile(path)
         
-        let success = UIImagePNGRepresentation(image)?.writeToFile(path, atomically: true)
+        let success = (try? UIImagePNGRepresentation(image)?.write(to: URL(fileURLWithPath: path), options: [.atomic])) != nil
         
         return success!
     }
     
-    func getCachedImage(url: NSURL, orientation: UIImageOrientation ) -> UIImage?
+    func getCachedImage(_ url: URL, orientation: UIImageOrientation ) -> UIImage?
     {
         let path = FileManager.sharedManager.urlToFilePath(url)
         
         if FileManager.sharedManager.fileExists(path)
         {
             let image = UIImage(contentsOfFile: path)
-            return UIImage(CGImage: image!.CGImage!, scale: 1.0, orientation: orientation)
+            return UIImage(cgImage: image!.cgImage!, scale: 1.0, orientation: orientation)
         }
         
         return nil
     }
     
-    func deleteCachedFile(url: NSURL)
+    func deleteCachedFile(_ url: URL)
     {
         let path = FileManager.sharedManager.urlToFilePath(url)
         

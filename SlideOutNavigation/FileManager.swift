@@ -12,28 +12,28 @@ class FileManager
 {
     static let sharedManager = FileManager()
     
-    private(set) var docRoot : String = ""
+    fileprivate(set) var docRoot : String = ""
     
-    private init()
+    fileprivate init()
     {
         self.setupDocRoot()
     }
     
-    private func setupDocRoot()
+    fileprivate func setupDocRoot()
     {
-        let paths : NSArray = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+        let paths : NSArray = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true) as NSArray
         
-        self.docRoot = paths.objectAtIndex(0) as! String;
+        self.docRoot = paths.object(at: 0) as! String;
     }
     
-    func urlToFilePath( url : NSURL ) -> String
+    func urlToFilePath( _ url : URL ) -> String
     {
-        if url.host?.compare(gMainBundleHost) == NSComparisonResult.OrderedSame
+        if url.host?.compare(gMainBundleHost) == ComparisonResult.orderedSame
         {
-            let resource = NSString(string: url.path!).stringByDeletingPathExtension.stringByReplacingOccurrencesOfString("/", withString: "")
-            let ext = NSString(string: url.path!).pathExtension
+            let resource = NSString(string: url.path).deletingPathExtension.replacingOccurrences(of: "/", with: "")
+            let ext = NSString(string: url.path).pathExtension
             
-            let path = NSBundle.mainBundle().pathForResource(resource, ofType: ext)
+            let path = Bundle.main.path(forResource: resource, ofType: ext)
             
             if path == nil {
                 return ""
@@ -42,27 +42,27 @@ class FileManager
                 return path!
             }
         }
-        else if url.host?.compare(gFileHost) == NSComparisonResult.OrderedSame {
+        else if url.host?.compare(gFileHost) == ComparisonResult.orderedSame {
             
-            return self.docRoot + url.path!
+            return self.docRoot + url.path
         }
         
-        return self.docRoot + url.path!
+        return self.docRoot + url.path
     }
     
-    func fileExists(path : String) -> Bool
+    func fileExists(_ path : String) -> Bool
     {
-        return NSFileManager.defaultManager().fileExistsAtPath(path)
+        return Foundation.FileManager.default.fileExists(atPath: path)
     }
     
-    func fileIsCached(url: NSURL) -> Bool
+    func fileIsCached(_ url: URL) -> Bool
     {
         return fileExists(self.urlToFilePath(url))
     }
     
-    func createDirectoryForFile(filePath: String)
+    func createDirectoryForFile(_ filePath: String)
     {
-        let dir: NSString = NSString(string: filePath).stringByDeletingLastPathComponent
+        let dir: NSString = NSString(string: filePath).deletingLastPathComponent as NSString
         
         if fileExists(String(dir)) == false
         {
@@ -70,15 +70,15 @@ class FileManager
         }
     }
     
-    func deleteFile(path : String) -> Bool
+    func deleteFile(_ path : String) -> Bool
     {
-        let mgr = NSFileManager.defaultManager()
+        let mgr = Foundation.FileManager.default
         
         var success = true
         
         do
         {
-            try mgr.removeItemAtPath(path)
+            try mgr.removeItem(atPath: path)
         }
         catch
         {
@@ -89,12 +89,12 @@ class FileManager
         return success
     }
     
-    func deleteFilesAtPath(path: String) -> Bool
+    func deleteFilesAtPath(_ path: String) -> Bool
     {
         var success = true;
         
         do {
-            let files = try NSFileManager.defaultManager().contentsOfDirectoryAtPath(path)
+            let files = try Foundation.FileManager.default.contentsOfDirectory(atPath: path)
             
             for file in files
             {
@@ -109,10 +109,10 @@ class FileManager
         return success
     }
     
-    func createDirectory(path: String) -> Bool
+    func createDirectory(_ path: String) -> Bool
     {
         do {
-            try NSFileManager.defaultManager().createDirectoryAtPath(path, withIntermediateDirectories: true, attributes: nil)
+            try Foundation.FileManager.default.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: nil)
         }
         catch {
             return false;

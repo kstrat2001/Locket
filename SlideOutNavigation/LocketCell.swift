@@ -14,7 +14,7 @@ class LocketCell: UITableViewCell
     @IBOutlet weak var locketThumbnailView: DownloadableImageView!
     @IBOutlet weak var locketTitleLabel: UILabel!
     
-    func configureForLocket(locket: LocketSkinEntity)
+    func configureForLocket(_ locket: LocketSkinEntity)
     {
         locketTitleLabel.text = locket.title;
         

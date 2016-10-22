@@ -13,12 +13,12 @@ extension UIView
 {
     func captureImage() -> UIImage
     {
-        UIGraphicsBeginImageContextWithOptions(self.bounds.size, self.opaque, 0.0);
+        UIGraphicsBeginImageContextWithOptions(self.bounds.size, self.isOpaque, 0.0);
         let context = UIGraphicsGetCurrentContext();
-        self.layer.renderInContext(context!);
+        self.layer.render(in: context!);
         let image = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
         
-        return image;
+        return image!;
     }
 }

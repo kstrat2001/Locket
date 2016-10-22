@@ -14,12 +14,12 @@ class UserLocketCell: UITableViewCell
     @IBOutlet weak var locketThumbnailView: DownloadableImageView!
     @IBOutlet weak var locketTitleLabel: UILabel!
     
-    private (set) var gradient: CAGradientLayer! = CAGradientLayer()
-    private (set) var gradient2: CAGradientLayer! = CAGradientLayer()
+    fileprivate (set) var gradient: CAGradientLayer! = CAGradientLayer()
+    fileprivate (set) var gradient2: CAGradientLayer! = CAGradientLayer()
     
-    private (set) var userLocket : UserLocketEntity?
+    fileprivate (set) var userLocket : UserLocketEntity?
     
-    func configureForLocket(userLocket: UserLocketEntity) {
+    func configureForLocket(_ userLocket: UserLocketEntity) {
         self.userLocket = userLocket
         locketTitleLabel.text = userLocket.caption_text
         locketTitleLabel.textColor = userLocket.caption_color.uicolor
@@ -28,34 +28,34 @@ class UserLocketCell: UITableViewCell
         self.backgroundColor = userLocket.background_color.uicolor
         
         gradient = CAGradientLayer()
-        gradient.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)
-        gradient.colors = [userLocket.background_color.inverse.CGColor, (self.backgroundColor?.CGColor)!]
+        gradient.frame = CGRect(x: 0, y: 0, width: self.frame.size.width, height: self.frame.size.height)
+        gradient.colors = [userLocket.background_color.inverse.cgColor, (self.backgroundColor?.cgColor)!]
         gradient.opacity = 0.0
         gradient.startPoint = CGPoint(x: 0.5, y: 0.0)
         gradient.endPoint = CGPoint(x: 0.5, y: 0.2)
-        gradient.anchorPoint = CGPointMake(0.5, 0.5)
-        self.layer.insertSublayer(gradient, atIndex: 0)
+        gradient.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        self.layer.insertSublayer(gradient, at: 0)
         
         gradient2 = CAGradientLayer()
-        gradient2.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)
-        gradient2.colors = [userLocket.background_color.inverse.CGColor, (self.backgroundColor?.CGColor)!]
+        gradient2.frame = CGRect(x: 0, y: 0, width: self.frame.size.width, height: self.frame.size.height)
+        gradient2.colors = [userLocket.background_color.inverse.cgColor, (self.backgroundColor?.cgColor)!]
         gradient2.opacity = 0.0
         gradient2.startPoint = CGPoint(x: 0.5, y: 1.0)
         gradient2.endPoint = CGPoint(x: 0.5, y: 0.8)
-        gradient2.anchorPoint = CGPointMake(0.5, 0.5)
-        self.layer.insertSublayer(gradient2, atIndex: 0)
+        gradient2.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        self.layer.insertSublayer(gradient2, at: 0)
     }
     
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         
-        UIView.animateWithDuration(gEditAnimationDuration, delay: 0, usingSpringWithDamping: gEditAnimationDamping, initialSpringVelocity: 1, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+        UIView.animate(withDuration: gEditAnimationDuration, delay: 0, usingSpringWithDamping: gEditAnimationDamping, initialSpringVelocity: 1, options: UIViewAnimationOptions.curveEaseOut, animations: {
                 if selected == true {
-                    self.locketThumbnailView.transform = CGAffineTransformMakeScale(1.0, 1.0)
+                    self.locketThumbnailView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                     self.gradient.opacity = 0.5
                     self.gradient2.opacity = 0.5
                 } else {
-                    self.locketThumbnailView.transform = CGAffineTransformMakeScale(0.8, 0.8)
+                    self.locketThumbnailView.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
                     self.gradient.opacity = 0.0
                     self.gradient2.opacity = 0.0
                 }

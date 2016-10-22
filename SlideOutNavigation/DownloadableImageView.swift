@@ -12,16 +12,16 @@ import AlamofireImage
 
 protocol DownloadableImageViewDelegate
 {
-    func imageLoaded(imageView: DownloadableImageView)
+    func imageLoaded(_ imageView: DownloadableImageView)
 }
 
 class DownloadableImageView : UIImageView
 {
-    private (set) var url : NSURL = NSURL()
+    fileprivate (set) var url : URL = URL()
     
     var delegate : DownloadableImageViewDelegate?
     
-    func loadImageFromUrl(url: NSURL, orientation: UIImageOrientation) {
+    func loadImageFromUrl(_ url: URL, orientation: UIImageOrientation) {
         self.url = url
         
         if let image = DataManager.sharedManager.getCachedImage(url, orientation: orientation)
@@ -35,12 +35,12 @@ class DownloadableImageView : UIImageView
         }
     }
     
-    func loadImageFromUrl(url: NSURL)
+    func loadImageFromUrl(_ url: URL)
     {
-        self.loadImageFromUrl(url, orientation: UIImageOrientation.Up)
+        self.loadImageFromUrl(url, orientation: UIImageOrientation.up)
     }
     
-    private func downloadImage()
+    fileprivate func downloadImage()
     {
         self.af_setImageWithURL(
             self.url,

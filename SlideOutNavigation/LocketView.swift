@@ -20,23 +20,23 @@ protocol LocketViewDelegate
 
 class LocketView : UIView
 {
-    private var userLocket : UserLocketEntity!
+    fileprivate var userLocket : UserLocketEntity!
     
-    private var contentView: UIView! = UIView(frame: UIScreen.mainScreen().bounds)
-    private var openLocketImageView : DownloadableImageView?
-    private var closedLocketImageView : DownloadableImageView?
-    private var locketChainImageView : DownloadableImageView?
-    private var photoImageView : LocketPhotoView?
-    private var captionLabel : UILabel?
+    fileprivate var contentView: UIView! = UIView(frame: UIScreen.main.bounds)
+    fileprivate var openLocketImageView : DownloadableImageView?
+    fileprivate var closedLocketImageView : DownloadableImageView?
+    fileprivate var locketChainImageView : DownloadableImageView?
+    fileprivate var photoImageView : LocketPhotoView?
+    fileprivate var captionLabel : UILabel?
     
-    private var bgEditView : EditColorView?
-    private var editingBackground : Bool! = false
+    fileprivate var bgEditView : EditColorView?
+    fileprivate var editingBackground : Bool! = false
     
-    private var captionEditTextView : EditTextView?
-    private var editingCaption : Bool! = false
+    fileprivate var captionEditTextView : EditTextView?
+    fileprivate var editingCaption : Bool! = false
     
-    private var isAnimating : Bool = false
-    private (set) var isClosed : Bool = true
+    fileprivate var isAnimating : Bool = false
+    fileprivate (set) var isClosed : Bool = true
     
     var delegate : LocketViewDelegate?
     
@@ -49,7 +49,7 @@ class LocketView : UIView
         captionEditTextView?.frame = self.frame
         captionEditTextView?.delegate = self
         captionEditTextView?.initEvents()
-        captionEditTextView?.hidden = true
+        captionEditTextView?.isHidden = true
         self.addSubview(self.captionEditTextView!)
         
         bgEditView = EditColorView.loadFromNibNamed("EditColorView") as? EditColorView
@@ -66,20 +66,20 @@ class LocketView : UIView
         super.init(coder: aDecoder)
     }
     
-    func setUserLocket(userLocket: UserLocketEntity!)
+    func setUserLocket(_ userLocket: UserLocketEntity!)
     {
         self.userLocket = userLocket
         let skin = self.userLocket.locket_skin
         
-        self.loadLocketSkin(skin)
+        self.loadLocketSkin(skin!)
         
         if photoImageView == nil {
             photoImageView = LocketPhotoView(frame: self.frame,
                 colorFrame: self.userLocket.getImageFrame(),
-                maskFrame: skin.getMaskFrame(),
+                maskFrame: (skin?.getMaskFrame())!,
                 colorUrl: self.userLocket.image.imageURL,
-                colorOrientation: UIImageOrientation(rawValue: Int(self.userLocket.image.orientation.intValue))!,
-                maskUrl: skin.mask_image.imageURL)
+                colorOrientation: UIImageOrientation(rawValue: Int(self.userLocket.image.orientation.int32Value))!,
+                maskUrl: (skin?.mask_image.imageURL)!)
             photoImageView?.delegate = self
             
         } else {
@@ -87,7 +87,7 @@ class LocketView : UIView
                 self.userLocket.getImageFrame(),
                 maskFrame: skin.getMaskFrame(),
                 colorUrl: self.userLocket.image.imageURL,
-                colorOrientation: UIImageOrientation(rawValue: Int(self.userLocket.image.orientation.intValue))!,
+                colorOrientation: UIImageOrientation(rawValue: Int(self.userLocket.image.orientation.int32Value))!,
                 maskUrl: skin.mask_image.imageURL)
         }
         
@@ -98,7 +98,7 @@ class LocketView : UIView
         self.loadBackgroundColor()
     }
     
-    private func loadLocketSkin(skin: LocketSkinEntity)
+    fileprivate func loadLocketSkin(_ skin: LocketSkinEntity)
     {
         locketChainImageView?.removeFromSuperview()
         closedLocketImageView?.removeFromSuperview()
@@ -108,14 +108,14 @@ class LocketView : UIView
         closedLocketImageView = nil
         openLocketImageView = nil
         
-        locketChainImageView = loadImage(skin.chain_image.imageURL, size: skin.chain_image.frame.size, position: skin.getChainPosition())
-        locketChainImageView?.userInteractionEnabled = false
-        openLocketImageView = loadImage(skin.open_image.imageURL, size: skin.open_image.frame.size, position: skin.getOpenLocketPosition())
-        closedLocketImageView = loadImage(skin.closed_image.imageURL, size: skin.closed_image.frame.size, position: skin.getClosedLocketPosition())
+        locketChainImageView = loadImage(skin.chain_image.imageURL as URL, size: skin.chain_image.frame.size, position: skin.getChainPosition())
+        locketChainImageView?.isUserInteractionEnabled = false
+        openLocketImageView = loadImage(skin.open_image.imageURL as URL, size: skin.open_image.frame.size, position: skin.getOpenLocketPosition())
+        closedLocketImageView = loadImage(skin.closed_image.imageURL as URL, size: skin.closed_image.frame.size, position: skin.getClosedLocketPosition())
         
         // Init open/closed state
         closedLocketImageView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action:#selector(LocketView.locketTapped(_:))))
-        closedLocketImageView?.userInteractionEnabled = true
+        closedLocketImageView?.isUserInteractionEnabled = true
         
         openLocketImageView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action:#selector(LocketView.locketTapped(_:))))
         self.openLocketImageView?.alpha = 0.0
@@ -127,29 +127,29 @@ class LocketView : UIView
     
     func loadBackgroundColor()
     {
-        contentView.backgroundColor = UIColor.clearColor()
+        contentView.backgroundColor = UIColor.clear
         self.backgroundColor = userLocket.background_color.uicolor
     }
     
-    func setPhoto(image: UIImage)
+    func setPhoto(_ image: UIImage)
     {
         AnalyticsManager.sharedManager.settingsEvent("Locket Photo Set")
         
-        let url = NSURL(string:"http://" + gFileHost + "/" + image.getUniqueString() + ".png")!
+        let url = URL(string:"http://" + gFileHost + "/" + image.getUniqueString() + ".png")!
         if !FileManager.sharedManager.fileIsCached(url) {
             DataManager.sharedManager.cacheImage(url, image: image)
         }
         
-        self.userLocket.image.orientation = image.imageOrientation.rawValue
+        self.userLocket.image.orientation = image.imageOrientation.rawValue as NSNumber!
         self.userLocket.image.image_full = url.absoluteString
         self.userLocket.image.image_thumb = url.absoluteString
         DataManager.sharedManager.saveAllRecords()
         photoImageView?.setPhoto(image)
     }
     
-    func viewTapped(press: UITapGestureRecognizer)
+    func viewTapped(_ press: UITapGestureRecognizer)
     {
-        let location = press.locationInView(self)
+        let location = press.location(in: self)
         let height = self.frame.height
         
         if location.y < (height * 0.33) {
@@ -170,13 +170,13 @@ class LocketView : UIView
         }
     }
     
-    func viewLongPress(press: UILongPressGestureRecognizer)
+    func viewLongPress(_ press: UILongPressGestureRecognizer)
     {
-        if press.state != UIGestureRecognizerState.Began {
+        if press.state != UIGestureRecognizerState.began {
             return
         }
         
-        let location = press.locationInView(self)
+        let location = press.location(in: self)
         let height = self.frame.height
         
         if isClosed == false && location.y >= height * 0.33 && location.y <= height * 0.66 {
@@ -188,24 +188,24 @@ class LocketView : UIView
         }
     }
     
-    private func cleanupEditMode()
+    fileprivate func cleanupEditMode()
     {
         if(self.photoImageView?.inEditMode == false &&
             self.editingBackground == false &&
             self.editingCaption == false) {
-                self.contentView.userInteractionEnabled = true
+                self.contentView.isUserInteractionEnabled = true
                 delegate?.locketViewDidFinishEditing()
         }
     }
     
-    private func editPhoto()
+    fileprivate func editPhoto()
     {
         AnalyticsManager.sharedManager.settingsEvent("Edit Photo")
         delegate?.locketViewDidStartEditing()
         
         self.photoImageView?.toggleEditMode()
         
-        UIView.animateWithDuration(gEditAnimationDuration, delay: 0, usingSpringWithDamping: gEditAnimationDamping, initialSpringVelocity: 1, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+        UIView.animate(withDuration: gEditAnimationDuration, delay: 0, usingSpringWithDamping: gEditAnimationDamping, initialSpringVelocity: 1, options: UIViewAnimationOptions.curveEaseOut, animations: {
                 self.locketChainImageView?.alpha = 0.0
                 self.openLocketImageView?.alpha = 0.0
                 self.captionLabel?.alpha = 0.0
@@ -215,10 +215,10 @@ class LocketView : UIView
 
     }
     
-    private func stopEditingPhoto()
+    fileprivate func stopEditingPhoto()
     {
         self.photoImageView?.toggleEditMode()
-        UIView.animateWithDuration(gEditAnimationDuration, delay: 0, usingSpringWithDamping: gEditAnimationDamping, initialSpringVelocity: 1, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+        UIView.animate(withDuration: gEditAnimationDuration, delay: 0, usingSpringWithDamping: gEditAnimationDamping, initialSpringVelocity: 1, options: UIViewAnimationOptions.curveEaseOut, animations: {
                 self.locketChainImageView?.alpha = 1.0
                 self.openLocketImageView?.alpha = 1.0
                 self.captionLabel?.alpha = 1.0
@@ -229,26 +229,26 @@ class LocketView : UIView
         self.cleanupEditMode()
     }
     
-    private func editBackground()
+    fileprivate func editBackground()
     {
         AnalyticsManager.sharedManager.settingsEvent("Edit Background")
         
-        self.contentView.userInteractionEnabled = false
+        self.contentView.isUserInteractionEnabled = false
         editingBackground = true
         delegate?.locketViewDidStartEditing()
         bgEditView?.setColor(self.backgroundColor!)
         
-        UIView.animateWithDuration(gEditAnimationDuration, delay: 0, usingSpringWithDamping: gEditAnimationDamping, initialSpringVelocity: 1, options: UIViewAnimationOptions.CurveEaseOut, animations: {
-                self.bgEditView?.transform = CGAffineTransformMakeTranslation(0, gBGEditViewHeight)
+        UIView.animate(withDuration: gEditAnimationDuration, delay: 0, usingSpringWithDamping: gEditAnimationDamping, initialSpringVelocity: 1, options: UIViewAnimationOptions.curveEaseOut, animations: {
+                self.bgEditView?.transform = CGAffineTransform(translationX: 0, y: gBGEditViewHeight)
             },
             completion: { (value: Bool) in
         })
     }
     
-    private func stopEditingBackground()
+    fileprivate func stopEditingBackground()
     {
-        UIView.animateWithDuration(gEditAnimationDuration, delay: 0, usingSpringWithDamping: gEditAnimationDamping, initialSpringVelocity: 1, options: UIViewAnimationOptions.CurveEaseOut, animations: {
-                self.bgEditView?.transform = CGAffineTransformMakeTranslation(0, 0)
+        UIView.animate(withDuration: gEditAnimationDuration, delay: 0, usingSpringWithDamping: gEditAnimationDamping, initialSpringVelocity: 1, options: UIViewAnimationOptions.curveEaseOut, animations: {
+                self.bgEditView?.transform = CGAffineTransform(translationX: 0, y: 0)
             },
             completion: { (value: Bool) in
                 self.editingBackground = false
@@ -256,18 +256,18 @@ class LocketView : UIView
         })
     }
     
-    private func editCaption()
+    fileprivate func editCaption()
     {
         AnalyticsManager.sharedManager.settingsEvent("Edit Caption")
         
-        contentView.userInteractionEnabled = false
+        contentView.isUserInteractionEnabled = false
         delegate?.locketViewDidStartEditing()
         captionEditTextView?.setTextFieldText(self.captionLabel!.text!)
-        captionEditTextView?.hidden = false
+        captionEditTextView?.isHidden = false
         
-        UIView.animateWithDuration(gEditAnimationDuration, delay: 0, usingSpringWithDamping: gEditAnimationDamping, initialSpringVelocity: 1, options: UIViewAnimationOptions.CurveEaseOut, animations: {
-                let offset = UIScreen.mainScreen().bounds.height * (0.5 - (1.0 - gCaptionCenterYMultiplier))
-                self.contentView.transform = CGAffineTransformMakeTranslation(0, -offset)
+        UIView.animate(withDuration: gEditAnimationDuration, delay: 0, usingSpringWithDamping: gEditAnimationDamping, initialSpringVelocity: 1, options: UIViewAnimationOptions.curveEaseOut, animations: {
+                let offset = UIScreen.main.bounds.height * (0.5 - (1.0 - gCaptionCenterYMultiplier))
+                self.contentView.transform = CGAffineTransform(translationX: 0, y: -offset)
             },
             completion: { (value: Bool) in
         })
@@ -276,19 +276,19 @@ class LocketView : UIView
         editingCaption = true
     }
     
-    private func stopEditingCaption()
+    fileprivate func stopEditingCaption()
     {
-        UIView.animateWithDuration(0.7, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 1, options: UIViewAnimationOptions.CurveEaseOut, animations: {
-                self.contentView.transform = CGAffineTransformMakeTranslation(0, 0)
+        UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 1, options: UIViewAnimationOptions.curveEaseOut, animations: {
+                self.contentView.transform = CGAffineTransform(translationX: 0, y: 0)
             },
             completion: { (value: Bool ) in
-                self.captionEditTextView?.hidden = true
+                self.captionEditTextView?.isHidden = true
                 self.editingCaption = false
                 self.cleanupEditMode()
         })
     }
     
-    func locketTapped(sender: UITapGestureRecognizer)
+    func locketTapped(_ sender: UITapGestureRecognizer)
     {
         if isAnimating == true {
             return
@@ -299,20 +299,20 @@ class LocketView : UIView
         let incomingView = isClosed ? openLocketImageView! : closedLocketImageView!
         
         isClosed = !isClosed
-        fadingView.userInteractionEnabled = false
+        fadingView.isUserInteractionEnabled = false
         isAnimating = true
         
-        UIView.animateWithDuration(0.5, animations: {
+        UIView.animate(withDuration: 0.5, animations: {
             fadingView.alpha = 0.0
             incomingView.alpha = 1.0
             },
             completion: { (value: Bool) in
                 self.isAnimating = false
-                incomingView.userInteractionEnabled = true
+                incomingView.isUserInteractionEnabled = true
             })
     }
     
-    private func loadImage(url: NSURL, size: CGSize, position: CGPoint) -> DownloadableImageView
+    fileprivate func loadImage(_ url: URL, size: CGSize, position: CGPoint) -> DownloadableImageView
     {
         let imageView = DownloadableImageView()
         contentView.addSubview(imageView)
@@ -321,15 +321,15 @@ class LocketView : UIView
         
         imageView.loadImageFromUrl(url)
         
-        imageView.layer.shadowColor = UIColor.blackColor().CGColor
-        imageView.layer.shadowOffset = CGSizeMake(4, 4)
+        imageView.layer.shadowColor = UIColor.black.cgColor
+        imageView.layer.shadowOffset = CGSize(width: 4, height: 4)
         imageView.layer.shadowRadius = 7
         imageView.layer.shadowOpacity = 1.0
         
         return imageView
     }
     
-    private func loadCaption()
+    fileprivate func loadCaption()
     {
         if let label = self.captionLabel as UILabel?
         {
@@ -342,15 +342,15 @@ class LocketView : UIView
         
         label.translatesAutoresizingMaskIntoConstraints = false
         
-        self.addConstraint(NSLayoutConstraint(item: label, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Width, multiplier: 0.85, constant: 0))
-        self.addConstraint(NSLayoutConstraint(item: label, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 100))
-        self.addConstraint(NSLayoutConstraint(item: label, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0))
-        self.addConstraint(NSLayoutConstraint(item: label, attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Bottom, multiplier: gCaptionCenterYMultiplier, constant: 0))
+        self.addConstraint(NSLayoutConstraint(item: label, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.width, multiplier: 0.85, constant: 0))
+        self.addConstraint(NSLayoutConstraint(item: label, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: 100))
+        self.addConstraint(NSLayoutConstraint(item: label, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.centerX, multiplier: 1, constant: 0))
+        self.addConstraint(NSLayoutConstraint(item: label, attribute: NSLayoutAttribute.centerY, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.bottom, multiplier: gCaptionCenterYMultiplier, constant: 0))
         
         label.font = UIFont(name: self.userLocket.caption_font, size: gCaptionFontSize)
         label.text = self.userLocket.caption_text
         label.textColor = self.userLocket.caption_color.uicolor
-        label.textAlignment = NSTextAlignment.Center
+        label.textAlignment = NSTextAlignment.center
         label.numberOfLines = 1
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.3
@@ -358,14 +358,14 @@ class LocketView : UIView
         captionLabel = label
     }
     
-    private func addImageConstraints( imageView: UIImageView, size: CGSize, position: CGPoint )
+    fileprivate func addImageConstraints( _ imageView: UIImageView, size: CGSize, position: CGPoint )
     {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         
-        self.addConstraint(NSLayoutConstraint(item: imageView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: size.width))
-        self.addConstraint(NSLayoutConstraint(item: imageView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: size.height))
-        self.addConstraint(NSLayoutConstraint(item: imageView, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: position.x))
-        self.addConstraint(NSLayoutConstraint(item: imageView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: position.y))
+        self.addConstraint(NSLayoutConstraint(item: imageView, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: size.width))
+        self.addConstraint(NSLayoutConstraint(item: imageView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: size.height))
+        self.addConstraint(NSLayoutConstraint(item: imageView, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.left, multiplier: 1, constant: position.x))
+        self.addConstraint(NSLayoutConstraint(item: imageView, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.top, multiplier: 1, constant: position.y))
     }
 }
 
@@ -376,23 +376,23 @@ extension LocketView : EditTextViewDelegate
         self.stopEditingCaption()
     }
     
-    func editTextViewTextChanged(text: String) {
+    func editTextViewTextChanged(_ text: String) {
         self.captionLabel?.text = text
         self.userLocket.caption_text = text
     }
     
-    func editTextViewFontChanged(font: String)
+    func editTextViewFontChanged(_ font: String)
     {
         self.captionLabel?.font = UIFont(name: font, size: gCaptionFontSize)
         self.userLocket.caption_font = font
     }
     
-    func editTextViewColorChanged(color: UIColor)
+    func editTextViewColorChanged(_ color: UIColor)
     {
         self.captionLabel?.textColor = color
-        self.userLocket.caption_color.red = color.coreImageColor?.red
-        self.userLocket.caption_color.green = color.coreImageColor?.green
-        self.userLocket.caption_color.blue = color.coreImageColor?.blue
+        self.userLocket.caption_color.red = color.coreImageColor?.red as NSNumber!
+        self.userLocket.caption_color.green = color.coreImageColor?.green as NSNumber!
+        self.userLocket.caption_color.blue = color.coreImageColor?.blue as NSNumber!
     }
 }
 
@@ -401,10 +401,10 @@ extension LocketView : LocketPhotoViewDelegate
     func didFinishEditing() {
         let anchorX = (self.closedLocketImageView?.frame.origin.x)! + CGFloat(self.userLocket.locket_skin.closed_image.anchor_x) - (self.photoImageView?.colorImageFrame.origin.x)!
         let anchorY = (self.closedLocketImageView?.frame.origin.y)! + CGFloat(self.userLocket.locket_skin.closed_image.anchor_y) - (self.photoImageView?.colorImageFrame.origin.y)!
-        self.userLocket.image.anchor_x = NSNumber(float: Float(anchorX))
-        self.userLocket.image.anchor_y = NSNumber(float: Float(anchorY))
-        self.userLocket.image.width = self.photoImageView?.colorImageFrame.width
-        self.userLocket.image.height = self.photoImageView?.colorImageFrame.height
+        self.userLocket.image.anchor_x = NSNumber(value: Float(anchorX) as Float)
+        self.userLocket.image.anchor_y = NSNumber(value: Float(anchorY) as Float)
+        self.userLocket.image.width = self.photoImageView?.colorImageFrame.width as NSNumber!
+        self.userLocket.image.height = self.photoImageView?.colorImageFrame.height as NSNumber!
         DataManager.sharedManager.saveAllRecords()
         
         self.stopEditingPhoto()
@@ -421,10 +421,10 @@ extension LocketView : LocketPhotoViewDelegate
 
 extension LocketView : EditColorViewDelegate
 {
-    func EditColorViewColorChanged(color: UIColor) {
+    func EditColorViewColorChanged(_ color: UIColor) {
         self.backgroundColor = color
-        self.userLocket.background_color.red = color.coreImageColor?.red
-        self.userLocket.background_color.green = color.coreImageColor?.green
-        self.userLocket.background_color.blue = color.coreImageColor?.blue
+        self.userLocket.background_color.red = color.coreImageColor?.red as NSNumber!
+        self.userLocket.background_color.green = color.coreImageColor?.green as NSNumber!
+        self.userLocket.background_color.blue = color.coreImageColor?.blue as NSNumber!
     }
 }

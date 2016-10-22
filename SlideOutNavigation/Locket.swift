@@ -18,27 +18,27 @@ class ImageAsset
     {
         data = assetData
         
-        let screenWidth = UIScreen.mainScreen().bounds.width
+        let screenWidth = UIScreen.main.bounds.width
         let scaleFactor : CGFloat = screenWidth / 1242
         let width: CGFloat = scaleFactor * (data["width"] as! CGFloat)
         let height: CGFloat = scaleFactor * (data["height"] as! CGFloat)
         let anchorX = scaleFactor * (data["anchor_x"] as! CGFloat)
         let anchorY = scaleFactor * (data["anchor_y"] as! CGFloat)
         
-        frame = CGRectMake(anchorX, anchorY, width, height)
+        frame = CGRect(x: anchorX, y: anchorY, width: width, height: height)
         title = data["title"] as! String
     }
     
-    func getThumbUrl() -> NSURL
+    func getThumbUrl() -> URL
     {
         let thumbStr : String = data["image_thumb"] as! String
-        return NSURL(string: thumbStr)!
+        return URL(string: thumbStr)!
     }
     
-    func getImageUrl() -> NSURL
+    func getImageUrl() -> URL
     {
         let imageStr = data["image_full"] as! String
-        return NSURL(string: imageStr)!
+        return URL(string: imageStr)!
     }
     
     class func createDefaultImageAsset() -> ImageAsset
@@ -66,7 +66,7 @@ class Locket
         maskImage = ImageAsset(assetData: self.data["mask_image"] as! NSDictionary )
     }
     
-    class func loadLockets(data: NSDictionary!) -> Array<Locket>
+    class func loadLockets(_ data: NSDictionary!) -> Array<Locket>
     {
         let lockets = data["lockets"] as! Array<NSDictionary>
         
@@ -87,15 +87,15 @@ class Locket
         return self.data["title"] as! String
     }
     
-    func getThumbUrl() -> NSURL
+    func getThumbUrl() -> URL
     {
         return closedImage.getThumbUrl()
     }
     
     func getClosedLocketPosition() -> CGPoint
     {
-        let width = UIScreen.mainScreen().bounds.size.width
-        let height = UIScreen.mainScreen().bounds.size.height
+        let width = UIScreen.main.bounds.size.width
+        let height = UIScreen.main.bounds.size.height
         
         let x = 0.5 * (width - closedImage.frame.size.width)
         let y = 0.5 * (height - closedImage.frame.size.height)
@@ -118,10 +118,10 @@ class Locket
         let pos = getAnchoredImagePosition(self.maskImage.frame.origin)
         let size = self.maskImage.frame.size
         
-        return CGRectMake(pos.x, pos.y, size.width, size.height)
+        return CGRect(x: pos.x, y: pos.y, width: size.width, height: size.height)
     }
     
-    func getAnchoredImagePosition(anchor: CGPoint) -> CGPoint
+    func getAnchoredImagePosition(_ anchor: CGPoint) -> CGPoint
     {
         let locketPos : CGPoint = getClosedLocketPosition()
         let locketAnchor : CGPoint = closedImage.frame.origin
@@ -139,13 +139,13 @@ class Locket
 
 class UserLocket
 {
-    private (set) var title : String
-    private (set) var locket : Locket
-    private (set) var locketSkin : LocketSkinEntity
-    private (set) var image : ImageAsset
-    private (set) var captionText : String
-    private (set) var captionFont: String
-    private (set) var backgroundColor : UIColor
+    fileprivate (set) var title : String
+    fileprivate (set) var locket : Locket
+    fileprivate (set) var locketSkin : LocketSkinEntity
+    fileprivate (set) var image : ImageAsset
+    fileprivate (set) var captionText : String
+    fileprivate (set) var captionFont: String
+    fileprivate (set) var backgroundColor : UIColor
     
     init(data: NSDictionary)
     {
@@ -158,12 +158,12 @@ class UserLocket
         self.backgroundColor = UIColor(red: data["bg_red"] as! CGFloat, green: data["bg_green"] as! CGFloat, blue: data["bg_blue"] as! CGFloat, alpha: 1.0)
     }
     
-    func setLocket(locket: Locket!)
+    func setLocket(_ locket: Locket!)
     {
         self.locket = locket
     }
     
-    func setLocketSkin(locketSkin: LocketSkinEntity!)
+    func setLocketSkin(_ locketSkin: LocketSkinEntity!)
     {
         self.locketSkin = locketSkin
     }
@@ -171,11 +171,11 @@ class UserLocket
     func getImageFrame() -> CGRect
     {
         let pos = locket.getAnchoredImagePosition(image.frame.origin)
-        return CGRectMake(pos.x, pos.y, image.frame.width, image.frame.height)
+        return CGRect(x: pos.x, y: pos.y, width: image.frame.width, height: image.frame.height)
     }
     
     class func createDefaultUserLocket() -> UserLocket
     {
-        return UserLocket(data: gDefaultUserLocketData)
+        return UserLocket(data: gDefaultUserLocketData as NSDictionary)
     }
 }

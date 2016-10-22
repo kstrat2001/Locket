@@ -11,32 +11,32 @@ import UIKit
 
 class MaskView : UIView
 {
-    private (set) var maskViewImage : UIImage?
-    private (set) var mask: CGImage?
+    fileprivate (set) var maskViewImage : UIImage?
+    var mask: CGImage?
     
-    private (set) var whiteFullScreenImage: UIImage?
-    private (set) var blackFullScreenImage: UIImage?
+    fileprivate (set) var whiteFullScreenImage: UIImage?
+    fileprivate (set) var blackFullScreenImage: UIImage?
     
-    private (set) var inverseMask: CGImage?
-    private (set) var inverseMaskView: UIView?
+    fileprivate (set) var inverseMask: CGImage?
+    fileprivate (set) var inverseMaskView: UIView?
     
     override init(frame: CGRect)
     {
         super.init(frame: frame)
         
         inverseMaskView = UIView(frame: frame)
-        inverseMaskView?.userInteractionEnabled = false
+        inverseMaskView?.isUserInteractionEnabled = false
         
         let colorView = UIView(frame: frame)
-        colorView.backgroundColor = UIColor.whiteColor()
+        colorView.backgroundColor = UIColor.white
         whiteFullScreenImage = colorView.captureImage()
         
-        colorView.backgroundColor = UIColor.blackColor()
+        colorView.backgroundColor = UIColor.black
         blackFullScreenImage = colorView.captureImage()
         
         // Set up the background to mask transparent
         // Any color added to the view will mask in image data
-        self.backgroundColor = UIColor.whiteColor()
+        self.backgroundColor = UIColor.white
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -52,7 +52,7 @@ class MaskView : UIView
         
         // reallocate the inverseMaskView here to clear all previous subviews
         inverseMaskView = UIView(frame: frame)
-        inverseMaskView?.userInteractionEnabled = false
+        inverseMaskView?.isUserInteractionEnabled = false
         
         let whiteMaskPatternImageView = UIImageView(image: whiteMaskPattern)
         whiteMaskPatternImageView.frame = self.frame
@@ -64,27 +64,27 @@ class MaskView : UIView
         // No longer need the white pattern
         whiteMaskPatternImageView.removeFromSuperview()
 
-        let blackOverlay = UIImage(CGImage: CGImageCreateWithMask(blackFullScreenImage!.CGImage, self.inverseMask)!)
-        inverseMaskView?.backgroundColor = UIColor.clearColor()
+        let blackOverlay = UIImage(cgImage: (blackFullScreenImage!.cgImage?.masking(self.inverseMask!)!)!)
+        inverseMaskView?.backgroundColor = UIColor.clear
         let blackOverlayView = UIImageView(image: blackOverlay)
         blackOverlayView.frame = self.frame
         inverseMaskView?.addSubview(blackOverlayView)
     }
     
-    func applyMaskToImage(image: UIImage) -> UIImage
+    func applyMaskToImage(_ image: UIImage) -> UIImage
     {
-        return UIImage(CGImage: CGImageCreateWithMask(image.CGImage, self.mask)!)
+        return UIImage(cgImage: image.cgImage!.masking(self.mask!)!)
     }
     
-    private func createMask(image: UIImage) -> CGImage
+    fileprivate func createMask(_ image: UIImage) -> CGImage
     {
-        let maskRef = image.CGImage
-        let mask = CGImageMaskCreate(CGImageGetWidth(maskRef),
-            CGImageGetHeight(maskRef),
-            CGImageGetBitsPerComponent(maskRef),
-            CGImageGetBitsPerPixel(maskRef),
-            CGImageGetBytesPerRow(maskRef),
-            CGImageGetDataProvider(maskRef), nil, false);
+        let maskRef = image.cgImage
+        let mask = CGImage(maskWidth: (maskRef?.width)!,
+            height: (maskRef?.height)!,
+            bitsPerComponent: (maskRef?.bitsPerComponent)!,
+            bitsPerPixel: (maskRef?.bitsPerPixel)!,
+            bytesPerRow: (maskRef?.bytesPerRow)!,
+            provider: (maskRef?.dataProvider!)!, decode: nil, shouldInterpolate: false);
         
         return mask!
     }

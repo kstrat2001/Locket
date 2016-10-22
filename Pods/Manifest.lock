@@ -2,7 +2,7 @@ PODS:
   - Alamofire (4.0.1)
   - AlamofireImage (3.1.0):
     - Alamofire (~> 4.0)
-  - GoogleAnalytics (3.14.0)
+  - GoogleAnalytics (3.17.0)
 
 DEPENDENCIES:
   - Alamofire (~> 4.0)
@@ -12,7 +12,7 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   Alamofire: 7682d43245de14874acd142ec137b144aa1dd335
   AlamofireImage: bb8c8351c51cb1633bb6be69b6dbbaff37ce65b7
-  GoogleAnalytics: 9be1afdb8deeac4bb5f13ca7f7d3b9db2a1f43dc
+  GoogleAnalytics: f42cc53a87a51fe94334821868d9c8481ff47a7b
 
 PODFILE CHECKSUM: 7b48011a2548871f8118f5df884da6a294011807
 

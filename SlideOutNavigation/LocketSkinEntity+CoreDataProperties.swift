@@ -15,7 +15,7 @@ import CoreData
 extension LocketSkinEntity {
 
     @NSManaged var title: String!
-    @NSManaged var updated_at: NSDate!
+    @NSManaged var updated_at: Date!
     @NSManaged var id: NSNumber!
     @NSManaged var chain_image: ImageAssetEntity!
     @NSManaged var closed_image: ImageAssetEntity!

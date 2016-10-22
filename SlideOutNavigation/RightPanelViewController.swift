@@ -11,7 +11,7 @@ import UIKit
 
 protocol RightPanelViewControllerDelegate
 {
-    func userLocketSelected(userLocket: UserLocketEntity)
+    func userLocketSelected(_ userLocket: UserLocketEntity)
 }
 
 class RightPanelViewController: UIViewController {
@@ -38,33 +38,33 @@ class RightPanelViewController: UIViewController {
 
 extension RightPanelViewController: UITableViewDataSource {
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int
+    func numberOfSections(in tableView: UITableView) -> Int
     {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
         // Add 1 to the number of lockets to show the "AddNewCell"
         return SettingsManager.sharedManager.userLockets.count + 1
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
-        if indexPath.row < SettingsManager.sharedManager.userLockets.count {
-            let cell = tableView.dequeueReusableCellWithIdentifier(TableView.CellIdentifiers.LocketCell, forIndexPath: indexPath) as! UserLocketCell
+        if (indexPath as NSIndexPath).row < SettingsManager.sharedManager.userLockets.count {
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.LocketCell, for: indexPath) as! UserLocketCell
             
-            let locket = SettingsManager.sharedManager.userLockets[indexPath.row]
+            let locket = SettingsManager.sharedManager.userLockets[(indexPath as NSIndexPath).row]
             cell.configureForLocket(locket)
             
-            if SettingsManager.sharedManager.isUserLocketSelected(indexPath.row) == true {
-                tableView.selectRowAtIndexPath(indexPath, animated: true, scrollPosition: UITableViewScrollPosition.None)
+            if SettingsManager.sharedManager.isUserLocketSelected((indexPath as NSIndexPath).row) == true {
+                tableView.selectRow(at: indexPath, animated: true, scrollPosition: UITableViewScrollPosition.none)
             }
             
             return cell
         // Exception for the "New" cell which adds lockets
         } else {
-            let cell = tableView.dequeueReusableCellWithIdentifier(TableView.CellIdentifiers.AddNewCell, forIndexPath: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.AddNewCell, for: indexPath)
             
             return cell
         }
@@ -76,11 +76,11 @@ extension RightPanelViewController: UITableViewDataSource {
 
 extension RightPanelViewController: UITableViewDelegate {
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        if indexPath.row < SettingsManager.sharedManager.userLockets.count {
-            let selectedLocket = SettingsManager.sharedManager.selectUserLocket(indexPath.row)
-            AnalyticsManager.sharedManager.userLocketSelectAction("Lckt #\(indexPath.row), cap: \(selectedLocket.caption_text), skin: \(selectedLocket.locket_skin.title)")
+        if (indexPath as NSIndexPath).row < SettingsManager.sharedManager.userLockets.count {
+            let selectedLocket = SettingsManager.sharedManager.selectUserLocket((indexPath as NSIndexPath).row)
+            AnalyticsManager.sharedManager.userLocketSelectAction("Lckt #\((indexPath as NSIndexPath).row), cap: \(selectedLocket.caption_text), skin: \(selectedLocket.locket_skin.title)")
             delegate?.userLocketSelected(selectedLocket)
         } else {
             let selectedLocket = SettingsManager.sharedManager.addNewLocket()
@@ -90,17 +90,17 @@ extension RightPanelViewController: UITableViewDelegate {
         }
     }
     
-    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        if indexPath.row < SettingsManager.sharedManager.userLockets.count {
-            return !SettingsManager.sharedManager.isUserLocketSelected(indexPath.row)
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        if (indexPath as NSIndexPath).row < SettingsManager.sharedManager.userLockets.count {
+            return !SettingsManager.sharedManager.isUserLocketSelected((indexPath as NSIndexPath).row)
         } else {
             return false
         }
     }
     
-    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == UITableViewCellEditingStyle.Delete {
-            SettingsManager.sharedManager.deleteUserLocket(indexPath.row )
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == UITableViewCellEditingStyle.delete {
+            SettingsManager.sharedManager.deleteUserLocket((indexPath as NSIndexPath).row )
             AnalyticsManager.sharedManager.valueChangedEvent("Saved Lockets", action: "Delete Locket", value: SettingsManager.sharedManager.userLockets.count)
             tableView.reloadData()
         }

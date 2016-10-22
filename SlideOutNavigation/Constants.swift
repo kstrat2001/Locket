@@ -27,7 +27,7 @@ let gLightPinkColor = UIColor(red: 1.0, green: 232.0/255.0, blue: 243.0/255.0, a
 let gCaptionFontSize = CGFloat(40.0)
 let gCaptionCenterYMultiplier = CGFloat(0.85)
 
-let gEditAnimationDuration = NSTimeInterval(0.7)
+let gEditAnimationDuration = TimeInterval(0.7)
 let gEditAnimationDamping = CGFloat(0.9)
 
 let gDefaultImageAssetData : NSDictionary = [
@@ -106,4 +106,4 @@ let gDefaultUserLocketData = [
         "green" : 0.0,
         "blue" : 0.0,
         "alpha" : 1.0 ],
-]
+] as [String : Any]

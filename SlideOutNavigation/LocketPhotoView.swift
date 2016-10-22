@@ -19,24 +19,24 @@ protocol LocketPhotoViewDelegate
 
 class LocketPhotoView : UIView
 {
-    private (set) var colorDownload : DownloadableImageView?
-    private (set) var fullScreencolorDownload: UIView?
+    fileprivate (set) var colorDownload : DownloadableImageView?
+    fileprivate (set) var fullScreencolorDownload: UIView?
 
-    private (set) var maskDownload : DownloadableImageView?
-    private (set) var maskImageView : MaskView?
+    fileprivate (set) var maskDownload : DownloadableImageView?
+    fileprivate (set) var maskImageView : MaskView?
     
-    private (set) var finalImageView : UIImageView?
+    fileprivate (set) var finalImageView : UIImageView?
     
-    private (set) var colorImageLoaded : Bool = false
-    private (set) var maskImageLoaded : Bool = false
+    fileprivate (set) var colorImageLoaded : Bool = false
+    fileprivate (set) var maskImageLoaded : Bool = false
     
-    private (set) var doneButton : UIButton?
-    private (set) var selectPhotoButton : UIButton?
-    private (set) var takePhotoButton : UIButton?
-    private (set) var inEditMode : Bool = false
+    fileprivate (set) var doneButton : UIButton?
+    fileprivate (set) var selectPhotoButton : UIButton?
+    fileprivate (set) var takePhotoButton : UIButton?
+    fileprivate (set) var inEditMode : Bool = false
     
-    private (set) var colorImageFrame : CGRect = CGRect()
-    private (set) var maskImageFrame : CGRect = CGRect()
+    fileprivate (set) var colorImageFrame : CGRect = CGRect()
+    fileprivate (set) var maskImageFrame : CGRect = CGRect()
     
     var delegate : LocketPhotoViewDelegate?
     
@@ -44,7 +44,7 @@ class LocketPhotoView : UIView
         super.init(coder: aDecoder)
     }
     
-    init(frame: CGRect, colorFrame: CGRect, maskFrame: CGRect, colorUrl: NSURL, colorOrientation: UIImageOrientation, maskUrl: NSURL)
+    init(frame: CGRect, colorFrame: CGRect, maskFrame: CGRect, colorUrl: URL, colorOrientation: UIImageOrientation, maskUrl: URL)
     {
         super.init(frame: frame)
         
@@ -72,17 +72,17 @@ class LocketPhotoView : UIView
         self.addSubview(fullScreencolorDownload!)
         self.addSubview(finalImageView!)
         
-        self.takePhotoButton?.hidden = true
-        self.selectPhotoButton?.hidden = true
-        self.doneButton?.hidden = true
-        self.bringSubviewToFront(self.doneButton!)
-        self.bringSubviewToFront(self.selectPhotoButton!)
-        self.bringSubviewToFront(self.takePhotoButton!)
+        self.takePhotoButton?.isHidden = true
+        self.selectPhotoButton?.isHidden = true
+        self.doneButton?.isHidden = true
+        self.bringSubview(toFront: self.doneButton!)
+        self.bringSubview(toFront: self.selectPhotoButton!)
+        self.bringSubview(toFront: self.takePhotoButton!)
         
         loadAssets(colorFrame, maskFrame: maskFrame, colorUrl: colorUrl, colorOrientation: colorOrientation, maskUrl: maskUrl)
     }
     
-    func loadAssets(colorFrame: CGRect, maskFrame: CGRect, colorUrl: NSURL, colorOrientation: UIImageOrientation, maskUrl: NSURL)
+    func loadAssets(_ colorFrame: CGRect, maskFrame: CGRect, colorUrl: URL, colorOrientation: UIImageOrientation, maskUrl: URL)
     {
         colorImageLoaded = false
         maskImageLoaded = false
@@ -96,7 +96,7 @@ class LocketPhotoView : UIView
         maskDownload?.loadImageFromUrl(maskUrl)
     }
     
-    func setPhoto(image: UIImage)
+    func setPhoto(_ image: UIImage)
     {
         let scale = self.frame.width / image.size.width
         let width = image.size.width * scale
@@ -109,7 +109,7 @@ class LocketPhotoView : UIView
         colorDownload?.frame = colorImageFrame
     }
     
-    private func calculateColorImageFrame(photoFrame: CGRect, maskFrame: CGRect)
+    fileprivate func calculateColorImageFrame(_ photoFrame: CGRect, maskFrame: CGRect)
     {
         if photoFrame.contains(maskFrame){
             colorImageFrame = photoFrame
@@ -120,17 +120,17 @@ class LocketPhotoView : UIView
             if colorAspect > maskAspect {
                 let newWidth = maskFrame.width * (colorAspect / maskAspect)
                 let newX = maskFrame.origin.x - ((newWidth - maskFrame.width) * 0.5)
-                colorImageFrame = CGRectMake(newX, maskFrame.origin.y, newWidth, maskFrame.height)
+                colorImageFrame = CGRect(x: newX, y: maskFrame.origin.y, width: newWidth, height: maskFrame.height)
             }
             else {
                 let newHeight = maskFrame.height * (maskAspect / colorAspect)
                 let newY = maskFrame.origin.y - ((newHeight - maskFrame.height) * 0.5)
-                colorImageFrame = CGRectMake(maskFrame.origin.x, newY, maskFrame.width, newHeight)
+                colorImageFrame = CGRect(x: maskFrame.origin.x, y: newY, width: maskFrame.width, height: newHeight)
             }
         }
     }
     
-    private func setupLayers()
+    fileprivate func setupLayers()
     {
         maskImageView?.inverseMaskView?.removeFromSuperview()
         maskImageView?.updateMask()
@@ -143,13 +143,13 @@ class LocketPhotoView : UIView
         fullScreencolorDownload!.alpha = 0.0
     }
     
-    private func updateFinalImage()
+    fileprivate func updateFinalImage()
     {
         fullScreencolorDownload!.alpha = 1.0
         let fullScreenColor = fullScreencolorDownload?.captureImage()
         
         finalImageView?.image = maskImageView?.applyMaskToImage(fullScreenColor!)
-        self.bringSubviewToFront(finalImageView!)
+        self.bringSubview(toFront: finalImageView!)
     }
     
     func toggleEditMode()
@@ -158,46 +158,46 @@ class LocketPhotoView : UIView
         
         if inEditMode == true
         {
-            self.takePhotoButton?.hidden = false
-            self.selectPhotoButton?.hidden = false
-            self.doneButton?.hidden = false
+            self.takePhotoButton?.isHidden = false
+            self.selectPhotoButton?.isHidden = false
+            self.doneButton?.isHidden = false
             
-            UIView.animateWithDuration(gEditAnimationDuration, delay: 0, usingSpringWithDamping: gEditAnimationDamping, initialSpringVelocity: 1, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+            UIView.animate(withDuration: gEditAnimationDuration, delay: 0, usingSpringWithDamping: gEditAnimationDamping, initialSpringVelocity: 1, options: UIViewAnimationOptions.curveEaseOut, animations: {
                     self.fullScreencolorDownload?.alpha = 1.0
                     (self.maskImageView?.inverseMaskView)!.alpha = 1.0
-                    let transform = CGAffineTransformMakeTranslation(0, 0)
+                    let transform = CGAffineTransform(translationX: 0, y: 0)
                     self.takePhotoButton?.transform = transform
                     self.selectPhotoButton?.transform = transform
                     self.doneButton?.transform = transform
                 },
                 completion: { (value: Bool) in
-                    self.finalImageView?.hidden = true
+                    self.finalImageView?.isHidden = true
 
             })
         }
         else
         {
             self.updateFinalImage()
-            finalImageView!.hidden = false
+            finalImageView!.isHidden = false
             
-            UIView.animateWithDuration(gEditAnimationDuration, delay: 0, usingSpringWithDamping: gEditAnimationDamping, initialSpringVelocity: 1, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+            UIView.animate(withDuration: gEditAnimationDuration, delay: 0, usingSpringWithDamping: gEditAnimationDamping, initialSpringVelocity: 1, options: UIViewAnimationOptions.curveEaseOut, animations: {
                     self.fullScreencolorDownload?.alpha = 0.0
                     (self.maskImageView?.inverseMaskView)!.alpha = 0.0
-                    self.takePhotoButton?.transform = CGAffineTransformMakeTranslation(0, -100)
-                    self.selectPhotoButton?.transform = CGAffineTransformMakeTranslation(0, -100)
-                    self.doneButton?.transform = CGAffineTransformMakeTranslation(0, 100)
+                    self.takePhotoButton?.transform = CGAffineTransform(translationX: 0, y: -100)
+                    self.selectPhotoButton?.transform = CGAffineTransform(translationX: 0, y: -100)
+                    self.doneButton?.transform = CGAffineTransform(translationX: 0, y: 100)
                 },
                 completion: { (value: Bool) in
-                    self.takePhotoButton?.hidden = true
-                    self.selectPhotoButton?.hidden = true
-                    self.doneButton?.hidden = true
+                    self.takePhotoButton?.isHidden = true
+                    self.selectPhotoButton?.isHidden = true
+                    self.doneButton?.isHidden = true
             })
         }
     }
     
-    func panHandler(sender: UIPanGestureRecognizer)
+    func panHandler(_ sender: UIPanGestureRecognizer)
     {
-        let translation = sender.translationInView(fullScreencolorDownload!)
+        let translation = sender.translation(in: fullScreencolorDownload!)
         let location = CGPoint(x: translation.x + colorImageFrame.origin.x, y: translation.y + colorImageFrame.origin.y)
         
         var newFrame = CGRect(origin: location, size: colorImageFrame.size)
@@ -221,12 +221,12 @@ class LocketPhotoView : UIView
         
         colorDownload?.frame = newFrame
         
-        if sender.state == UIGestureRecognizerState.Ended {
+        if sender.state == UIGestureRecognizerState.ended {
             colorImageFrame = newFrame
         }
     }
     
-    func pinchHandler(sender: UIPinchGestureRecognizer)
+    func pinchHandler(_ sender: UIPinchGestureRecognizer)
     {
         let xOffset = -(colorImageFrame.size.width * (sender.scale - 1.0)) * 0.5
         let yOffset = -(colorImageFrame.size.height * (sender.scale - 1.0)) * 0.5
@@ -236,89 +236,89 @@ class LocketPhotoView : UIView
         let newX = colorImageFrame.origin.x + xOffset
         let newY = colorImageFrame.origin.y + yOffset
         
-        let newFrame = CGRectMake(newX, newY, newWidth, newHeight)
+        let newFrame = CGRect(x: newX, y: newY, width: newWidth, height: newHeight)
         
         if newFrame.contains((maskDownload?.frame)!){
             colorDownload?.frame = newFrame
         }
         
-        if sender.state == UIGestureRecognizerState.Ended {
+        if sender.state == UIGestureRecognizerState.ended {
             colorImageFrame = (colorDownload?.frame)!
         }
     }
     
-    private func loadEditButton()
+    fileprivate func loadEditButton()
     {
         let btnWidth : CGFloat = self.frame.width * 0.6
         let btnHeight : CGFloat = 50.0
-        let btnFrame = CGRectMake( 0.5 * (self.frame.width - btnWidth), self.frame.height - btnHeight - 30.0, btnWidth, btnHeight)
+        let btnFrame = CGRect( x: 0.5 * (self.frame.width - btnWidth), y: self.frame.height - btnHeight - 30.0, width: btnWidth, height: btnHeight)
         
         doneButton = self.loadButton(btnFrame, title: "Done")
-        doneButton?.transform = CGAffineTransformMakeTranslation(0, 100)
+        doneButton?.transform = CGAffineTransform(translationX: 0, y: 100)
         addSubview(doneButton!)
     }
     
-    private func loadSelectPhotoButton()
+    fileprivate func loadSelectPhotoButton()
     {
         let btnWidth : CGFloat = self.frame.width * 0.3
         let btnHeight : CGFloat = 50.0
-        let btnFrame = CGRectMake( (0.25 * self.frame.width - 0.5 * btnWidth), 20, btnWidth, btnHeight)
+        let btnFrame = CGRect( x: (0.25 * self.frame.width - 0.5 * btnWidth), y: 20, width: btnWidth, height: btnHeight)
         
         selectPhotoButton = self.loadButton(btnFrame, imageName: "photo_lib_btn")
-        selectPhotoButton?.transform = CGAffineTransformMakeTranslation(0, -100)
+        selectPhotoButton?.transform = CGAffineTransform(translationX: 0, y: -100)
         addSubview(selectPhotoButton!)
     }
     
-    private func loadTakePhotoButton()
+    fileprivate func loadTakePhotoButton()
     {
         let btnWidth : CGFloat = self.frame.width * 0.3
         let btnHeight : CGFloat = 50.0
-        let btnFrame = CGRectMake( (0.75 * self.frame.width - 0.5 * btnWidth), 20, btnWidth, btnHeight)
+        let btnFrame = CGRect( x: (0.75 * self.frame.width - 0.5 * btnWidth), y: 20, width: btnWidth, height: btnHeight)
         
         takePhotoButton = self.loadButton(btnFrame, imageName: "photo_btn")
-        takePhotoButton?.transform = CGAffineTransformMakeTranslation(0, -100)
+        takePhotoButton?.transform = CGAffineTransform(translationX: 0, y: -100)
 
         addSubview(takePhotoButton!)
 
     }
     
-    private func loadButton(frame: CGRect, imageName: String) -> UIButton
+    fileprivate func loadButton(_ frame: CGRect, imageName: String) -> UIButton
     {
-        let button = UIButton(type: UIButtonType.RoundedRect)
+        let button = UIButton(type: UIButtonType.roundedRect)
         button.frame = frame
         button.layer.cornerRadius = 10
-        button.backgroundColor = UIColor.whiteColor()
+        button.backgroundColor = UIColor.white
         
-        let image = UIImage(named: imageName)?.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
+        let image = UIImage(named: imageName)?.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
         let aspect = image!.size.width / image!.size.height
         let iconHeight = frame.height * 0.75
         let iconWidth = iconHeight * aspect
         
-        button.setImage(image, forState: UIControlState.Normal)
+        button.setImage(image, for: UIControlState())
         button.imageEdgeInsets = UIEdgeInsetsMake(0.5 * (frame.height - iconHeight), 0.5 * (frame.width - iconWidth), 0.5 * (frame.height - iconHeight), 0.5 * (frame.width - iconWidth))
         
-        button.addTarget(self, action: #selector(LocketPhotoView.buttonPressed(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+        button.addTarget(self, action: #selector(LocketPhotoView.buttonPressed(_:)), for: UIControlEvents.touchUpInside)
 
         return button
     }
     
-    private func loadButton(frame: CGRect, title: String) -> UIButton
+    fileprivate func loadButton(_ frame: CGRect, title: String) -> UIButton
     {
-        let button = UIButton(type: UIButtonType.RoundedRect)
+        let button = UIButton(type: UIButtonType.roundedRect)
         button.frame = frame
         button.layer.cornerRadius = 10
-        button.backgroundColor = UIColor.whiteColor()
+        button.backgroundColor = UIColor.white
         
         button.titleLabel?.font = UIFont(name: "Helvetica", size: 20)
-        button.setTitle(title, forState: UIControlState.Normal)
-        button.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+        button.setTitle(title, for: UIControlState())
+        button.setTitleColor(UIColor.black, for: UIControlState())
         
-        button.addTarget(self, action: #selector(LocketPhotoView.buttonPressed(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+        button.addTarget(self, action: #selector(LocketPhotoView.buttonPressed(_:)), for: UIControlEvents.touchUpInside)
         
         return button
     }
     
-    func buttonPressed(button: UIButton)
+    func buttonPressed(_ button: UIButton)
     {
         if button == doneButton {
             delegate?.didFinishEditing()
@@ -336,7 +336,7 @@ class LocketPhotoView : UIView
 
 extension LocketPhotoView : DownloadableImageViewDelegate
 {
-    func imageLoaded(imageView: DownloadableImageView) {
+    func imageLoaded(_ imageView: DownloadableImageView) {
         if imageView == colorDownload
         {
             self.colorImageLoaded = true

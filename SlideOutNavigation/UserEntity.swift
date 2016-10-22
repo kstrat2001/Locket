@@ -27,7 +27,7 @@ class UserEntity: NSManagedObject {
         
         if UserEntity.fetch() != nil { assert(false) }
         
-        let entity = NSEntityDescription.insertNewObjectForEntityForName("UserEntity", inManagedObjectContext: DataManager.sharedManager.managedObjectContext) as! UserEntity
+        let entity = NSEntityDescription.insertNewObject(forEntityName: "UserEntity", into: DataManager.sharedManager.managedObjectContext) as! UserEntity
         
         return entity
     }

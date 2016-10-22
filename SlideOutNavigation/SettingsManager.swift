@@ -16,8 +16,8 @@ class SettingsManager
         return self.user.selected_locket!
     }
     
-    private (set) var userLockets : [UserLocketEntity]! = [UserLocketEntity]()
-    private (set) var user : UserEntity!
+    fileprivate (set) var userLockets : [UserLocketEntity]! = [UserLocketEntity]()
+    fileprivate (set) var user : UserEntity!
     
     init()
     {
@@ -49,22 +49,22 @@ class SettingsManager
         return locket
     }
     
-    func selectUserLocket(index: Int) -> UserLocketEntity {
+    func selectUserLocket(_ index: Int) -> UserLocketEntity {
         self.user.selected_locket = self.userLockets[index]
         DataManager.sharedManager.saveAllRecords()
         return selectedLocket;
     }
     
-    func isUserLocketSelected(index: Int) -> Bool {
+    func isUserLocketSelected(_ index: Int) -> Bool {
         return selectedLocket == self.userLockets[index]
     }
     
-    func deleteUserLocket(index: Int) {
+    func deleteUserLocket(_ index: Int) {
         DataManager.sharedManager.deleteRecord(self.userLockets[index])
         self.userLockets = UserLocketEntity.fetchAll()
     }
     
-    func locketSkinInUse(locketSkin: LocketSkinEntity) -> Bool {
+    func locketSkinInUse(_ locketSkin: LocketSkinEntity) -> Bool {
         for userLocket in self.userLockets {
             if userLocket.locket_skin == locketSkin {
                 return true;
